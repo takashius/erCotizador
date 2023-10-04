@@ -15,6 +15,10 @@ export default function Layout() {
           borderRightWidth: 0,
           backgroundColor: "#1d68b5",
         },
+        headerStyle: {
+          backgroundColor: "#2196F3",
+        },
+        headerTintColor: "white",
       }}
       drawerContent={(props) => <CustomDrawer {...props} />}
     >
