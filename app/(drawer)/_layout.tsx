@@ -2,7 +2,17 @@ import { Drawer } from "expo-router/drawer";
 
 export default function Layout() {
   return (
-    <Drawer>
+    <Drawer
+      screenOptions={{
+        drawerType: "slide",
+        drawerStyle: {
+          flex: 1,
+          width: "60%",
+          borderRightWidth: 0,
+          backgroundColor: "transparent",
+        },
+      }}
+    >
       <Drawer.Screen
         name="home"
         options={{
