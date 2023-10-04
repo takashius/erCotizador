@@ -5,6 +5,7 @@ import { Box, Center, Avatar, Text, Icon } from "native-base";
 import { Image, Dimensions, View } from "react-native";
 const { width } = Dimensions.get("screen");
 import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import {
   DrawerItemList,
   DrawerItem,
@@ -59,7 +60,9 @@ const CustomDrawer = (props: any) => {
             activeTintColor="white"
             inactiveTintColor="white"
             label={"Logout"}
-            onPress={() => {}}
+            onPress={() => {
+              router.replace("/login");
+            }}
           />
         </View>
       </ImageBackground>
