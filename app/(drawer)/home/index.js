@@ -1,5 +1,6 @@
 import { Text } from "react-native";
 import { Stack } from "expo-router";
+import { Box } from "native-base";
 
 export default page = () => {
   return (
@@ -9,7 +10,7 @@ export default page = () => {
           headerShown: false,
         }}
       />
-      <Text>Home Page</Text>
+      <Box>Home Page</Box>
     </>
   );
 };
