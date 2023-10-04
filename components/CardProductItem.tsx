@@ -8,9 +8,10 @@ import {
   Heading,
   VStack,
 } from "native-base";
-import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
-const CardCustomerItem = (params: any) => {
+const CardProductItem = (params: any) => {
+  const iva = false;
   return (
     <Box alignItems="center" marginBottom={5}>
       <Box
@@ -35,32 +36,39 @@ const CardCustomerItem = (params: any) => {
         <_Stack p="4" space={0}>
           <_Stack space={2}>
             <Heading size="md" ml="-1" color={"blue.500"}>
-              Cliente titulo
+              Producto titulo
             </Heading>
           </_Stack>
+          <Text>Description</Text>
           <HStack space={3} justifyContent="left">
             <VStack flex={1}>
-              <Text>Juan de los Palotes</Text>
               <HStack>
                 <Icon
                   marginTop={1}
-                  as={<MaterialIcons name="phone" />}
+                  as={<FontAwesome name="dollar" />}
                   size={4}
                   color={"blue.500"}
                 />
-                <Text> 08342387</Text>
+                <Text>08342387</Text>
               </HStack>
             </VStack>
             <VStack flex={1} alignItems={"flex-end"}>
-              <Text>Rif: J-000000-0</Text>
               <HStack>
+                <Text>Iva: </Text>
                 <Icon
                   marginTop={1}
-                  as={<MaterialIcons name="location-city" />}
+                  as={
+                    <MaterialCommunityIcons
+                      name={
+                        iva
+                          ? "checkbox-marked-circle-outline"
+                          : "close-circle-outline"
+                      }
+                    />
+                  }
                   size={4}
-                  color={"blue.500"}
+                  color={iva ? "blue.500" : "red.300"}
                 />
-                <Text> 2</Text>
               </HStack>
             </VStack>
           </HStack>
@@ -70,4 +78,4 @@ const CardCustomerItem = (params: any) => {
   );
 };
 
-export default CardCustomerItem;
+export default CardProductItem;
