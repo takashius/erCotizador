@@ -2,6 +2,7 @@ import { Image, Dimensions, StyleSheet } from "react-native";
 import { Box, Input, Icon, Pressable, Text, Button } from "native-base";
 import { Stack, router } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 const { width } = Dimensions.get("screen");
 const ratio = (width * 0.8) / 270;
