@@ -2,7 +2,7 @@ import { Image, Dimensions, StyleSheet } from "react-native";
 import { Box, Input, Icon, Pressable, Text, Button } from "native-base";
 import { Stack, router } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useQuery } from "@tanstack/react-query";
+import example from "../components/api/example";
 import { useState } from "react";
 const { width } = Dimensions.get("screen");
 const ratio = (width * 0.8) / 270;
@@ -10,6 +10,7 @@ const ratio = (width * 0.8) / 270;
 export default function login() {
   const logo = require("../assets/images/logo.png");
   const [show, setShow] = useState(false);
+  example();
   return (
     <Box bgColor={"blue.100"} flex={1}>
       <Stack.Screen
