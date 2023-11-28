@@ -2,6 +2,7 @@
   "expo": {
     "name": "erCotizador",
     "slug": "erCotizador",
+    "owner": "erickhernandez",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -10,7 +11,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1d68b5"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -34,6 +35,20 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "3775c50d-89d0-4721-b7bc-195ad42b1bee"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3775c50d-89d0-4721-b7bc-195ad42b1bee"
     }
   }
 }

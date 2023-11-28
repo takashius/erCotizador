@@ -2,9 +2,9 @@ import { ScrollView } from "react-native";
 import { Stack } from "expo-router";
 import { Box } from "native-base";
 import SearchBar from "../../../components/SearchBar";
-import CardCotizaItem from "../../../components/CardCotizaItem";
+import CardCustomerItem from "../../../components/CardCustomerItem";
 
-export default page = () => {
+export default customer = () => {
   const repeat = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
   return (
@@ -13,7 +13,7 @@ export default page = () => {
       <SearchBar />
       <ScrollView>
         {repeat.map(() => (
-          <CardCotizaItem />
+          <CardCustomerItem />
         ))}
       </ScrollView>
     </Box>
