@@ -16,6 +16,7 @@
     "@expo/vector-icons": "^13.0.0",
     "@react-navigation/drawer": "^6.6.4",
     "@react-navigation/native": "^6.0.2",
+    "@tanstack/react-query": "^5.8.9",
     "expo": "~49.0.12",
     "expo-font": "~11.4.0",
     "expo-linear-gradient": "~12.3.0",

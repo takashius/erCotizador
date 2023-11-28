@@ -9,6 +9,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { NativeBaseProvider } from "native-base";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -49,13 +50,16 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const queryClient = new QueryClient();
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <NativeBaseProvider>
-        <Stack>
-          <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-        </Stack>
+        <QueryClientProvider client={queryClient}>
+          <Stack>
+            <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+          </Stack>
+        </QueryClientProvider>
       </NativeBaseProvider>
     </ThemeProvider>
   );
