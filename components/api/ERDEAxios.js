@@ -13,9 +13,9 @@ const ERDEAxios = axios.create();
 // interceptor for outgoing requests
 ERDEAxios.interceptors.request.use(
   async (config) => {
-    // const userToken = await read("userToken");
-    const userToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGZiZTYxMDcxYWYzYWQyMDNkYmE4YjgiLCJkYXRlIjoiMjAyMy0xMS0yMVQxOTo0MTozMy4xODdaIiwiaWF0IjoxNzAwNTk1NjkzfQ.mQg2RC6fN4EpT7hkTdnqGy9PArSapZ7Gl_mkhCBIWFE";
+    const userToken = await read("userToken");
+    // const userToken =
+    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGZiZTYxMDcxYWYzYWQyMDNkYmE4YjgiLCJkYXRlIjoiMjAyMy0xMS0yMVQxOTo0MTozMy4xODdaIiwiaWF0IjoxNzAwNTk1NjkzfQ.mQg2RC6fN4EpT7hkTdnqGy9PArSapZ7Gl_mkhCBIWFE";
     if (userToken) {
       config.headers["Authorization"] = "Bearer " + userToken;
     }
@@ -23,7 +23,7 @@ ERDEAxios.interceptors.request.use(
     config.headers["Content-type"] = "application/json";
     config.url = urlJoin(apiUrl, config.url);
     if (DEBUG) {
-      console.log("URL", config.url);
+      console.log("URL", config.method, config.url);
       config.data && console.log("DATA", config.data);
     }
     return config;

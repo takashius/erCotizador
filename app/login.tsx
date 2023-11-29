@@ -2,7 +2,7 @@ import { Image, Dimensions, StyleSheet } from "react-native";
 import { Box, Input, Icon, Pressable, Text, Button } from "native-base";
 import { Stack, router } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
-import example from "../components/api/example";
+import { useLogin } from "../components/api/auth";
 import { useState } from "react";
 const { width } = Dimensions.get("screen");
 const ratio = (width * 0.8) / 270;
@@ -10,7 +10,9 @@ const ratio = (width * 0.8) / 270;
 export default function login() {
   const logo = require("../assets/images/logo.png");
   const [show, setShow] = useState(false);
-  example();
+  const responseQuery = useLogin("takashi.onimaru@gmail.com", "abc.123456");
+  if (!responseQuery.isFetched)
+    console.log("QUERY RESPONSE", JSON.stringify(responseQuery.data, null, 2));
   return (
     <Box bgColor={"blue.100"} flex={1}>
       <Stack.Screen
@@ -23,7 +25,7 @@ export default function login() {
       </Box>
       <Box alignSelf={"center"} marginTop={10}>
         <Text fontSize="xl" color={"coolGray.500"}>
-          Login
+          Login {`${responseQuery.data}`}
         </Text>
       </Box>
       <Box marginTop={"1"} p="10" pb={4} pt={10}>
