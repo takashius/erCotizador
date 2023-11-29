@@ -4,6 +4,8 @@ import ERDEAxios from "./ERDEAxios";
 export const useLogin = (email: String, password: String) => {
   const query = useQuery({
     queryKey: ["login"],
+    enabled: false,
+    retry: false,
     queryFn: () => {
       return ERDEAxios.post("/user/login", JSON.stringify({ email, password }));
     },
