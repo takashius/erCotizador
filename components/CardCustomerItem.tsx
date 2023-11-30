@@ -10,7 +10,6 @@ import {
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { type Customer } from "./types/customer";
-import { FormatDate } from "./helpers/Utils";
 
 const CardCustomerItem = ({ item }: { item: Customer }) => {
   return (

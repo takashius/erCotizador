@@ -9,8 +9,9 @@ import {
   VStack,
 } from "native-base";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import { type Product } from "./types/products";
 
-const CardProductItem = (params: any) => {
+const CardProductItem = ({ item }: { item: Product }) => {
   const iva = false;
   return (
     <Box alignItems="center" marginBottom={5}>
@@ -36,10 +37,10 @@ const CardProductItem = (params: any) => {
         <_Stack p="4" space={0}>
           <_Stack space={2}>
             <Heading size="md" ml="-1" color={"blue.500"}>
-              Producto titulo
+              {item.name}
             </Heading>
           </_Stack>
-          <Text>Description</Text>
+          <Text>{item.description}</Text>
           <HStack space={3} justifyContent="left">
             <VStack flex={1}>
               <HStack>
@@ -49,7 +50,7 @@ const CardProductItem = (params: any) => {
                   size={4}
                   color={"blue.500"}
                 />
-                <Text>08342387</Text>
+                <Text>{item.price}</Text>
               </HStack>
             </VStack>
             <VStack flex={1} alignItems={"flex-end"}>
@@ -60,7 +61,7 @@ const CardProductItem = (params: any) => {
                   as={
                     <MaterialCommunityIcons
                       name={
-                        iva
+                        item.iva
                           ? "checkbox-marked-circle-outline"
                           : "close-circle-outline"
                       }
