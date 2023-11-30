@@ -9,8 +9,10 @@ import {
   Icon,
 } from "native-base";
 import { FontAwesome } from "@expo/vector-icons";
+import { type Cotiza } from "./types/cotiza";
+import { FormatDate } from "./helpers/Utils";
 
-const CardCotizaItem = (params: any) => {
+const CardCotizaItem = ({ item }: { item: Cotiza }) => {
   return (
     <Box alignItems="center" marginBottom={5}>
       <Box
@@ -35,7 +37,7 @@ const CardCotizaItem = (params: any) => {
         <_Stack p="4" space={2}>
           <_Stack space={2}>
             <Heading size="md" ml="-1" color={"blue.500"}>
-              Cotizacion uno
+              {item.title}
             </Heading>
             <Text
               fontSize="xs"
@@ -49,10 +51,12 @@ const CardCotizaItem = (params: any) => {
               ml="-0.5"
               mt="-1"
             >
-              Productos de computadora.
+              {item.description}
             </Text>
           </_Stack>
-          <Text fontWeight="400">Pedro Picapiedras</Text>
+          <Text fontWeight="400">
+            {item.customer.name} {item.customer.lastname}
+          </Text>
           <HStack alignItems="center" space={4} justifyContent="space-between">
             <HStack alignItems="center">
               <Text
@@ -62,7 +66,7 @@ const CardCotizaItem = (params: any) => {
                 }}
                 fontWeight="400"
               >
-                12/05/2023
+                {FormatDate(item.created.date)}
               </Text>
             </HStack>
           </HStack>
@@ -84,7 +88,7 @@ const CardCotizaItem = (params: any) => {
             py="1.5"
           >
             <Icon as={<FontAwesome name="dollar" />} size={4} color={"white"} />
-            PRECIO
+            {item.amount}
           </Center>
           <Center
             _text={{
@@ -97,7 +101,7 @@ const CardCotizaItem = (params: any) => {
             px="3"
             py="1.5"
           >
-            STATUS
+            {item.status.toUpperCase()}
           </Center>
         </_Stack>
       </Box>

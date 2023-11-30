@@ -36,9 +36,7 @@ export default function login() {
 
   const readUserLogged = async () => {
     const data = await read("userToken");
-    console.log("readUserLogged TOKEN", data);
     if (data) {
-      console.log("A HOME", data);
       router.replace("/(drawer)/home");
     }
   };
