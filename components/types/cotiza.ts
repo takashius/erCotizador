@@ -1,3 +1,5 @@
+import { type CustomerShort, type CreatedShort } from "./general";
+
 export interface Cotiza {
     title: string;
     description: string;
@@ -11,14 +13,4 @@ export interface Cotiza {
     customer: CustomerShort;
     created: CreatedShort;
     _id: string;
-}
-
-export interface CustomerShort {
-    _id: string;
-    name: string;
-    lastname: string;
-}
-
-export interface CreatedShort {
-    date: string;
 }
