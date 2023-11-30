@@ -9,8 +9,10 @@ import {
   VStack,
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
+import { type Customer } from "./types/customer";
+import { FormatDate } from "./helpers/Utils";
 
-const CardCustomerItem = (params: any) => {
+const CardCustomerItem = ({ item }: { item: Customer }) => {
   return (
     <Box alignItems="center" marginBottom={5}>
       <Box
@@ -35,24 +37,28 @@ const CardCustomerItem = (params: any) => {
         <_Stack p="4" space={0}>
           <_Stack space={2}>
             <Heading size="md" ml="-1" color={"blue.500"}>
-              Cliente titulo
+              {item.title}
             </Heading>
           </_Stack>
           <HStack space={3} justifyContent="left">
             <VStack flex={1}>
-              <Text>Juan de los Palotes</Text>
+              <Text>
+                {item.name} {item.lastname}
+              </Text>
               <HStack>
-                <Icon
-                  marginTop={1}
-                  as={<MaterialIcons name="phone" />}
-                  size={4}
-                  color={"blue.500"}
-                />
-                <Text> 08342387</Text>
+                {item.phone && (
+                  <Icon
+                    marginTop={1}
+                    as={<MaterialIcons name="phone" />}
+                    size={4}
+                    color={"blue.500"}
+                  />
+                )}
+                <Text> {item.phone}</Text>
               </HStack>
             </VStack>
             <VStack flex={1} alignItems={"flex-end"}>
-              <Text>Rif: J-000000-0</Text>
+              <Text>Rif: {item.rif}</Text>
               <HStack>
                 <Icon
                   marginTop={1}
@@ -60,7 +66,7 @@ const CardCustomerItem = (params: any) => {
                   size={4}
                   color={"blue.500"}
                 />
-                <Text> 2</Text>
+                <Text> {item.addresses.length}</Text>
               </HStack>
             </VStack>
           </HStack>

@@ -1,4 +1,4 @@
-import { ScrollView, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { Stack } from "expo-router";
 import { Box } from "native-base";
 import SearchBar from "../../../components/SearchBar";
