@@ -36,7 +36,9 @@ export default function login() {
 
   const readUserLogged = async () => {
     const data = await read("userToken");
+    console.log("readUserLogged TOKEN", data);
     if (data) {
+      console.log("A HOME", data);
       router.replace("/(drawer)/home");
     }
   };
@@ -44,7 +46,6 @@ export default function login() {
   useEffect(() => {
     const response = responseQuery.data;
     if (response) {
-      console.log("useEffect", response);
       write("userToken", response.token).then((res) => res);
       write("userId", response._id).then((res) => res);
       write("userName", response.name).then((res) => res);

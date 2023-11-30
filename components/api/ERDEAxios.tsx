@@ -14,8 +14,6 @@ const ERDEAxios = axios.create();
 ERDEAxios.interceptors.request.use(
   async (config) => {
     const userToken = await read("userToken");
-    // const userToken =
-    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGZiZTYxMDcxYWYzYWQyMDNkYmE4YjgiLCJkYXRlIjoiMjAyMy0xMS0yMVQxOTo0MTozMy4xODdaIiwiaWF0IjoxNzAwNTk1NjkzfQ.mQg2RC6fN4EpT7hkTdnqGy9PArSapZ7Gl_mkhCBIWFE";
     if (userToken) {
       config.headers["Authorization"] = "Bearer " + userToken;
     }
@@ -40,7 +38,6 @@ ERDEAxios.interceptors.request.use(
 // interceptor for incoming responses
 ERDEAxios.interceptors.response.use(
   (response) => {
-    const responseString = JSON.stringify(response.data, null, 2);
     if (DEBUG) {
       console.log("API CALL RESPONSE SUCCESSFUL");
     }
