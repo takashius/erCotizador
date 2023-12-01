@@ -1,13 +1,8 @@
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Icon } from "native-base";
-import { NavigationProp } from "@react-navigation/native";
 
-export const useOptions = (
-  title: string,
-  back: boolean,
-  navigation: NavigationProp<ReactNavigation.RootParamList>
-) => {
+export const useOptions = (title: string, back: boolean, navigation: any) => {
   if (back) {
     return {
       headerShown: true,
