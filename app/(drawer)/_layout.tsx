@@ -57,6 +57,7 @@ export default function Layout() {
       <Drawer.Screen
         name="products"
         options={{
+          headerShown: false,
           drawerLabel: "Productos",
           title: "Productos",
           drawerActiveTintColor: "white",
