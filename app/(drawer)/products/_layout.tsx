@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
 
-export default ProductsLayout = () => {
+export default () => {
   return <Stack></Stack>;
 };

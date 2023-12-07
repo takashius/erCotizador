@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
-import { Product } from "../types/products";
+import { Product, ProductForm } from "../types/products";
 
 export const useListProduct = () => {
   const query = useQuery<Product[]>({
@@ -11,4 +11,13 @@ export const useListProduct = () => {
     },
   });
   return query;
+};
+
+export const useCreateProduct = (data: ProductForm) => {
+  const mutation = useMutation({
+    mutationFn: (data: ProductForm) => {
+      return ERDEAxios.post("/product", data);
+    },
+  });
+  return mutation.mutate(data);
 };

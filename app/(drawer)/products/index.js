@@ -7,14 +7,18 @@ import { useListProduct } from "../../../components/api/product";
 import Spinner from "../../../components/helpers/Spinner";
 import { AntDesign } from "@expo/vector-icons";
 import { useOptions } from "../../../components/helpers/OptionsScreens";
+import { useTranslation } from "react-i18next";
 
 export default products = () => {
+  const { t } = useTranslation();
   const responseQuery = useListProduct();
   const navigation = useNavigation();
 
   return (
     <Box bg="white" safeArea flex="1">
-      <Stack.Screen options={useOptions("Productos", false, navigation)} />
+      <Stack.Screen
+        options={useOptions(t("modules.product"), false, navigation)}
+      />
       <SearchBar />
       {responseQuery.isLoading && <Spinner />}
       <FlatList

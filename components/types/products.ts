@@ -8,3 +8,10 @@ export interface Product {
     created: CreatedShort;
     _id: string;
 }
+export interface ProductForm {
+    name: string;
+    description: string;
+    price: number;
+    iva: boolean;
+    _id: string;
+}

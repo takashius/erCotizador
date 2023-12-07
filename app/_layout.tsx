@@ -41,15 +41,14 @@ export default function RootLayout() {
 
   useEffect(() => {
     i18next.init({
-      lng: "en",
-      debug: true,
+      lng: "es",
       resources: {
-        en: common_en,
-        es: common_es,
+        en: { translation: common_en },
+        es: { translation: common_es },
       },
       compatibilityJSON: "v3",
       interpolation: {
-        escapeValue: false, // react already does escaping
+        escapeValue: false,
       },
     });
   }, []);
@@ -74,11 +73,13 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <NativeBaseProvider>
-        <QueryClientProvider client={queryClient}>
-          <Stack>
-            <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-          </Stack>
-        </QueryClientProvider>
+        <I18nextProvider i18n={i18next}>
+          <QueryClientProvider client={queryClient}>
+            <Stack>
+              <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+            </Stack>
+          </QueryClientProvider>
+        </I18nextProvider>
       </NativeBaseProvider>
     </ThemeProvider>
   );

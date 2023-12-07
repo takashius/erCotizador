@@ -1,11 +1,13 @@
 import { VStack, Input, Icon } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 const SearchBar = () => {
+  const { t } = useTranslation();
   return (
     <VStack w="90%" alignSelf="center" marginBottom={4}>
       <Input
-        placeholder="Buscar"
+        placeholder={t("search")}
         width="100%"
         borderRadius="4"
         py="3"

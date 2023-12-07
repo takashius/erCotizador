@@ -11,25 +11,43 @@ import {
 } from "native-base";
 import { useOptions } from "../../../components/helpers/OptionsScreens";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useCreateProduct } from "../../../components/api/product";
+import { useMutation } from "@tanstack/react-query";
+import ERDEAxios from "../../../components/api/ERDEAxios";
+import { ProductForm } from "../../../components/types/products";
 
-export default productForm = () => {
-  const [formData, setData] = useState({ iva: false });
+export default () => {
+  const { t } = useTranslation();
+  const [formData, setData] = useState<ProductForm>({
+    name: "",
+    iva: false,
+    price: 0.0,
+    description: "",
+    _id: "",
+  });
   const [errors, setErrors] = useState({});
   const params = useLocalSearchParams();
   const { post } = params;
 
+  const mutation = useMutation({
+    mutationFn: (data) => {
+      return ERDEAxios.post("/product", data);
+    },
+  });
+
   const validate = () => {
     if (formData.name === undefined) {
-      setErrors({ ...errors, name: "Name is required" });
+      setErrors({ ...errors, name: t("products.validations.nameRequired") });
       return false;
     } else if (formData.name.length < 3) {
-      setErrors({ ...errors, name: "Name is too short" });
+      setErrors({ ...errors, name: t("products.validations.nameShort") });
       return false;
     } else if (formData.price === undefined) {
-      setErrors({ ...errors, price: "Price is required" });
+      setErrors({ ...errors, price: t("products.validations.priceRequired") });
       return false;
-    } else if (Number(formData.price) <= 0) {
-      setErrors({ ...errors, price: "Price incorrect" });
+    } else if (formData.price < 0) {
+      setErrors({ ...errors, price: t("products.validations.priceIncorrect") });
       return false;
     }
     setErrors({});
@@ -37,19 +55,22 @@ export default productForm = () => {
   };
 
   const onSubmit = () => {
-    validate() ? submitForm() : console.log("Validation Failed");
+    validate() && submitForm();
   };
 
   const submitForm = () => {
-    console.log("Correct", formData);
+    const product = useCreateProduct(formData);
+    // const product = mutation.mutate(formData);
+    console.log("Correct", product);
   };
 
   return (
     <Box bg="white" safeArea flex="1">
       <Stack.Screen
         options={useOptions(
-          post == "new" ? "Nuevo Producto" : "Editar Producto",
-          true
+          post == "new" ? t("products.new") : t("products.edit"),
+          true,
+          ""
         )}
       />
       <VStack mx="3">
@@ -59,17 +80,17 @@ export default productForm = () => {
               bold: true,
             }}
           >
-            Name
+            {t("name")}
           </FormControl.Label>
           <Input
-            placeholder="Product title"
+            placeholder={t("products.placeholder.name")}
             onChangeText={(value) => setData({ ...formData, name: value })}
           />
           {"name" in errors ? (
             <FormControl.ErrorMessage>{errors.name}</FormControl.ErrorMessage>
           ) : (
             <FormControl.HelperText>
-              Name should contain atleast 3 character.
+              {t("products.nameDescription")}
             </FormControl.HelperText>
           )}
         </FormControl>
@@ -79,10 +100,10 @@ export default productForm = () => {
               bold: true,
             }}
           >
-            Description
+            {t("description")}
           </FormControl.Label>
           <Input
-            placeholder="Product description"
+            placeholder={t("products.placeholder.description")}
             onChangeText={(value) =>
               setData({ ...formData, description: value })
             }
@@ -94,23 +115,25 @@ export default productForm = () => {
               bold: true,
             }}
           >
-            Price
+            {t("price")}
           </FormControl.Label>
           <Input
             keyboardType="number-pad"
-            placeholder="Product price"
-            onChangeText={(value) => setData({ ...formData, price: value })}
+            placeholder={t("products.placeholder.price")}
+            onChangeText={(value) =>
+              setData({ ...formData, price: Number(value) })
+            }
           />
           {"price" in errors ? (
             <FormControl.ErrorMessage>{errors.price}</FormControl.ErrorMessage>
           ) : (
             <FormControl.HelperText>
-              Name should contain atleast 3 character.
+              {t("products.priceDescription")}
             </FormControl.HelperText>
           )}
         </FormControl>
         <HStack alignItems="center" space={4}>
-          <Text>Iva</Text>
+          <Text>{t("tax")}</Text>
           <Switch
             size="sm"
             offTrackColor="blue.100"
@@ -123,7 +146,7 @@ export default productForm = () => {
           />
         </HStack>
         <Button bgColor={"blue.500"} rounded={"3xl"} onPress={onSubmit} mt="5">
-          Submit
+          {t("submit")}
         </Button>
       </VStack>
     </Box>

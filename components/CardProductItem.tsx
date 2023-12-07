@@ -11,8 +11,10 @@ import {
 } from "native-base";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { type Product } from "./types/products";
+import { useTranslation } from "react-i18next";
 
 const CardProductItem = ({ item }: { item: Product }) => {
+  const { t } = useTranslation();
   const iva = false;
   return (
     <Box alignItems="center" marginBottom={5}>
@@ -62,7 +64,7 @@ const CardProductItem = ({ item }: { item: Product }) => {
               </VStack>
               <VStack flex={1} alignItems={"flex-end"}>
                 <HStack>
-                  <Text>Iva: </Text>
+                  <Text>{t("tax")}: </Text>
                   <Icon
                     marginTop={1}
                     as={

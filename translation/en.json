@@ -1,3 +1,35 @@
 {
-    "appName": "ErCotizador"
+    "appName": "ErCotizador",
+    "search": "Search",
+    "submit": "Submit",
+    "tax": "Tax",
+    "name": "Name",
+    "price": "Price",
+    "description": "Description",
+    "modules": {
+        "cotiza": "Quotes",
+        "customer": "Customers",
+        "product": "Products"
+    },
+    "auth": {
+        "login": "Login",
+        "logout": "Logout"
+    },
+    "products": {
+        "new": "New Product",
+        "edit": "Edit Product",
+        "nameDescription": "Name should contain at least 3 character.",
+        "priceDescription": "You must enter the amount without a thousands separator.",
+        "placeholder": {
+            "name": "Product title",
+            "description": "Product description",
+            "price": "Product price"
+        },
+        "validations": {
+            "nameRequired": "Name is required",
+            "nameShort": "Name is too short",
+            "priceRequired": "Price is required",
+            "priceIncorrect": "Wrong price"
+        }
+    }
 }

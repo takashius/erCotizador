@@ -3,8 +3,10 @@ import CustomDrawer from "../../components/CustomDrawer";
 import { Icon } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Layout() {
+  const { t } = useTranslation();
   return (
     <Drawer
       screenOptions={{
@@ -25,8 +27,8 @@ export default function Layout() {
       <Drawer.Screen
         name="home"
         options={{
-          drawerLabel: "Cotizaciones",
-          title: "Cotizaciones",
+          drawerLabel: t("modules.cotiza"),
+          title: t("modules.cotiza"),
           drawerActiveTintColor: "white",
           drawerInactiveTintColor: "white",
           drawerIcon: ({ focused, size }): ReactNode => (
@@ -41,8 +43,8 @@ export default function Layout() {
       <Drawer.Screen
         name="customer"
         options={{
-          drawerLabel: "Clientes",
-          title: "Clientes",
+          drawerLabel: t("modules.customer"),
+          title: t("modules.customer"),
           drawerActiveTintColor: "white",
           drawerInactiveTintColor: "white",
           drawerIcon: ({ focused, size }): ReactNode => (
@@ -58,8 +60,8 @@ export default function Layout() {
         name="products"
         options={{
           headerShown: false,
-          drawerLabel: "Productos",
-          title: "Productos",
+          drawerLabel: t("modules.product"),
+          title: t("modules.product"),
           drawerActiveTintColor: "white",
           drawerInactiveTintColor: "white",
           drawerIcon: ({ focused, size }): ReactNode => (

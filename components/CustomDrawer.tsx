@@ -12,8 +12,10 @@ import {
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
 const ratio = (width * 0.4) / 270;
+import { useTranslation } from "react-i18next";
 
 const CustomDrawer = (props: any) => {
+  const { t } = useTranslation();
   return (
     <Box flex={1}>
       <ImageBackground source={bg} resizeMode="cover" style={styles.image}>
@@ -59,7 +61,7 @@ const CustomDrawer = (props: any) => {
             )}
             activeTintColor="white"
             inactiveTintColor="white"
-            label={"Logout"}
+            label={t("auth.logout")}
             onPress={() => {
               router.replace("/login");
             }}

@@ -1,3 +1,35 @@
 {
-    "appName": "ErCotizador"
+    "appName": "ErCotizador",
+    "search": "Buscar",
+    "submit": "Enviar",
+    "tax": "Iva",
+    "name": "Nombre",
+    "price": "Precio",
+    "description": "Descripción",
+    "modules": {
+        "cotiza": "Cotizaciones",
+        "customer": "Clientes",
+        "product": "Productos"
+    },
+    "auth": {
+        "login": "Iniciar Sesion",
+        "logout": "Salir"
+    },
+    "products": {
+        "new": "Nuevo producto",
+        "edit": "Editar producto",
+        "nameDescription": "El nombre debe contener al menos 3 caracteres.",
+        "priceDescription": "Debe colocar el monto sin separador de miles",
+        "placeholder": {
+            "name": "Título del producto",
+            "description": "Descripción del producto",
+            "price": "Precio del producto"
+        },
+        "validations": {
+            "nameRequired": "El nombre es requerido",
+            "nameShort": "El nombre es muy corto",
+            "priceRequired": "El precio es requerido",
+            "priceIncorrect": "Precio incorrecto"
+        }
+    }
 }
