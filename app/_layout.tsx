@@ -10,6 +10,10 @@ import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { NativeBaseProvider } from "native-base";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { I18nextProvider } from "react-i18next";
+import i18next from "i18next";
+import common_en from "../translation/en.json";
+import common_es from "../translation/es.json";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -34,6 +38,21 @@ export default function RootLayout() {
   useEffect(() => {
     if (error) throw error;
   }, [error]);
+
+  useEffect(() => {
+    i18next.init({
+      lng: "en",
+      debug: true,
+      resources: {
+        en: common_en,
+        es: common_es,
+      },
+      compatibilityJSON: "v3",
+      interpolation: {
+        escapeValue: false, // react already does escaping
+      },
+    });
+  }, []);
 
   useEffect(() => {
     if (loaded) {
