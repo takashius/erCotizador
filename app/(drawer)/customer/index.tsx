@@ -6,7 +6,7 @@ import CardCustomerItem from "../../../components/CardCustomerItem";
 import { useListCustomer } from "../../../components/api/customer";
 import Spinner from "../../../components/helpers/Spinner";
 
-export default customer = () => {
+export default () => {
   const responseQuery = useListCustomer();
 
   return (

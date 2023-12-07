@@ -9,7 +9,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useOptions } from "../../../components/helpers/OptionsScreens";
 import { useTranslation } from "react-i18next";
 
-export default products = () => {
+export default () => {
   const { t } = useTranslation();
   const responseQuery = useListProduct();
   const navigation = useNavigation();

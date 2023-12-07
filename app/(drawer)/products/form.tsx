@@ -1,4 +1,4 @@
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
 import {
   Box,
   VStack,
@@ -19,6 +19,7 @@ import { ProductForm } from "../../../components/types/products";
 
 export default () => {
   const { t } = useTranslation();
+  const navigation = useNavigation();
   const [formData, setData] = useState<ProductForm>({
     name: "",
     iva: false,
@@ -70,7 +71,7 @@ export default () => {
         options={useOptions(
           post == "new" ? t("products.new") : t("products.edit"),
           true,
-          ""
+          navigation
         )}
       />
       <VStack mx="3">

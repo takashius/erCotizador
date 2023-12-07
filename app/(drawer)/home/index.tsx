@@ -6,7 +6,7 @@ import CardCotizaItem from "../../../components/CardCotizaItem";
 import { useListCotiza } from "../../../components/api/cotiza";
 import Spinner from "../../../components/helpers/Spinner";
 
-export default page = () => {
+export default () => {
   const responseQuery = useListCotiza();
 
   return (

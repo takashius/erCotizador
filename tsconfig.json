@@ -3,14 +3,5 @@
   "compilerOptions": {
     "strict": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "app/(drawer)/customer/index.js",
-    "app/(drawer)/products/form.js",
-    "app/(drawer)/products/index.js",
-    "app/(drawer)/products/index.js"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }
