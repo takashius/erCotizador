@@ -1,4 +1,10 @@
-import { FormControl, Input, Select } from "native-base";
+import {
+  FormControl,
+  Input,
+  Select,
+  CheckIcon,
+  WarningOutlineIcon,
+} from "native-base";
 
 export const InputForm = ({ data }: { data: any }) => {
   return (
@@ -22,7 +28,7 @@ export const InputForm = ({ data }: { data: any }) => {
         }
       />
       {`${data.name}` in data.errors ? (
-        <FormControl.ErrorMessage>
+        <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
           {data.errors[data.name]}
         </FormControl.ErrorMessage>
       ) : (
@@ -41,6 +47,7 @@ export const SelectForm = () => {
         placeholder="Choose Service"
         _selectedItem={{
           bg: "red.600",
+          endIcon: <CheckIcon size={5} />,
         }}
         mt="1"
       >
@@ -50,7 +57,7 @@ export const SelectForm = () => {
         <Select.Item label="UI Designing" value="ui" />
         <Select.Item label="Backend Development" value="backend" />
       </Select>
-      <FormControl.ErrorMessage>
+      <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
         Please make a selection!
       </FormControl.ErrorMessage>
     </FormControl>
