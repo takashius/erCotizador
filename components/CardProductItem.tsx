@@ -21,7 +21,14 @@ const CardProductItem = ({ item }: { item: Product }) => {
       <Link
         href={{
           pathname: "/(drawer)/products/form",
-          params: { id: 86, other: "anything you want here" },
+          params: {
+            post: "edit",
+            id: item._id,
+            name: item.name,
+            description: item.description,
+            price: item.price,
+            iva: String(item.iva),
+          },
         }}
       >
         <Box

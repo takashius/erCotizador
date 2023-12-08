@@ -10,7 +10,7 @@ import {
   Button,
 } from "native-base";
 import { useOptions } from "../../../components/helpers/OptionsScreens";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCreateProduct } from "../../../components/api/product";
 import { useMutation } from "@tanstack/react-query";
@@ -30,9 +30,16 @@ export default () => {
   const [errors, setErrors] = useState({});
   const params = useLocalSearchParams();
   const { post } = params;
+  if (post === "edit") {
+    formData._id = params["_id"] as string;
+    formData.name = params["name"] as string;
+    formData.description = params["description"] as string;
+    formData.price = Number(params["price"]);
+    formData.iva = params["price"] === "true" ? true : false;
+  }
 
   const mutation = useMutation({
-    mutationFn: (data) => {
+    mutationFn: (data: ProductForm) => {
       return ERDEAxios.post("/product", data);
     },
   });
@@ -60,9 +67,10 @@ export default () => {
   };
 
   const submitForm = () => {
-    const product = useCreateProduct(formData);
-    // const product = mutation.mutate(formData);
-    console.log("Correct", product);
+    if (post === "new") {
+      // const product = useCreateProduct(formData);
+      const product = mutation.mutate(formData);
+    }
   };
 
   return (
@@ -85,6 +93,7 @@ export default () => {
           </FormControl.Label>
           <Input
             placeholder={t("products.placeholder.name")}
+            value={formData.name}
             onChangeText={(value) => setData({ ...formData, name: value })}
           />
           {"name" in errors ? (
@@ -105,6 +114,7 @@ export default () => {
           </FormControl.Label>
           <Input
             placeholder={t("products.placeholder.description")}
+            value={formData.description}
             onChangeText={(value) =>
               setData({ ...formData, description: value })
             }
@@ -120,6 +130,7 @@ export default () => {
           </FormControl.Label>
           <Input
             keyboardType="number-pad"
+            value={String(formData.price)}
             placeholder={t("products.placeholder.price")}
             onChangeText={(value) =>
               setData({ ...formData, price: Number(value) })
@@ -141,6 +152,7 @@ export default () => {
             onTrackColor="blue.200"
             onThumbColor="blue.500"
             offThumbColor="blue.50"
+            value={formData.iva}
             onValueChange={() => {
               setData({ ...formData, iva: !formData.iva });
             }}
