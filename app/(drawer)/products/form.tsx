@@ -1,42 +1,37 @@
 import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
-import {
-  Box,
-  VStack,
-  HStack,
-  Text,
-  FormControl,
-  Switch,
-  Input,
-  Button,
-} from "native-base";
+import { Box, VStack, HStack, Text, Switch, Button } from "native-base";
 import { useOptions } from "../../../components/helpers/OptionsScreens";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCreateProduct } from "../../../components/api/product";
 import { useMutation } from "@tanstack/react-query";
 import ERDEAxios from "../../../components/api/ERDEAxios";
 import { ProductForm } from "../../../components/types/products";
+import { InputForm } from "../../../components/Form";
 
 export default () => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
-  const [formData, setData] = useState<ProductForm>({
-    name: "",
-    iva: false,
-    price: 0.0,
-    description: "",
-    _id: "",
-  });
-  const [errors, setErrors] = useState({});
   const params = useLocalSearchParams();
   const { post } = params;
-  if (post === "edit") {
-    formData._id = params["_id"] as string;
-    formData.name = params["name"] as string;
-    formData.description = params["description"] as string;
-    formData.price = Number(params["price"]);
-    formData.iva = params["price"] === "true" ? true : false;
-  }
+  const navigation = useNavigation();
+  const [errors, setErrors] = useState({});
+  const [formData, setData] = useState<ProductForm>(
+    post === "new"
+      ? {
+          name: "",
+          iva: false,
+          price: 0.0,
+          description: "",
+          _id: "",
+        }
+      : {
+          name: params["name"] as string,
+          iva: params["iva"] === "true" ? true : false,
+          price: Number(params["price"]),
+          description: params["description"] as string,
+          _id: params["id"] as string,
+        }
+  );
 
   const mutation = useMutation({
     mutationFn: (data: ProductForm) => {
@@ -45,13 +40,13 @@ export default () => {
   });
 
   const validate = () => {
-    if (formData.name === undefined) {
+    if (formData.name === undefined || formData.name === "") {
       setErrors({ ...errors, name: t("products.validations.nameRequired") });
       return false;
     } else if (formData.name.length < 3) {
       setErrors({ ...errors, name: t("products.validations.nameShort") });
       return false;
-    } else if (formData.price === undefined) {
+    } else if (!formData.price) {
       setErrors({ ...errors, price: t("products.validations.priceRequired") });
       return false;
     } else if (formData.price < 0) {
@@ -71,6 +66,7 @@ export default () => {
       // const product = useCreateProduct(formData);
       const product = mutation.mutate(formData);
     }
+    console.log(formData);
   };
 
   return (
@@ -83,67 +79,44 @@ export default () => {
         )}
       />
       <VStack mx="3">
-        <FormControl isRequired isInvalid={"name" in errors}>
-          <FormControl.Label
-            _text={{
-              bold: true,
-            }}
-          >
-            {t("name")}
-          </FormControl.Label>
-          <Input
-            placeholder={t("products.placeholder.name")}
-            value={formData.name}
-            onChangeText={(value) => setData({ ...formData, name: value })}
-          />
-          {"name" in errors ? (
-            <FormControl.ErrorMessage>{errors.name}</FormControl.ErrorMessage>
-          ) : (
-            <FormControl.HelperText>
-              {t("products.nameDescription")}
-            </FormControl.HelperText>
-          )}
-        </FormControl>
-        <FormControl isInvalid={"description" in errors}>
-          <FormControl.Label
-            _text={{
-              bold: true,
-            }}
-          >
-            {t("description")}
-          </FormControl.Label>
-          <Input
-            placeholder={t("products.placeholder.description")}
-            value={formData.description}
-            onChangeText={(value) =>
-              setData({ ...formData, description: value })
-            }
-          />
-        </FormControl>
-        <FormControl isRequired isInvalid={"price" in errors}>
-          <FormControl.Label
-            _text={{
-              bold: true,
-            }}
-          >
-            {t("price")}
-          </FormControl.Label>
-          <Input
-            keyboardType="number-pad"
-            value={String(formData.price)}
-            placeholder={t("products.placeholder.price")}
-            onChangeText={(value) =>
-              setData({ ...formData, price: Number(value) })
-            }
-          />
-          {"price" in errors ? (
-            <FormControl.ErrorMessage>{errors.price}</FormControl.ErrorMessage>
-          ) : (
-            <FormControl.HelperText>
-              {t("products.priceDescription")}
-            </FormControl.HelperText>
-          )}
-        </FormControl>
+        <InputForm
+          data={{
+            name: "name",
+            errors,
+            title: t("name"),
+            placeholder: t("products.placeholder.name"),
+            value: String(params["name"]),
+            formData,
+            setData,
+            require: true,
+            description: t("products.nameDescription"),
+          }}
+        />
+        <InputForm
+          data={{
+            name: "description",
+            errors,
+            title: t("description"),
+            placeholder: t("products.placeholder.description"),
+            value: String(params["description"]),
+            formData,
+            setData,
+          }}
+        />
+        <InputForm
+          data={{
+            name: "price",
+            errors,
+            title: t("price"),
+            placeholder: t("products.placeholder.price"),
+            value: String(params["price"]),
+            formData,
+            setData,
+            keyboardType: "number-pad",
+            require: true,
+            description: t("products.priceDescription"),
+          }}
+        />
         <HStack alignItems="center" space={4}>
           <Text>{t("tax")}</Text>
           <Switch
@@ -152,7 +125,7 @@ export default () => {
             onTrackColor="blue.200"
             onThumbColor="blue.500"
             offThumbColor="blue.50"
-            value={formData.iva}
+            defaultIsChecked={params["iva"] === "true"}
             onValueChange={() => {
               setData({ ...formData, iva: !formData.iva });
             }}
