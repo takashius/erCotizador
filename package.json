@@ -43,6 +43,7 @@
     "react-native-screens": "~3.22.0",
     "react-native-spinkit": "^1.5.1",
     "react-native-svg": "13.9.0",
+    "react-native-swipe-list-view": "^3.2.9",
     "react-native-web": "~0.19.6",
     "url-join": "^5.0.0"
   },

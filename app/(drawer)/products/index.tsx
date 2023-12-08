@@ -1,6 +1,7 @@
 import { Stack, router, useNavigation } from "expo-router";
 import { Box, Fab, Icon } from "native-base";
-import { FlatList } from "react-native";
+import { FlatList, View, Text, TouchableOpacity } from "react-native";
+import { SwipeListView } from "react-native-swipe-list-view";
 import CardProductItem from "../../../components/CardProductItem";
 import SearchBar from "../../../components/SearchBar";
 import { useListProduct } from "../../../components/api/product";
@@ -8,6 +9,7 @@ import Spinner from "../../../components/helpers/Spinner";
 import { AntDesign } from "@expo/vector-icons";
 import { useOptions } from "../../../components/helpers/OptionsScreens";
 import { useTranslation } from "react-i18next";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default () => {
   const { t } = useTranslation();
@@ -21,11 +23,41 @@ export default () => {
       />
       <SearchBar />
       {responseQuery.isLoading && <Spinner />}
-      <FlatList
+      <SwipeListView
+        data={responseQuery.data}
+        renderItem={({ item }) => <CardProductItem item={item} />}
+        renderHiddenItem={(data, rowMap) => (
+          <TouchableOpacity
+            onPress={() => {
+              console.log("Entrando");
+            }}
+          >
+            <View
+              style={{
+                marginLeft: 280,
+                height: "90%",
+                width: 60,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Icon
+                marginTop={1}
+                as={<FontAwesome name="times-circle" />}
+                size={"5xl"}
+                color={"red.500"}
+              />
+            </View>
+          </TouchableOpacity>
+        )}
+        rightOpenValue={-75}
+      />
+      {/* <FlatList
         data={responseQuery.data}
         renderItem={({ item }) => <CardProductItem item={item} />}
         keyExtractor={(item) => item._id}
-      />
+      /> */}
       <Fab
         renderInPortal={false}
         shadow={2}
