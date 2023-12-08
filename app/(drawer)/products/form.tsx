@@ -8,11 +8,8 @@ import { Box, VStack, HStack, Text, Switch, Button } from "native-base";
 import { useOptions } from "../../../components/helpers/OptionsScreens";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  useCreateProduct,
-  useUpdateProduct,
-} from "../../../components/api/product";
-import { ProductForm } from "../../../components/types/products";
+import { useCreateProduct, useUpdateProduct } from "../../../api/product";
+import { ProductForm } from "../../../types/products";
 import { InputForm } from "../../../components/Form";
 import Spinner from "../../../components/helpers/Spinner";
 

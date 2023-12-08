@@ -3,7 +3,7 @@ import { Stack } from "expo-router";
 import { Box } from "native-base";
 import SearchBar from "../../../components/SearchBar";
 import CardCustomerItem from "../../../components/CardCustomerItem";
-import { useListCustomer } from "../../../components/api/customer";
+import { useListCustomer } from "../../../api/customer";
 import Spinner from "../../../components/helpers/Spinner";
 
 export default () => {

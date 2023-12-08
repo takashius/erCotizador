@@ -4,7 +4,7 @@ import Spinner from "../components/helpers/Spinner";
 import { Stack, router } from "expo-router";
 import { write, read } from "../components/helpers/LocalStorage";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useLogin } from "../components/api/auth";
+import { useLogin } from "../api/auth";
 import { useState, useEffect } from "react";
 const { width } = Dimensions.get("screen");
 const ratio = (width * 0.8) / 270;

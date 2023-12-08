@@ -3,7 +3,7 @@ import { Stack } from "expo-router";
 import { Box } from "native-base";
 import SearchBar from "../../../components/SearchBar";
 import CardCotizaItem from "../../../components/CardCotizaItem";
-import { useListCotiza } from "../../../components/api/cotiza";
+import { useListCotiza } from "../../../api/cotiza";
 import Spinner from "../../../components/helpers/Spinner";
 
 export default () => {

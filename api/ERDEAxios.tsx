@@ -1,7 +1,7 @@
 import axios from "axios";
 import urlJoin from "url-join";
-import getEnvVars from "../../environment";
-import { read } from "../helpers/LocalStorage";
+import getEnvVars from "../environment";
+import { read } from "../components/helpers/LocalStorage";
 import { locale } from "expo-localization";
 
 const { apiUrl } = getEnvVars();

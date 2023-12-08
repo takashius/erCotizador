@@ -9,7 +9,7 @@ import {
   VStack,
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
-import { type Customer } from "./types/customer";
+import { type Customer } from "../types/customer";
 
 const CardCustomerItem = ({ item }: { item: Customer }) => {
   return (

@@ -9,7 +9,7 @@ import {
   Icon,
 } from "native-base";
 import { FontAwesome } from "@expo/vector-icons";
-import { type Cotiza } from "./types/cotiza";
+import { type Cotiza } from "../types/cotiza";
 import { FormatDate } from "./helpers/Utils";
 
 const CardCotizaItem = ({ item }: { item: Cotiza }) => {

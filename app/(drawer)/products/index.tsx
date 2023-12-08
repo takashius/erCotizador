@@ -4,7 +4,7 @@ import { FlatList, View, Text, TouchableOpacity } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import CardProductItem from "../../../components/CardProductItem";
 import SearchBar from "../../../components/SearchBar";
-import { useListProduct } from "../../../components/api/product";
+import { useListProduct } from "../../../api/product";
 import Spinner from "../../../components/helpers/Spinner";
 import { AntDesign } from "@expo/vector-icons";
 import { useOptions } from "../../../components/helpers/OptionsScreens";
