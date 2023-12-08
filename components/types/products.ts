@@ -5,9 +5,10 @@ export interface ProductForm {
     description: string;
     price: number;
     iva: boolean;
-    _id: string;
+    id: string;
 }
 
 export interface Product extends ProductForm {
     created: CreatedShort;
+    _id: string;
 }

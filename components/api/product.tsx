@@ -13,11 +13,22 @@ export const useListProduct = () => {
   return query;
 };
 
-export const useCreateProduct = (data: ProductForm) => {
+export const useCreateProduct = () => {
   const mutation = useMutation({
     mutationFn: (data: ProductForm) => {
       return ERDEAxios.post("/product", data);
     },
   });
-  return mutation.mutate(data);
+
+  return mutation;
+};
+
+export const useUpdateProduct = () => {
+  const mutation = useMutation({
+    mutationFn: (data: ProductForm) => {
+      return ERDEAxios.patch("/product", data);
+    },
+  });
+
+  return mutation;
 };
