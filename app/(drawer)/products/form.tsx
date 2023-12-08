@@ -146,7 +146,7 @@ export default () => {
       {createMutation.isPending || updateMutation.isPending ? (
         <Spinner />
       ) : createMutation.isSuccess || updateMutation.isSuccess ? (
-        router.replace("/(drawer)/products")
+        router.back()
       ) : (
         renderForm()
       )}

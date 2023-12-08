@@ -25,6 +25,9 @@ export default () => {
       {responseQuery.isLoading && <Spinner />}
       <SwipeListView
         data={responseQuery.data}
+        useFlatList={true}
+        onRefresh={() => responseQuery.refetch()}
+        refreshing={responseQuery.isFetching}
         renderItem={({ item }) => <CardProductItem item={item} />}
         renderHiddenItem={(data, rowMap) => (
           <TouchableOpacity
