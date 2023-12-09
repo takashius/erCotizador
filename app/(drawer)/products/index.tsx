@@ -1,6 +1,6 @@
 import { Stack, router, useNavigation } from "expo-router";
-import { Box, Fab, Icon, Popover, Button } from "native-base";
-import { View, TouchableOpacity, Animated } from "react-native";
+import { Box, Fab, Icon } from "native-base";
+import { View, Animated } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import {
   CardProductItem,
@@ -12,7 +12,6 @@ import {
 import { useListProduct, useDeleteProduct } from "../../../api/product";
 import { AntDesign } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import { FontAwesome } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Product } from "../../../types/products";
 
@@ -21,7 +20,6 @@ export default () => {
   const responseQuery = useListProduct();
   const deleteMutation = useDeleteProduct();
   const navigation = useNavigation();
-  const [open, setIsOpen] = useState<any>({});
   const [dataList, setDataList] = useState<Product[]>();
 
   useEffect(() => {
@@ -84,11 +82,6 @@ export default () => {
         )}
         rightOpenValue={-75}
       />
-      {/* <FlatList
-        data={responseQuery.data}
-        renderItem={({ item }) => <CardProductItem item={item} />}
-        keyExtractor={(item) => item._id}
-      /> */}
       <Fab
         renderInPortal={false}
         shadow={2}
