@@ -2,12 +2,15 @@ import { Stack, router, useNavigation } from "expo-router";
 import { Box, Fab, Icon, Popover, Button } from "native-base";
 import { View, TouchableOpacity, Animated } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
-import CardProductItem from "../../../components/CardProductItem";
-import SearchBar from "../../../components/SearchBar";
+import {
+  CardProductItem,
+  SearchBar,
+  Spinner,
+  useOptions,
+  DeleteButton,
+} from "../../../components";
 import { useListProduct, useDeleteProduct } from "../../../api/product";
-import Spinner from "../../../components/helpers/Spinner";
 import { AntDesign } from "@expo/vector-icons";
-import { useOptions } from "../../../components/helpers/OptionsScreens";
 import { useTranslation } from "react-i18next";
 import { FontAwesome } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
@@ -61,78 +64,23 @@ export default () => {
         refreshing={responseQuery.isFetching || deleteMutation.isPending}
         renderItem={({ item }) => <CardProductItem item={item} />}
         renderHiddenItem={(data, rowMap) => (
-          <TouchableOpacity
-            onPress={() => {
-              console.log("Entrando");
+          <View
+            style={{
+              marginLeft: 280,
+              height: "90%",
+              width: 60,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            <View
-              style={{
-                marginLeft: 280,
-                height: "90%",
-                width: 60,
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Popover // @ts-ignore
-                placement="left top"
-                trigger={(triggerProps) => {
-                  return (
-                    <Button
-                      colorScheme="danger"
-                      alignSelf="center"
-                      {...triggerProps}
-                      onPress={() =>
-                        setIsOpen({ ...open, [data.index]: !open[data.index] })
-                      }
-                    >
-                      <Icon
-                        marginTop={1}
-                        as={<FontAwesome name="times-circle" />}
-                        size={"2xl"}
-                        color={"white"}
-                      />
-                    </Button>
-                  );
-                }}
-                isOpen={open[data.index]}
-                onClose={() => setIsOpen(false)}
-              >
-                <Popover.Content w="56">
-                  <Popover.Arrow />
-                  <Popover.CloseButton onPress={() => setIsOpen(false)} />
-                  <Popover.Header>Delete Customer</Popover.Header>
-                  <Popover.Body>
-                    This will remove all data relating to Alex. This action
-                    cannot be reversed. Deleted data can not be recovered.
-                  </Popover.Body>
-                  <Popover.Footer justifyContent="flex-end">
-                    <Button.Group space={2}>
-                      <Button
-                        colorScheme="coolGray"
-                        variant="ghost"
-                        onPress={() => setIsOpen(false)}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        colorScheme="danger"
-                        onPress={() => {
-                          setIsOpen(false);
-                          deleteRow(rowMap, data?.item._id);
-                          deleteMutation.mutate(data.item._id);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </Button.Group>
-                  </Popover.Footer>
-                </Popover.Content>
-              </Popover>
-            </View>
-          </TouchableOpacity>
+            <DeleteButton
+              data={data}
+              rowMap={rowMap}
+              deleteMutation={deleteMutation}
+              deleteRow={deleteRow}
+            />
+          </View>
         )}
         rightOpenValue={-75}
       />
