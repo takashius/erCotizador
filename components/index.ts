@@ -1,6 +1,7 @@
 import CardCotizaItem from "./CardCotizaItem";
 import CardCustomerItem from "./CardCustomerItem";
 import CardProductItem from "./CardProductItem";
+import CardAddressItem from "./CardAddressItem";
 import CustomDrawer from "./CustomDrawer";
 import DeleteButton from "./DeleteButton";
 import EditScreenInfo from "./EditScreenInfo";
@@ -19,6 +20,7 @@ export {
     CardCotizaItem,
     CardCustomerItem,
     CardProductItem,
+    CardAddressItem,
     CustomDrawer,
     DeleteButton,
     EditScreenInfo,
