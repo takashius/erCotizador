@@ -3,10 +3,9 @@ import CustomDrawer from "../../components/CustomDrawer";
 import { Icon } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ReactNode } from "react";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 export default function Layout() {
-  const { t } = useTranslation();
   return (
     <Drawer
       screenOptions={{

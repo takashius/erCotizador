@@ -11,12 +11,11 @@ import {
 } from "../../../components";
 import { useListProduct, useDeleteProduct } from "../../../api/product";
 import { AntDesign } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { Product } from "../../../types/products";
+import { t } from "i18next";
 
 export default () => {
-  const { t } = useTranslation();
   const responseQuery = useListProduct();
   const deleteMutation = useDeleteProduct();
   const navigation = useNavigation();

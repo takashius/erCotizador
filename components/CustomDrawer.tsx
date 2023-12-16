@@ -11,11 +11,10 @@ import {
   DrawerItem,
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
+import { t } from "i18next";
 const ratio = (width * 0.4) / 270;
-import { useTranslation } from "react-i18next";
 
 const CustomDrawer = (props: any) => {
-  const { t } = useTranslation();
   return (
     <Box flex={1}>
       <ImageBackground source={bg} resizeMode="cover" style={styles.image}>

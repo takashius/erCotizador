@@ -11,10 +11,9 @@ import {
 } from "native-base";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { type Product } from "../types/products";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 const CardProductItem = ({ item }: { item: Product }) => {
-  const { t } = useTranslation();
   const iva = false;
   return (
     <Box alignItems="center" marginBottom={5}>

@@ -1,9 +1,8 @@
 import { VStack, Input, Icon } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 const SearchBar = ({ filterData }: { filterData: any }) => {
-  const { t } = useTranslation();
   return (
     <VStack w="90%" alignSelf="center" marginBottom={4}>
       <Input
