@@ -21,9 +21,11 @@ export default () => {
   const deleteMutation = useDeleteProduct();
   const navigation = useNavigation();
   const [dataList, setDataList] = useState<Product[]>();
+  const [dataDefault, setDataDefault] = useState<Product[]>();
 
   useEffect(() => {
     setDataList(responseQuery.data);
+    setDataDefault(responseQuery.data);
   }, [responseQuery.data]);
 
   const deleteRow = (rowMap: any, rowKey: any) => {
@@ -45,12 +47,24 @@ export default () => {
     }
   };
 
+  const filterData = (search: string) => {
+    if (dataDefault) {
+      setDataList(
+        dataDefault.filter(
+          (item: Product) =>
+            item.description.toUpperCase().includes(search.toUpperCase()) ||
+            item.name.toUpperCase().includes(search.toUpperCase())
+        )
+      );
+    }
+  };
+
   return (
     <Box bg="white" safeArea flex="1">
       <Stack.Screen
         options={useOptions(t("modules.product"), false, navigation)}
       />
-      <SearchBar />
+      <SearchBar filterData={filterData} />
       {responseQuery.isLoading && <Spinner />}
       <SwipeListView
         data={dataList}
