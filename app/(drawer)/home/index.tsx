@@ -1,17 +1,22 @@
 import { FlatList } from "react-native";
-import { Stack } from "expo-router";
+import { Stack, useNavigation } from "expo-router";
 import { Box } from "native-base";
-import SearchBar from "../../../components/SearchBar";
-import CardCotizaItem from "../../../components/CardCotizaItem";
+import {
+  SearchBar,
+  CardCotizaItem,
+  Spinner,
+  useOptions,
+} from "../../../components";
 import { useListCotiza } from "../../../api/cotiza";
-import Spinner from "../../../components/helpers/Spinner";
 import { useEffect, useState } from "react";
 import { type Cotiza } from "../../../types/cotiza";
+import { t } from "i18next";
 
 export default () => {
   const responseQuery = useListCotiza();
   const [dataList, setDataList] = useState<Cotiza[]>();
   const [dataDefault, setDataDefault] = useState<Cotiza[]>();
+  const navigation = useNavigation();
 
   useEffect(() => {
     setDataList(responseQuery.data);
@@ -32,7 +37,9 @@ export default () => {
 
   return (
     <Box bg="white" safeArea flex="1">
-      <Stack.Screen options={{ headerShown: false }} />
+      <Stack.Screen
+        options={useOptions(t("modules.cotiza"), false, navigation)}
+      />
       <SearchBar filterData={filterData} />
       {responseQuery.isLoading && <Spinner />}
       <FlatList

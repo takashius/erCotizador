@@ -27,6 +27,7 @@ export default function Layout() {
       <Drawer.Screen
         name="home"
         options={{
+          headerShown: false,
           drawerLabel: t("modules.cotiza"),
           title: t("modules.cotiza"),
           drawerActiveTintColor: "white",
@@ -43,6 +44,7 @@ export default function Layout() {
       <Drawer.Screen
         name="customer"
         options={{
+          headerShown: false,
           drawerLabel: t("modules.customer"),
           title: t("modules.customer"),
           drawerActiveTintColor: "white",
