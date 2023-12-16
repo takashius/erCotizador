@@ -13,6 +13,7 @@ import { write, clear, read, remove } from "./helpers/LocalStorage";
 import { useOptions } from "./helpers/OptionsScreens";
 import Spinner from "./helpers/Spinner";
 import { FormatDate } from "./helpers/Utils";
+import Card from "./helpers/Card";
 
 export {
     CardCotizaItem,
@@ -31,5 +32,6 @@ export {
     write, clear, read, remove,
     useOptions,
     Spinner,
-    FormatDate
+    FormatDate,
+    Card
 }

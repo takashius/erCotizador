@@ -9,7 +9,10 @@ export default () => {
 
   return (
     <Box bg="white" safeArea flex="1">
-      <Stack.Screen options={useOptions(t("products.new"), true, navigation)} />
+      <Stack.Screen
+        options={useOptions(t("customer.detail"), true, navigation)}
+      />
+      <Box alignItems="center" marginBottom={5}></Box>
     </Box>
   );
 };

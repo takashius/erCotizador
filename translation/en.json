@@ -31,5 +31,10 @@
             "priceRequired": "Price is required",
             "priceIncorrect": "Wrong price"
         }
+    },
+    "customer": {
+        "new": "Add Customer",
+        "edit": "Edit Customer",
+        "detail": "Customer"
     }
 }

@@ -9,6 +9,7 @@ import {
   Heading,
   VStack,
 } from "native-base";
+import Card from "./helpers/Card";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { type Product } from "../types/products";
 import { t } from "i18next";
@@ -30,28 +31,10 @@ const CardProductItem = ({ item }: { item: Product }) => {
           },
         }}
       >
-        <Box
-          maxW="80"
-          w={"80"}
-          rounded="lg"
-          overflow="hidden"
-          borderColor="coolGray.200"
-          borderWidth="1"
-          _dark={{
-            borderColor: "coolGray.600",
-            backgroundColor: "gray.700",
-          }}
-          _web={{
-            shadow: 2,
-            borderWidth: 0,
-          }}
-          _light={{
-            backgroundColor: "gray.50",
-          }}
-        >
+        <Card>
           <_Stack p="4" space={0}>
             <_Stack space={2}>
-              <Heading size="md" ml="-1" color={"blue.500"}>
+              <Heading size="md" color={"blue.500"}>
                 {item.name}
               </Heading>
             </_Stack>
@@ -89,7 +72,7 @@ const CardProductItem = ({ item }: { item: Product }) => {
               </VStack>
             </HStack>
           </_Stack>
-        </Box>
+        </Card>
       </Link>
     </Box>
   );

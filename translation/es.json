@@ -31,5 +31,10 @@
             "priceRequired": "El precio es requerido",
             "priceIncorrect": "Precio incorrecto"
         }
+    },
+    "customer": {
+        "new": "Nuevo Cliente",
+        "edit": "Editar Cliente",
+        "detail": "Cliente"
     }
 }
