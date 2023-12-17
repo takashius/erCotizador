@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack } from "expo-router";
-import { FlatList } from "react-native";
+import { FlatList, Pressable } from "react-native";
 import {
   Box,
   Heading,
@@ -9,6 +9,8 @@ import {
   HStack,
   Icon,
   VStack,
+  Menu,
+  HamburgerIcon,
 } from "native-base";
 import { useOptions, CardAddressItem } from "../../../components";
 import { t } from "i18next";
@@ -48,7 +50,9 @@ export default () => {
   return (
     <Box bg="white" safeArea flex="1">
       <Stack.Screen
-        options={useOptions(t("customer.detail"), true, navigation)}
+        options={useOptions(t("customer.detail"), navigation, true, true, [
+          { isDisabled: false, onPress: () => {}, title: "" },
+        ])}
       />
       <_Stack px="4" space={0}>
         <_Stack space={2} pb="2">

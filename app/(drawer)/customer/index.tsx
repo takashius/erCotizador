@@ -38,9 +38,7 @@ export default () => {
 
   return (
     <Box bg="white" safeArea flex="1">
-      <Stack.Screen
-        options={useOptions(t("modules.customer"), false, navigation)}
-      />
+      <Stack.Screen options={useOptions(t("modules.customer"), navigation)} />
       <SearchBar filterData={filterData} />
       {responseQuery.isLoading && <Spinner />}
       <FlatList

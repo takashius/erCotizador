@@ -135,8 +135,8 @@ export default () => {
       <Stack.Screen
         options={useOptions(
           post == "new" ? t("products.new") : t("products.edit"),
-          true,
-          navigation
+          navigation,
+          true
         )}
       />
       {createMutation.isPending || updateMutation.isPending ? (

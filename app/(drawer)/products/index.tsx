@@ -60,9 +60,7 @@ export default () => {
 
   return (
     <Box bg="white" safeArea flex="1">
-      <Stack.Screen
-        options={useOptions(t("modules.product"), false, navigation)}
-      />
+      <Stack.Screen options={useOptions(t("modules.product"), navigation)} />
       <SearchBar filterData={filterData} />
       {responseQuery.isLoading && <Spinner />}
       <SwipeListView
