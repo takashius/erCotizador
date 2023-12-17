@@ -10,8 +10,9 @@ import {
 } from "native-base";
 import Card from "./helpers/Card";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { type Address } from "../types/customer";
 
-const CardAddressItem = ({ item }: { item: any }) => {
+const CardAddressItem = ({ item }: { item: Address }) => {
   return (
     <Box alignItems="center" marginBottom={5}>
       <Card>
@@ -33,9 +34,9 @@ const CardAddressItem = ({ item }: { item: any }) => {
           </_Stack>
 
           <VStack flex={1}>
-            <Text>Ciudad: </Text>
-            <Text>Direccion (L1): </Text>
-            <Text>Direccion (L2): </Text>
+            <Text>{item.city}</Text>
+            <Text>{item.line1} </Text>
+            <Text>{item.line2} </Text>
           </VStack>
           {item.default && (
             <Center
@@ -53,7 +54,6 @@ const CardAddressItem = ({ item }: { item: any }) => {
               py="1.5"
             >
               <Icon as={<FontAwesome name="home" />} size={4} color={"white"} />
-              {item.amount}
             </Center>
           )}
 
@@ -68,7 +68,7 @@ const CardAddressItem = ({ item }: { item: any }) => {
             px="3"
             py="1.5"
           >
-            Zip
+            {item.zip}
           </Center>
         </_Stack>
       </Card>

@@ -12,3 +12,14 @@ export const useListCustomer = () => {
   });
   return query;
 };
+
+export const useGetCustomer = (id: string | string[]) => {
+  const query = useQuery<Customer>({
+    queryKey: ["customerDetail"],
+    retry: false,
+    queryFn: () => {
+      return ERDEAxios.get("/customer/" + id);
+    },
+  });
+  return query;
+};
