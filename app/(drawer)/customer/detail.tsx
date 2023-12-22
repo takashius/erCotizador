@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import {
   Box,
   Heading,
@@ -16,12 +16,14 @@ import {
   CardAddressItem,
   Spinner,
   ModalAddress,
+  DeleteButton,
 } from "../../../components";
 import { t } from "i18next";
 import { useNavigation } from "expo-router";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
-import { useGetCustomer } from "../../../api/customer";
+import { useGetCustomer, useDeleteAddress } from "../../../api/customer";
 import { MenuItem } from "../../../types/general";
+import { SwipeListView } from "react-native-swipe-list-view";
 
 export default () => {
   const params = useLocalSearchParams();
@@ -31,6 +33,7 @@ export default () => {
   const navigation = useNavigation();
   const menu: Array<MenuItem> = [];
   const responseQuery = useGetCustomer(id);
+  const deleteAddressMutation = useDeleteAddress();
 
   useEffect(() => {
     if (submit) {
@@ -38,6 +41,14 @@ export default () => {
       responseQuery.refetch();
     }
   }, [submit]);
+
+  useEffect(() => {
+    if (deleteAddressMutation.isSuccess) {
+      responseQuery.refetch();
+    }
+  }, [deleteAddressMutation.isSuccess]);
+
+  const deleteRow = (rowMap: any, rowKey: any) => {};
 
   return (
     <Box bg="white" safeArea flex="1">
@@ -99,11 +110,35 @@ export default () => {
               Direcciones
             </Heading>
           </_Stack>
-          <FlatList
+          <SwipeListView
             data={responseQuery.data?.addresses!}
+            useFlatList={true}
+            disableRightSwipe={true}
+            closeOnRowBeginSwipe={true}
             renderItem={({ item }) => <CardAddressItem item={item} />}
             keyExtractor={(item: any) => item.id}
             contentContainerStyle={{ paddingBottom: 200 }}
+            renderHiddenItem={(data, rowMap) => (
+              <View
+                style={{
+                  marginLeft: 270,
+                  height: "90%",
+                  width: 60,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <DeleteButton
+                  data={data}
+                  rowMap={rowMap}
+                  deleteMutation={deleteAddressMutation}
+                  deleteRow={deleteRow}
+                  idParent={responseQuery.data!._id}
+                />
+              </View>
+            )}
+            rightOpenValue={-75}
           />
         </_Stack>
       )}

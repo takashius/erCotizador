@@ -33,3 +33,14 @@ export const useCreateAddress = () => {
 
   return mutation;
 };
+
+export const useDeleteAddress = () => {
+  const mutation = useMutation({
+    mutationFn: (data: any) => {
+      console.log("useDeleteAddress", data);
+      return ERDEAxios.delete("/customer/address", { data });
+    },
+  });
+
+  return mutation;
+};
