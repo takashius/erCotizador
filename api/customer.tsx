@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
-import { Customer } from "../types/customer";
+import { Address, Customer } from "../types/customer";
 
 export const useListCustomer = () => {
   const query = useQuery<Customer[]>({
@@ -22,4 +22,14 @@ export const useGetCustomer = (id: string | string[]) => {
     },
   });
   return query;
+};
+
+export const useCreateAddress = () => {
+  const mutation = useMutation({
+    mutationFn: (data: Address) => {
+      return ERDEAxios.post("/customer/address", data);
+    },
+  });
+
+  return mutation;
 };

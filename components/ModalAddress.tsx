@@ -1,15 +1,19 @@
 import { Button, Modal } from "native-base";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import AddressForm from "./AddressForm";
 import { t } from "i18next";
 import { Address } from "../types/customer";
+import { useCreateAddress } from "../api/customer";
+import Spinner from "./helpers/Spinner";
 
 const ModalAddress = ({
+  idCustomer,
   post,
   open,
   setOpen,
   setSubmit,
 }: {
+  idCustomer: string;
   post: string;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -22,7 +26,7 @@ const ModalAddress = ({
     line2: "",
     zip: "",
     created: null,
-    _id: null,
+    id: idCustomer,
     default: false,
   };
 
@@ -33,13 +37,14 @@ const ModalAddress = ({
     line2: "",
     zip: "",
     created: null,
-    _id: null,
+    id: null,
     default: false,
   });
   const [errors, setErrors] = useState<Object>({});
   const [formData, setData] = useState<Address>(
     post === "new" ? defaultData : transformData({})
   );
+  const createMutation = useCreateAddress();
 
   const validate = (formData: Address) => {
     if (formData.title === undefined || formData.title === "") {
@@ -61,11 +66,18 @@ const ModalAddress = ({
 
   const onSubmit = (formData: Address) => {
     if (validate(formData)) {
-      console.log("FORM DATA", formData);
-      setOpen(false);
-      setSubmit(true);
+      formData.id = idCustomer;
+      setData(defaultData);
+      createMutation.mutate(formData);
     }
   };
+
+  useEffect(() => {
+    if (createMutation.isSuccess) {
+      setSubmit(true);
+      setOpen(false);
+    }
+  }, [createMutation.isSuccess]);
 
   return (
     <Modal isOpen={open} onClose={() => setOpen(false)} safeAreaTop={true}>
@@ -73,14 +85,18 @@ const ModalAddress = ({
         <Modal.CloseButton />
         <Modal.Header>{t("address.new")}</Modal.Header>
         <Modal.Body>
-          <AddressForm
-            post={"new"}
-            params={() => {}}
-            errors={errors}
-            setErrors={setErrors}
-            formData={formData}
-            setData={setData}
-          />
+          {createMutation.isPending ? (
+            <Spinner />
+          ) : (
+            <AddressForm
+              post={"new"}
+              params={() => {}}
+              errors={errors}
+              setErrors={setErrors}
+              formData={formData}
+              setData={setData}
+            />
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button.Group space={2}>

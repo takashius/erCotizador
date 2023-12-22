@@ -20,5 +20,5 @@ export interface Address {
     zip: string;
     default: boolean;
     created: CreatedShort | null;
-    _id: string | null;
+    id: string | null;
 }

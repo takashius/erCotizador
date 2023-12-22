@@ -102,11 +102,13 @@ export default () => {
           <FlatList
             data={responseQuery.data?.addresses}
             renderItem={({ item }) => <CardAddressItem item={item} />}
-            keyExtractor={(item) => item._id}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{ paddingBottom: 200 }}
           />
         </_Stack>
       )}
       <ModalAddress
+        idCustomer={responseQuery.data?._id!}
         open={open}
         setOpen={setOpen}
         setSubmit={setSubmit}
