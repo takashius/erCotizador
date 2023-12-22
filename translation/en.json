@@ -1,10 +1,11 @@
 {
     "appName": "ErCotizador",
     "search": "Search",
+    "cancel": "Cancel",
     "submit": "Submit",
     "tax": "Tax",
     "delete": "Delete",
-    "deleteMessage": "This action can not be undone",
+    "deleteMessage": "Surely you want to erase? \n This action can not be undone",
     "name": "Name",
     "title": "Title",
     "city": "Ciudad",

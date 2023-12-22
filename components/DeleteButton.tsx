@@ -1,4 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { t } from "i18next";
 import { Button, Icon, Popover } from "native-base";
 import { useState } from "react";
 
@@ -53,8 +54,8 @@ export default ({
       <Popover.Content w="56">
         <Popover.Arrow />
         <Popover.CloseButton onPress={handleClose} />
-        <Popover.Header>{ t('delete') }</Popover.Header>
-        <Popover.Body>{ t('deleteMessage') }</Popover.Body>
+        <Popover.Header>{t("delete")}</Popover.Header>
+        <Popover.Body>{t("deleteMessage")}</Popover.Body>
         <Popover.Footer justifyContent="flex-end">
           <Button.Group space={2}>
             <Button
@@ -62,10 +63,10 @@ export default ({
               variant="ghost"
               onPress={handleClose}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button colorScheme="danger" onPress={handleDelete}>
-              Delete
+              {t("delete")}
             </Button>
           </Button.Group>
         </Popover.Footer>

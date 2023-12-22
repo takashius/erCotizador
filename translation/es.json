@@ -1,10 +1,11 @@
 {
     "appName": "ErCotizador",
     "search": "Buscar",
+    "cancel": "Cancelar",
     "submit": "Enviar",
     "tax": "Iva",
     "delete": "Borrar",
-    "deleteMessage":"Esta acción no se puede deshacer",
+    "deleteMessage":"¿Seguro que desea borrar? \n Esta acción no se puede deshacer",
     "name": "Nombre",
     "title": "Titulo",
     "city": "Ciudad",

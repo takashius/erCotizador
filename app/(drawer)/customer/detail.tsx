@@ -100,9 +100,9 @@ export default () => {
             </Heading>
           </_Stack>
           <FlatList
-            data={responseQuery.data?.addresses}
+            data={responseQuery.data?.addresses!}
             renderItem={({ item }) => <CardAddressItem item={item} />}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item: any) => item.id}
             contentContainerStyle={{ paddingBottom: 200 }}
           />
         </_Stack>
