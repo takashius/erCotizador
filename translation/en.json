@@ -4,6 +4,9 @@
     "submit": "Submit",
     "tax": "Tax",
     "name": "Name",
+    "title": "Title",
+    "city": "Ciudad",
+    "default": "Default",
     "price": "Price",
     "description": "Description",
     "modules": {
@@ -36,5 +39,24 @@
         "new": "Add Customer",
         "edit": "Edit Customer",
         "detail": "Customer"
+    },
+    "address": {
+        "new":"New Address",
+        "edit":"Edit Address",
+        "delete": "Delete Address",
+        "placeholder": {
+            "title": "Address title",
+            "city": "City name",
+            "line1": "Address Line 1",
+            "line2": "Address Line 2",
+            "zip": "Zip",
+            "default": "Default address"
+        },
+        "validations": {
+            "title": "The title is mandatory",
+            "city": "The city is mandatory",
+            "line1": "The address is mandatory",
+            "zip": "The zip is mandatory"
+        }
     }
 }

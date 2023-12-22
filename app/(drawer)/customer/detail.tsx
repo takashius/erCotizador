@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { FlatList } from "react-native";
 import {
@@ -8,21 +8,36 @@ import {
   Text,
   HStack,
   Icon,
+  Fab,
   VStack,
 } from "native-base";
-import { useOptions, CardAddressItem, Spinner } from "../../../components";
+import {
+  useOptions,
+  CardAddressItem,
+  Spinner,
+  ModalAddress,
+} from "../../../components";
 import { t } from "i18next";
 import { useNavigation } from "expo-router";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useGetCustomer } from "../../../api/customer";
 import { MenuItem } from "../../../types/general";
 
 export default () => {
   const params = useLocalSearchParams();
+  const [open, setOpen] = useState(false);
+  const [submit, setSubmit] = useState(false);
   const { id } = params;
   const navigation = useNavigation();
   const menu: Array<MenuItem> = [];
   const responseQuery = useGetCustomer(id);
+
+  useEffect(() => {
+    if (submit) {
+      setSubmit(false);
+      responseQuery.refetch();
+    }
+  }, [submit]);
 
   return (
     <Box bg="white" safeArea flex="1">
@@ -91,6 +106,20 @@ export default () => {
           />
         </_Stack>
       )}
+      <ModalAddress
+        open={open}
+        setOpen={setOpen}
+        setSubmit={setSubmit}
+        post="new"
+      />
+      <Fab
+        renderInPortal={false}
+        shadow={2}
+        backgroundColor={"blue.500"}
+        onPress={() => setOpen(true)}
+        size="sm"
+        icon={<Icon color="white" as={AntDesign} name="plus" size="sm" />}
+      />
     </Box>
   );
 };

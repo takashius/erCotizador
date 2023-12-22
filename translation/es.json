@@ -4,6 +4,9 @@
     "submit": "Enviar",
     "tax": "Iva",
     "name": "Nombre",
+    "title": "Titulo",
+    "city": "Ciudad",
+    "default": "Por defecto",
     "price": "Precio",
     "description": "Descripción",
     "modules": {
@@ -36,5 +39,24 @@
         "new": "Nuevo Cliente",
         "edit": "Editar Cliente",
         "detail": "Cliente"
+    },
+    "address": {
+        "new":"Nueva Dirección",
+        "edit":"Editar Dirección",
+        "delete": "Borrar Dirección",
+        "placeholder": {
+            "title": "Titulo de la dirección",
+            "city": "Nombre de la ciudad",
+            "line1": "Dirección (línea 1)",
+            "line2": "Dirección (línea 2)",
+            "zip": "Código postal",
+            "default": "Dirección por defecto"
+        },
+        "validations": {
+            "title": "El titulo es obligatorio",
+            "city": "La ciudad es obligatoria",
+            "line1": "La dirección es obligatoria",
+            "zip": "El código postal es obligatorio"
+        }
     }
 }

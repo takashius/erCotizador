@@ -19,6 +19,6 @@ export interface Address {
     line2: string;
     zip: string;
     default: boolean;
-    created: CreatedShort;
-    _id: string;
+    created: CreatedShort | null;
+    _id: string | null;
 }
