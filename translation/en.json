@@ -3,6 +3,8 @@
     "search": "Search",
     "submit": "Submit",
     "tax": "Tax",
+    "delete": "Delete",
+    "deleteMessage": "This action can not be undone",
     "name": "Name",
     "title": "Title",
     "city": "Ciudad",

@@ -3,6 +3,8 @@
     "search": "Buscar",
     "submit": "Enviar",
     "tax": "Iva",
+    "delete": "Borrar",
+    "deleteMessage":"Esta acción no se puede deshacer",
     "name": "Nombre",
     "title": "Titulo",
     "city": "Ciudad",

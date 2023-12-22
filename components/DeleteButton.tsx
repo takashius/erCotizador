@@ -53,11 +53,8 @@ export default ({
       <Popover.Content w="56">
         <Popover.Arrow />
         <Popover.CloseButton onPress={handleClose} />
-        <Popover.Header>Delete Customer</Popover.Header>
-        <Popover.Body>
-          This will remove all data relating to Alex. This action cannot be
-          reversed. Deleted data can not be recovered.
-        </Popover.Body>
+        <Popover.Header>{ t('delete') }</Popover.Header>
+        <Popover.Body>{ t('deleteMessage') }</Popover.Body>
         <Popover.Footer justifyContent="flex-end">
           <Button.Group space={2}>
             <Button
