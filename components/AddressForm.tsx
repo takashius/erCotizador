@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { Box, Text, HStack, Switch } from "native-base";
 import { type AddressFormProps } from "../types/general";
 import { InputForm } from "./Form";
@@ -76,9 +75,9 @@ const AddressForm = (props: AddressFormProps) => {
           onTrackColor="blue.200"
           onThumbColor="blue.500"
           offThumbColor="blue.50"
-          defaultIsChecked={params["default"] === "true"}
+          defaultIsChecked={params ? params["default"] === "true" : false}
           onValueChange={() => {
-            setData({ ...formData, default: !formData.default });
+            setData({ ...formData, default: formData?.default! });
           }}
         />
       </HStack>

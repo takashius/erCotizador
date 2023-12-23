@@ -34,6 +34,16 @@ export const useCreateAddress = () => {
   return mutation;
 };
 
+export const useUpdateAddress = () => {
+  const mutation = useMutation({
+    mutationFn: (data: Address) => {
+      return ERDEAxios.patch("/customer/address", data);
+    },
+  });
+
+  return mutation;
+};
+
 export const useDeleteAddress = () => {
   const mutation = useMutation({
     mutationFn: (data: any) => {

@@ -21,4 +21,5 @@ export interface Address {
     default: boolean;
     created: CreatedShort | null;
     id: string | null;
+    _id?: string | null;
 }

@@ -13,7 +13,7 @@ export default ({
   data: any;
   rowMap: any;
   deleteMutation: any;
-  deleteRow: any;
+  deleteRow?: any;
   idParent?: string | null;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +28,7 @@ export default ({
 
   const handleDelete = () => {
     setIsOpen(false);
-    deleteRow(rowMap, data?.item._id);
+    deleteRow && deleteRow(rowMap, data?.item._id);
     if (idParent) {
       console.log({ id: data.item._id, idParent });
       deleteMutation.mutate({ id: data.item._id, idParent });

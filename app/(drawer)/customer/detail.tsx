@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
 import {
   Box,
   Heading,
@@ -24,11 +24,15 @@ import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useGetCustomer, useDeleteAddress } from "../../../api/customer";
 import { MenuItem } from "../../../types/general";
 import { SwipeListView } from "react-native-swipe-list-view";
+import { Address } from "../../../types/customer";
 
 export default () => {
   const params = useLocalSearchParams();
   const [open, setOpen] = useState(false);
+  const [post, setPost] = useState<string>("");
   const [submit, setSubmit] = useState(false);
+  const [toEdit, setToEdit] = useState<Address>();
+
   const { id } = params;
   const navigation = useNavigation();
   const menu: Array<MenuItem> = [];
@@ -48,14 +52,19 @@ export default () => {
     }
   }, [deleteAddressMutation.isSuccess]);
 
-  const deleteRow = (rowMap: any, rowKey: any) => {};
+  const onEditAddress = (item: Address) => {
+    // console.log("click", JSON.stringify(item, null, 2));
+    setOpen(true);
+    setPost("edit");
+    setToEdit(item);
+  };
 
   return (
     <Box bg="white" safeArea flex="1">
       <Stack.Screen
         options={useOptions(t("customer.detail"), navigation, true, true)}
       />
-      {responseQuery.isLoading || responseQuery.isFetching ? (
+      {responseQuery.isLoading ? (
         <Spinner />
       ) : (
         <_Stack px="4" space={0}>
@@ -107,39 +116,44 @@ export default () => {
 
           <_Stack space={2} pt="5" pb="3">
             <Heading size="md" ml="-1" color={"blue.500"}>
-              Direcciones
+              {t("address.title")}
             </Heading>
           </_Stack>
-          <SwipeListView
-            data={responseQuery.data?.addresses!}
-            useFlatList={true}
-            disableRightSwipe={true}
-            closeOnRowBeginSwipe={true}
-            renderItem={({ item }) => <CardAddressItem item={item} />}
-            keyExtractor={(item: any) => item.id}
-            contentContainerStyle={{ paddingBottom: 200 }}
-            renderHiddenItem={(data, rowMap) => (
-              <View
-                style={{
-                  marginLeft: 270,
-                  height: "90%",
-                  width: 60,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <DeleteButton
-                  data={data}
-                  rowMap={rowMap}
-                  deleteMutation={deleteAddressMutation}
-                  deleteRow={deleteRow}
-                  idParent={responseQuery.data!._id}
-                />
-              </View>
-            )}
-            rightOpenValue={-75}
-          />
+          {responseQuery.isFetching ? (
+            <Spinner />
+          ) : (
+            <SwipeListView
+              data={responseQuery.data?.addresses!}
+              useFlatList={true}
+              disableRightSwipe={true}
+              closeOnRowBeginSwipe={true}
+              renderItem={({ item }) => (
+                <CardAddressItem item={item} onClick={onEditAddress} />
+              )}
+              keyExtractor={(item: any) => item.id}
+              contentContainerStyle={{ paddingBottom: 200 }}
+              renderHiddenItem={(data, rowMap) => (
+                <View
+                  style={{
+                    marginLeft: 270,
+                    height: "90%",
+                    width: 60,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <DeleteButton
+                    data={data}
+                    rowMap={rowMap}
+                    deleteMutation={deleteAddressMutation}
+                    idParent={responseQuery.data!._id}
+                  />
+                </View>
+              )}
+              rightOpenValue={-75}
+            />
+          )}
         </_Stack>
       )}
       <ModalAddress
@@ -147,13 +161,17 @@ export default () => {
         open={open}
         setOpen={setOpen}
         setSubmit={setSubmit}
-        post="new"
+        post={post}
+        params={toEdit}
       />
       <Fab
         renderInPortal={false}
         shadow={2}
         backgroundColor={"blue.500"}
-        onPress={() => setOpen(true)}
+        onPress={() => {
+          setOpen(true);
+          setPost("new");
+        }}
         size="sm"
         icon={<Icon color="white" as={AntDesign} name="plus" size="sm" />}
       />

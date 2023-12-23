@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import AddressForm from "./AddressForm";
 import { t } from "i18next";
 import { Address } from "../types/customer";
-import { useCreateAddress } from "../api/customer";
+import { useCreateAddress, useUpdateAddress } from "../api/customer";
 import Spinner from "./helpers/Spinner";
 
 const ModalAddress = ({
@@ -12,12 +12,14 @@ const ModalAddress = ({
   open,
   setOpen,
   setSubmit,
+  params,
 }: {
   idCustomer: string;
   post: string;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   setSubmit: Dispatch<SetStateAction<boolean>>;
+  params?: Address;
 }) => {
   const defaultData: Address = {
     title: "",
@@ -30,21 +32,20 @@ const ModalAddress = ({
     default: false,
   };
 
-  const transformData = (params: any) => ({
-    title: "",
-    city: "",
-    line1: "",
-    line2: "",
-    zip: "",
-    created: null,
-    id: null,
-    default: false,
+  const transformData = (params: Address) => ({
+    title: params?.title ? params.title : "",
+    city: params?.city ? params.city : "",
+    line1: params?.line1 ? params.line1 : "",
+    line2: params?.line2 ? params.line2 : "",
+    zip: params?.zip ? params.zip : "",
+    created: params?.created!,
+    id: params?._id!,
+    default: params?.default!,
   });
   const [errors, setErrors] = useState<Object>({});
-  const [formData, setData] = useState<Address>(
-    post === "new" ? defaultData : transformData({})
-  );
+  const [formData, setData] = useState<Address>(defaultData);
   const createMutation = useCreateAddress();
+  const updateMutation = useUpdateAddress();
 
   const validate = (formData: Address) => {
     if (formData.title === undefined || formData.title === "") {
@@ -68,29 +69,48 @@ const ModalAddress = ({
     if (validate(formData)) {
       formData.id = idCustomer;
       setData(defaultData);
-      createMutation.mutate(formData);
+      if (post === "new") {
+        createMutation.mutate(formData);
+      } else {
+        updateMutation.mutate(formData);
+      }
     }
   };
 
   useEffect(() => {
-    if (createMutation.isSuccess) {
+    if (createMutation.isSuccess || updateMutation.isSuccess) {
       setSubmit(true);
       setOpen(false);
     }
-  }, [createMutation.isSuccess]);
+  }, [createMutation.isSuccess, updateMutation.isSuccess]);
+
+  useEffect(() => {
+    if (params && post === "edit") {
+      setData(transformData(params!));
+    } else {
+      setData(defaultData);
+    }
+  }, [params, open]);
+
+  const onClose = () => {
+    setOpen(false);
+    setData(defaultData);
+  };
 
   return (
-    <Modal isOpen={open} onClose={() => setOpen(false)} safeAreaTop={true}>
+    <Modal isOpen={open} onClose={() => onClose()} safeAreaTop={true}>
       <Modal.Content maxWidth="450">
         <Modal.CloseButton />
-        <Modal.Header>{t("address.new")}</Modal.Header>
+        <Modal.Header>
+          {post === "new" ? t("address.new") : t("address.edit")}
+        </Modal.Header>
         <Modal.Body>
           {createMutation.isPending ? (
             <Spinner />
           ) : (
             <AddressForm
               post={"new"}
-              params={() => {}}
+              params={params}
               errors={errors}
               setErrors={setErrors}
               formData={formData}
@@ -103,9 +123,7 @@ const ModalAddress = ({
             <Button
               variant="ghost"
               colorScheme="blueGray"
-              onPress={() => {
-                setOpen(false);
-              }}
+              onPress={() => onClose()}
             >
               Cancel
             </Button>

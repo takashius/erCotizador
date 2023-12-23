@@ -44,6 +44,7 @@
         "detail": "Customer"
     },
     "address": {
+        "title": "Addresses",
         "new":"New Address",
         "edit":"Edit Address",
         "delete": "Delete Address",

@@ -12,11 +12,17 @@ import Card from "./helpers/Card";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { type Address } from "../types/customer";
 
-const CardAddressItem = ({ item }: { item: Address }) => {
+const CardAddressItem = ({
+  item,
+  onClick,
+}: {
+  item: Address;
+  onClick: any;
+}) => {
   return (
     <Box alignItems="center" marginBottom={5}>
       <Card>
-        <_Stack p="4" space={2}>
+        <_Stack p="4" space={2} onTouchEnd={() => onClick(item)}>
           <_Stack space={2}>
             <Heading size="sm" ml="-1" color={"blue.500"}>
               <HStack>
