@@ -131,7 +131,7 @@ export default () => {
               renderItem={({ item }) => (
                 <CardAddressItem item={item} onClick={onEditAddress} />
               )}
-              keyExtractor={(item: any) => item.id}
+              keyExtractor={(item: any) => item._id}
               contentContainerStyle={{ paddingBottom: 200 }}
               renderHiddenItem={(data, rowMap) => (
                 <View

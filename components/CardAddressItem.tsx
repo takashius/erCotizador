@@ -11,6 +11,8 @@ import {
 import Card from "./helpers/Card";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { type Address } from "../types/customer";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Pressable, TouchableWithoutFeedback } from "react-native";
 
 const CardAddressItem = ({
   item,
@@ -21,8 +23,9 @@ const CardAddressItem = ({
 }) => {
   return (
     <Box alignItems="center" marginBottom={5}>
+      <Pressable onPress={() => onClick(item)}>
       <Card>
-        <_Stack p="4" space={2} onTouchEnd={() => onClick(item)}>
+        <_Stack p="4" space={2}>
           <_Stack space={2}>
             <Heading size="sm" ml="-1" color={"blue.500"}>
               <HStack>
@@ -78,6 +81,7 @@ const CardAddressItem = ({
           </Center>
         </_Stack>
       </Card>
+      </Pressable>
     </Box>
   );
 };
