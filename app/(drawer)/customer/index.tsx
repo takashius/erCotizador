@@ -1,6 +1,6 @@
 import { FlatList } from "react-native";
-import { Stack, useNavigation } from "expo-router";
-import { Box } from "native-base";
+import { Stack, router, useNavigation } from "expo-router";
+import { Box, Fab, Icon } from "native-base";
 import {
   SearchBar,
   CardCustomerItem,
@@ -11,6 +11,7 @@ import { useListCustomer } from "../../../api/customer";
 import { type Customer } from "../../../types/customer";
 import { useEffect, useState } from "react";
 import { t } from "i18next";
+import { AntDesign } from "@expo/vector-icons";
 
 export default () => {
   const responseQuery = useListCustomer();
@@ -42,13 +43,27 @@ export default () => {
       <SearchBar filterData={filterData} />
       {responseQuery.isLoading ? (
         <Spinner />
-      ) : (
-        <FlatList
+      ) : (<>
+      <FlatList
           data={dataList}
           renderItem={({ item }) => <CardCustomerItem item={item} />}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item) => item._id!}
         />
-      )}
+        <Fab
+          renderInPortal={false}
+          shadow={2}
+          backgroundColor={"blue.500"}
+          onPress={() => {
+            router.push({
+              pathname: "/(drawer)/customer/form",
+              params: { post: "new" },
+            });
+          }}
+          size="sm"
+          icon={<Icon color="white" as={AntDesign} name="plus" size="sm" />}
+        />
+      </>
+      )} 
     </Box>
   );
 };

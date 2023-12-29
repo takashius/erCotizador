@@ -7,10 +7,13 @@
     "delete": "Delete",
     "deleteMessage": "Surely you want to erase? \n This action can not be undone",
     "name": "Name",
+    "lastname": "Lastname",
     "title": "Title",
-    "city": "Ciudad",
+    "city": "City",
     "default": "Default",
     "price": "Price",
+    "rif": "Rif",
+    "email": "Email",
     "description": "Description",
     "modules": {
         "cotiza": "Quotes",
@@ -41,10 +44,25 @@
     "customer": {
         "new": "Add Customer",
         "edit": "Edit Customer",
-        "detail": "Customer"
+        "detail": "Customer",
+        "placeholder": {
+            "title": "Customer title",
+            "name": "Customer name",
+            "lastname": "Customer lastname",
+            "rif": "Customer rif",
+            "email": "Email",
+            "phone": "Number phone"
+        },
+        "validations": {
+            "titleRequired": "Title is required",
+            "lastnameShort": "Lastname is too short",
+            "rifRequired": "Rif is required",
+            "emailRequired": "Email is required"
+        }
     },
     "address": {
         "title": "Addresses",
+        "title_single": "Address",
         "new":"New Address",
         "edit":"Edit Address",
         "delete": "Delete Address",

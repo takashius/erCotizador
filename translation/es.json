@@ -7,10 +7,13 @@
     "delete": "Borrar",
     "deleteMessage":"¿Seguro que desea borrar? \n Esta acción no se puede deshacer",
     "name": "Nombre",
+    "lastname": "Apellido",
     "title": "Titulo",
     "city": "Ciudad",
     "default": "Por defecto",
     "price": "Precio",
+    "rif": "Rif",
+    "email": "Correo",
     "description": "Descripción",
     "modules": {
         "cotiza": "Cotizaciones",
@@ -41,10 +44,25 @@
     "customer": {
         "new": "Nuevo Cliente",
         "edit": "Editar Cliente",
-        "detail": "Cliente"
+        "detail": "Cliente",
+        "placeholder": {
+            "title": "Titulo del cliente",
+            "name": "Nombre del cliente",
+            "lastname": "Apellido del cliente",
+            "rif": "Numero de rif",
+            "email": "Correo Electronico",
+            "phone": "Numero de telefono"
+        },
+        "validations": {
+            "titleRequired": "El titulo es requerido",
+            "lastnameShort": "El apellido es requerido",
+            "rifRequired": "El Rif es requerido",
+            "emailRequired": "El correo es requerido"
+        }
     },
     "address": {
         "title": "Direcciones",
+        "title_single": "Dirección",
         "new":"Nueva Dirección",
         "edit":"Editar Dirección",
         "delete": "Borrar Dirección",

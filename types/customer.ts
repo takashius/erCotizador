@@ -1,15 +1,22 @@
 import { type CreatedShort } from "./general";
 
-export interface Customer {
+export interface CustomerBase {
     title: string;
     name: string;
     lastname: string;
     rif: string;
     email: string;
     phone: string;
-    created: CreatedShort;
+    created?: CreatedShort;
+    _id?: string;
+}
+
+export interface Customer extends CustomerBase {
     addresses: Address[];
-    _id: string;
+}
+
+export interface CustomerForm extends CustomerBase {
+    address?: Address;
 }
 
 export interface Address {
@@ -18,9 +25,9 @@ export interface Address {
     line1: string;
     line2: string;
     zip: string;
-    default: boolean;
+    default?: boolean;
     created?: CreatedShort;
-    id: string;
+    id?: string;
     _id?: string;
     idAddress?: string;
 }

@@ -17,6 +17,7 @@ import { FormatDate } from "./helpers/Utils";
 import Card from "./helpers/Card";
 import AddressForm from "./AddressForm";
 import ModalAddress from "./ModalAddress";
+import CustomerForm from "./CustomerForm";
 
 export {
     CardCotizaItem,
@@ -39,5 +40,6 @@ export {
     FormatDate,
     Card,
     AddressForm,
-    ModalAddress
+    ModalAddress,
+    CustomerForm as FormCustomer
 }
