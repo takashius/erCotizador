@@ -16,19 +16,16 @@ import {
 import { useState } from "react";
 import { t } from "i18next";
 import { type CustomerForm } from "../../../types/customer";
-import {
-  AddressForm,
-  useOptions,
-  InputForm,
-  Spinner,
-  FormCustomer,
-} from "../../../components";
+import { useOptions, Spinner, FormCustomer } from "../../../components";
+import { useCreateCustomer, useUpdateCustomer } from "../../../api/customer";
 
 export default () => {
   const params = useLocalSearchParams();
   const { post } = params;
   const navigation = useNavigation();
   const [errors, setErrors] = useState({});
+  const createMutation = useCreateCustomer();
+  const updateMutation = useUpdateCustomer();
   const defaultData = {
     title: "",
     name: "",
@@ -83,17 +80,7 @@ export default () => {
     } else if (formData.email === undefined || formData.email === "") {
       setErrors({
         ...errors,
-        lastname: t("customer.validations.emailRequired"),
-      });
-      return false;
-    } else if (
-      (formData.address!.title === undefined ||
-        formData.address!.title === "") &&
-      post === "new"
-    ) {
-      setErrors({
-        ...errors,
-        "address.title": t("address.validations.title"),
+        email: t("customer.validations.emailRequired"),
       });
       return false;
     } else if (
@@ -135,7 +122,6 @@ export default () => {
   };
 
   const orderData = (data: any) => {
-    data.address.title = data["address.title"];
     data.address.city = data["address.city"];
     data.address.line1 = data["address.line1"];
     data.address.line2 = data["address.line2"] ? data["address.line2"] : "";
@@ -146,15 +132,11 @@ export default () => {
   const submitForm = (data: CustomerForm) => {
     console.log("SUBMIT FORM", data);
     if (post === "new") {
-      // createMutation.mutate(formData);
+      createMutation.mutate(data);
     } else {
-      // updateMutation.mutate(formData);
+      updateMutation.mutate(data);
     }
   };
-
-  // const renderForm = () => (
-
-  // );
 
   return (
     <Box bg="white" safeArea flex="1">
@@ -166,15 +148,21 @@ export default () => {
         )}
       />
       <ScrollView marginBottom={6}>
-        <FormCustomer
-          post={"new"}
-          params={params}
-          errors={errors}
-          setErrors={setErrors}
-          formData={formData}
-          setData={setData}
-          onSubmit={onSubmit}
-        />
+        {createMutation.isPending || updateMutation.isPending ? (
+          <Spinner />
+        ) : createMutation.isSuccess || updateMutation.isSuccess ? (
+          router.back()
+        ) : (
+          <FormCustomer
+            post={"new"}
+            params={params}
+            errors={errors}
+            setErrors={setErrors}
+            formData={formData}
+            setData={setData}
+            onSubmit={onSubmit}
+          />
+        )}
       </ScrollView>
     </Box>
   );
