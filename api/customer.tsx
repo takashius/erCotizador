@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
-import { Address, Customer } from "../types/customer";
+import { Address, Customer, CustomerForm } from "../types/customer";
 
 export const useListCustomer = () => {
   const query = useQuery<Customer[]>({
@@ -22,6 +22,36 @@ export const useGetCustomer = (id: string | string[]) => {
     },
   });
   return query;
+};
+
+export const useCreateCustomer = () => {
+  const mutation = useMutation({
+    mutationFn: (data: CustomerForm) => {
+      return ERDEAxios.post("/customer", data);
+    },
+  });
+
+  return mutation;
+};
+
+export const useUpdateCustomer = () => {
+  const mutation = useMutation({
+    mutationFn: (data: CustomerForm) => {
+      return ERDEAxios.patch("/customer", data);
+    },
+  });
+
+  return mutation;
+};
+
+export const useDeleteCustomer = () => {
+  const mutation = useMutation({
+    mutationFn: (data: any) => {
+      return ERDEAxios.delete("/customer", { data });
+    },
+  });
+
+  return mutation;
 };
 
 export const useCreateAddress = () => {
@@ -47,7 +77,6 @@ export const useUpdateAddress = () => {
 export const useDeleteAddress = () => {
   const mutation = useMutation({
     mutationFn: (data: any) => {
-      console.log("useDeleteAddress", data);
       return ERDEAxios.delete("/customer/address", { data });
     },
   });
