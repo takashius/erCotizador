@@ -56,6 +56,7 @@ export default () => {
     // console.log("click", JSON.stringify(item, null, 2));
     setOpen(true);
     setPost("edit");
+    item.id = responseQuery.data?._id!;
     setToEdit(item);
   };
 

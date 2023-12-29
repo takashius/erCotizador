@@ -27,7 +27,6 @@ const ModalAddress = ({
     line1: "",
     line2: "",
     zip: "",
-    created: null,
     id: idCustomer,
     default: false,
   };
@@ -38,8 +37,8 @@ const ModalAddress = ({
     line1: params?.line1 ? params.line1 : "",
     line2: params?.line2 ? params.line2 : "",
     zip: params?.zip ? params.zip : "",
-    created: params?.created!,
-    id: params?._id!,
+    id: params?.id!,
+    idAddress: params?._id!,
     default: params?.default!,
   });
   const [errors, setErrors] = useState<Object>({});

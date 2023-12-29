@@ -19,7 +19,8 @@ export interface Address {
     line2: string;
     zip: string;
     default: boolean;
-    created: CreatedShort | null;
-    id: string | null;
-    _id?: string | null;
+    created?: CreatedShort;
+    id: string;
+    _id?: string;
+    idAddress?: string;
 }
