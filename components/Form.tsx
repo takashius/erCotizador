@@ -9,6 +9,8 @@ import {
 export const InputForm = ({ data }: { data: any }) => {
   return (
     <FormControl
+      w={data.col === true ? "1/2" : "full"}
+      px={data.col === true ? "2" : 0}
       {...(data.require && { isRequired: true })}
       isInvalid={`${data.name}` in data.errors}
     >

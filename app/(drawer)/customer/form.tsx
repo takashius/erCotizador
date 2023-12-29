@@ -37,7 +37,7 @@ export default () => {
     email: "",
     phone: "",
     address: {
-      title: "",
+      title: "Default",
       city: "",
       line1: "",
       line2: "",
