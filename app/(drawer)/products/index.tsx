@@ -62,37 +62,41 @@ export default () => {
     <Box bg="white" safeArea flex="1">
       <Stack.Screen options={useOptions(t("modules.product"), navigation)} />
       <SearchBar filterData={filterData} />
-      {responseQuery.isLoading && <Spinner />}
-      <SwipeListView
-        data={dataList}
-        useFlatList={true}
-        keyExtractor={(item) => item._id}
-        disableRightSwipe={true}
-        closeOnRowBeginSwipe={true}
-        onRefresh={() => responseQuery.refetch()}
-        refreshing={responseQuery.isFetching || deleteMutation.isPending}
-        renderItem={({ item }) => <CardProductItem item={item} />}
-        renderHiddenItem={(data, rowMap) => (
-          <View
-            style={{
-              marginLeft: 280,
-              height: "90%",
-              width: 60,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <DeleteButton
-              data={data}
-              rowMap={rowMap}
-              deleteMutation={deleteMutation}
-              deleteRow={deleteRow}
-            />
-          </View>
-        )}
-        rightOpenValue={-75}
-      />
+      {responseQuery.isLoading ? (
+        <Spinner />
+      ) : (
+        <SwipeListView
+          data={dataList}
+          useFlatList={true}
+          keyExtractor={(item) => item._id}
+          disableRightSwipe={true}
+          closeOnRowBeginSwipe={true}
+          onRefresh={() => responseQuery.refetch()}
+          refreshing={responseQuery.isFetching || deleteMutation.isPending}
+          renderItem={({ item }) => <CardProductItem item={item} />}
+          renderHiddenItem={(data, rowMap) => (
+            <View
+              style={{
+                marginLeft: 280,
+                height: "90%",
+                width: 60,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <DeleteButton
+                data={data}
+                rowMap={rowMap}
+                deleteMutation={deleteMutation}
+                deleteRow={deleteRow}
+              />
+            </View>
+          )}
+          rightOpenValue={-75}
+        />
+      )}
+
       <Fab
         renderInPortal={false}
         shadow={2}

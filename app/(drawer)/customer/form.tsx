@@ -4,15 +4,7 @@ import {
   router,
   useNavigation,
 } from "expo-router";
-import {
-  Box,
-  VStack,
-  HStack,
-  Text,
-  Switch,
-  Button,
-  ScrollView,
-} from "native-base";
+import { Box, ScrollView } from "native-base";
 import { useState } from "react";
 import { t } from "i18next";
 import { type CustomerForm } from "../../../types/customer";
@@ -43,12 +35,13 @@ export default () => {
   };
 
   const transformData = (params: any) => ({
-    title: "",
-    name: "",
-    lastname: "",
-    rif: "",
-    email: "",
-    phone: "",
+    title: params?.title,
+    name: params?.name,
+    lastname: params?.lastname,
+    rif: params?.rif,
+    email: params?.email,
+    phone: params?.phone,
+    id: params?._id,
   });
 
   const [formData, setData] = useState<CustomerForm>(
