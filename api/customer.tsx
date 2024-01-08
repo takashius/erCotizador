@@ -46,8 +46,8 @@ export const useUpdateCustomer = () => {
 
 export const useDeleteCustomer = () => {
   const mutation = useMutation({
-    mutationFn: (data: any) => {
-      return ERDEAxios.delete("/customer", { data });
+    mutationFn: (id: string) => {
+      return ERDEAxios.delete(`/customer/${id}`);
     },
   });
 

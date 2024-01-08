@@ -1,6 +1,7 @@
 import { Stack, router, useNavigation } from "expo-router";
 import { Box, Fab, Icon } from "native-base";
 import { View, Animated } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import {
   CardProductItem,
@@ -21,11 +22,18 @@ export default () => {
   const navigation = useNavigation();
   const [dataList, setDataList] = useState<Product[]>();
   const [dataDefault, setDataDefault] = useState<Product[]>();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     setDataList(responseQuery.data);
     setDataDefault(responseQuery.data);
   }, [responseQuery.data]);
+
+  useEffect(() => {
+    if (isFocused && responseQuery.data) {
+      responseQuery.refetch();
+    }
+  }, [isFocused]);
 
   const deleteRow = (rowMap: any, rowKey: any) => {
     if (dataList !== undefined) {

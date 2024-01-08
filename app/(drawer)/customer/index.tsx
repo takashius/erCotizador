@@ -1,6 +1,7 @@
-import { FlatList, View } from "react-native";
+import { View, Animated } from "react-native";
 import { Stack, router, useNavigation } from "expo-router";
 import { Box, Fab, Icon } from "native-base";
+import { useIsFocused } from "@react-navigation/native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import {
   SearchBar,
@@ -21,11 +22,18 @@ export default () => {
   const [dataList, setDataList] = useState<Customer[]>();
   const [dataDefault, setDataDefault] = useState<Customer[]>();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     setDataList(responseQuery.data);
     setDataDefault(responseQuery.data);
   }, [responseQuery.data]);
+
+  useEffect(() => {
+    if (isFocused && responseQuery.data) {
+      responseQuery.refetch();
+    }
+  }, [isFocused]);
 
   const filterData = (search: string) => {
     if (dataDefault) {
@@ -37,6 +45,25 @@ export default () => {
             item.title.toUpperCase().includes(search.toUpperCase())
         )
       );
+    }
+  };
+
+  const deleteRow = (rowMap: any, rowKey: any) => {
+    if (dataList !== undefined) {
+      rowMap[rowKey].closeRow();
+      const config = {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      };
+      Animated.timing(new Animated.Value(50), config).start(() => {
+        const newData = [...dataList];
+        const prevIndex = dataList.findIndex(
+          (item: any) => item._id === rowKey
+        );
+        newData.splice(prevIndex, 1);
+        setDataList(newData);
+      });
     }
   };
 
@@ -72,6 +99,7 @@ export default () => {
                   data={data}
                   rowMap={rowMap}
                   deleteMutation={deleteMutation}
+                  deleteRow={deleteRow}
                 />
               </View>
             )}
