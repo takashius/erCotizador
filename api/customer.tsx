@@ -30,8 +30,8 @@ export const useCreateCustomer = () => {
     mutationFn: (data: CustomerForm) => {
       return ERDEAxios.post("/customer", data);
     },
-    onSuccess: (data) => {
-      write("newCustomer", 'true').then((res) => res);
+    onSuccess: () => {
+      write("mutateCustomer", 'true').then((res) => res);
     },
   });
 

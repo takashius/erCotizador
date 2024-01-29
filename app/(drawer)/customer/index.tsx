@@ -30,17 +30,17 @@ export default () => {
     setDataDefault(responseQuery.data);
   }, [responseQuery.data]);
 
-  const isReturnFromCreated = async () => {
-    const created = await read("newCustomer");
+  const isReturnFromForm = async () => {
+    const created = await read("mutateCustomer");
     if (created && created === 'true') {
       responseQuery.refetch();
-      await remove("newCustomer");
+      await remove("mutateCustomer");
     }
   };
 
   useEffect(() => {
     if (isFocused) {
-      isReturnFromCreated();
+      isReturnFromForm();
     }
   }, [isFocused]);
 
