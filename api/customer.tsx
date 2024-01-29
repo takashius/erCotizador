@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
 import { Address, Customer, CustomerForm } from "../types/customer";
+import { write } from "../components/helpers/LocalStorage";
 
 export const useListCustomer = () => {
   const query = useQuery<Customer[]>({
@@ -28,6 +29,9 @@ export const useCreateCustomer = () => {
   const mutation = useMutation({
     mutationFn: (data: CustomerForm) => {
       return ERDEAxios.post("/customer", data);
+    },
+    onSuccess: (data) => {
+      write("newCustomer", 'true').then((res) => res);
     },
   });
 

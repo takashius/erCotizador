@@ -9,6 +9,7 @@ import {
   Spinner,
   useOptions,
   DeleteButton,
+  read, remove
 } from "../../../components";
 import { useListCustomer, useDeleteCustomer } from "../../../api/customer";
 import { type Customer } from "../../../types/customer";
@@ -29,9 +30,17 @@ export default () => {
     setDataDefault(responseQuery.data);
   }, [responseQuery.data]);
 
-  useEffect(() => {
-    if (isFocused && responseQuery.data) {
+  const isReturnFromCreated = async () => {
+    const created = await read("newCustomer");
+    if (created && created === 'true') {
       responseQuery.refetch();
+      await remove("newCustomer");
+    }
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      isReturnFromCreated();
     }
   }, [isFocused]);
 

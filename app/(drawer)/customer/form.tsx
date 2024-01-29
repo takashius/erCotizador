@@ -4,7 +4,8 @@ import {
   router,
   useNavigation,
 } from "expo-router";
-import { Box, ScrollView } from "native-base";
+import { Box, ScrollView, Text } from "native-base";
+import { Platform, KeyboardAvoidingView } from "react-native";
 import { useState } from "react";
 import { t } from "i18next";
 import { type CustomerForm } from "../../../types/customer";
@@ -123,7 +124,6 @@ export default () => {
   };
 
   const submitForm = (data: CustomerForm) => {
-    console.log("SUBMIT FORM", data);
     if (post === "new") {
       createMutation.mutate(data);
     } else {
@@ -140,21 +140,28 @@ export default () => {
           true
         )}
       />
+      {createMutation.isError &&
+        <Text>{createMutation.error.message}</Text>
+      }
       <ScrollView marginBottom={6}>
         {createMutation.isPending || updateMutation.isPending ? (
           <Spinner />
         ) : createMutation.isSuccess || updateMutation.isSuccess ? (
           router.back()
         ) : (
-          <FormCustomer
-            post={"new"}
-            params={params}
-            errors={errors}
-            setErrors={setErrors}
-            formData={formData}
-            setData={setData}
-            onSubmit={onSubmit}
-          />
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
+            <FormCustomer
+              post={"new"}
+              params={params}
+              errors={errors}
+              setErrors={setErrors}
+              formData={formData}
+              setData={setData}
+              onSubmit={onSubmit}
+            />
+          </KeyboardAvoidingView>
         )}
       </ScrollView>
     </Box>
