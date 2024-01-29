@@ -1,6 +1,7 @@
 import { useQuery, useMutation, QueryClient } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
 import { Product, ProductForm } from "../types/products";
+import { write } from "../components/helpers/LocalStorage";
 const queryClient = new QueryClient();
 
 export const useListProduct = () => {
@@ -19,6 +20,9 @@ export const useCreateProduct = () => {
     mutationFn: (data: ProductForm) => {
       return ERDEAxios.post("/product", data);
     },
+    onSuccess: () => {
+      write("mutateProduct", 'true').then((res) => res);
+    },
   });
 
   return mutation;
@@ -29,6 +33,9 @@ export const useUpdateProduct = () => {
     mutationFn: (data: ProductForm) => {
       return ERDEAxios.patch("/product", data);
     },
+    onSuccess: () => {
+      write("mutateProduct", 'true').then((res) => res);
+    },
   });
 
   return mutation;
@@ -38,9 +45,6 @@ export const useDeleteProduct = () => {
   const mutation = useMutation({
     mutationFn: (id: string) => {
       return ERDEAxios.delete(`/product/${id}`);
-    },
-    onSuccess: (data) => {
-      queryClient.refetchQueries({ queryKey: ["productList"], type: "all" });
     },
   });
 

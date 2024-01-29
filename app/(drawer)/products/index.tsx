@@ -9,6 +9,7 @@ import {
   Spinner,
   useOptions,
   DeleteButton,
+  read, remove
 } from "../../../components";
 import { useListProduct, useDeleteProduct } from "../../../api/product";
 import { AntDesign } from "@expo/vector-icons";
@@ -29,9 +30,17 @@ export default () => {
     setDataDefault(responseQuery.data);
   }, [responseQuery.data]);
 
-  useEffect(() => {
-    if (isFocused && responseQuery.data) {
+  const isReturnFromForm = async () => {
+    const created = await read("mutateProduct");
+    if (created && created === 'true') {
       responseQuery.refetch();
+      await remove("mutateProduct");
+    }
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      isReturnFromForm();
     }
   }, [isFocused]);
 
