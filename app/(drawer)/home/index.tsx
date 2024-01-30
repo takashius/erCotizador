@@ -1,6 +1,6 @@
 import { FlatList } from "react-native";
-import { Stack, useNavigation } from "expo-router";
-import { Box } from "native-base";
+import { Stack, router, useNavigation } from "expo-router";
+import { Box, Fab, Icon } from "native-base";
 import {
   SearchBar,
   CardCotizaItem,
@@ -11,6 +11,7 @@ import { useListCotiza } from "../../../api/cotiza";
 import { useEffect, useState } from "react";
 import { type Cotiza } from "../../../types/cotiza";
 import { t } from "i18next";
+import { AntDesign } from "@expo/vector-icons";
 
 export default () => {
   const responseQuery = useListCotiza();
@@ -44,6 +45,19 @@ export default () => {
         data={dataList}
         renderItem={({ item }) => <CardCotizaItem item={item} />}
         keyExtractor={(item) => item._id}
+      />
+      <Fab
+        renderInPortal={false}
+        shadow={2}
+        backgroundColor={"blue.500"}
+        onPress={() => {
+          router.push({
+            pathname: "/(drawer)/home/form",
+            params: { post: "new" },
+          });
+        }}
+        size="sm"
+        icon={<Icon color="white" as={AntDesign} name="plus" size="sm" />}
       />
     </Box>
   );

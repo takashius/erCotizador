@@ -5,7 +5,7 @@
     "submit": "Enviar",
     "tax": "Iva",
     "delete": "Borrar",
-    "deleteMessage":"¿Seguro que desea borrar? \n Esta acción no se puede deshacer",
+    "deleteMessage": "¿Seguro que desea borrar? \n Esta acción no se puede deshacer",
     "name": "Nombre",
     "lastname": "Apellido",
     "title": "Titulo",
@@ -63,8 +63,8 @@
     "address": {
         "title": "Direcciones",
         "title_single": "Dirección",
-        "new":"Nueva Dirección",
-        "edit":"Editar Dirección",
+        "new": "Nueva Dirección",
+        "edit": "Editar Dirección",
         "delete": "Borrar Dirección",
         "placeholder": {
             "title": "Titulo de la dirección",
@@ -80,5 +80,9 @@
             "line1": "La dirección es obligatoria",
             "zip": "El código postal es obligatorio"
         }
+    },
+    "cotiza": {
+        "new": "Nueva cotización",
+        "edit": "Editar cotización"
     }
 }

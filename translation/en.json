@@ -63,8 +63,8 @@
     "address": {
         "title": "Addresses",
         "title_single": "Address",
-        "new":"New Address",
-        "edit":"Edit Address",
+        "new": "New Address",
+        "edit": "Edit Address",
         "delete": "Delete Address",
         "placeholder": {
             "title": "Address title",
@@ -80,5 +80,9 @@
             "line1": "The address is mandatory",
             "zip": "The zip is mandatory"
         }
+    },
+    "cotiza": {
+        "new": "New quote",
+        "edit": "Edit quote"
     }
 }
