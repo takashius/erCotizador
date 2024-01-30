@@ -20,7 +20,7 @@ const CardCustomerItem = ({ item }: { item: Customer }) => {
         href={{
           pathname: "/(drawer)/customer/detail",
           params: {
-            id: item._id,
+            id: item._id!,
           },
         }}
       >

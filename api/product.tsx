@@ -2,7 +2,6 @@ import { useQuery, useMutation, QueryClient } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
 import { Product, ProductForm } from "../types/products";
 import { write } from "../components/helpers/LocalStorage";
-const queryClient = new QueryClient();
 
 export const useListProduct = () => {
   const query = useQuery<Product[]>({

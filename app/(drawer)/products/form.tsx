@@ -133,11 +133,11 @@ export default () => {
   return (
     <Box bg="white" safeArea flex="1">
       <Stack.Screen
-        options={useOptions(
-          post == "new" ? t("products.new") : t("products.edit"),
+        options={useOptions({
+          title: post == "new" ? t("products.new") : t("products.edit"),
           navigation,
-          true
-        )}
+          back: true
+        })}
       />
       {createMutation.isPending || updateMutation.isPending ? (
         <Spinner />

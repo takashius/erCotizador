@@ -53,7 +53,6 @@ export default () => {
   }, [deleteAddressMutation.isSuccess]);
 
   const onEditAddress = (item: Address) => {
-    // console.log("click", JSON.stringify(item, null, 2));
     setOpen(true);
     setPost("edit");
     item.id = responseQuery.data?._id!;
@@ -63,7 +62,7 @@ export default () => {
   return (
     <Box bg="white" safeArea flex="1">
       <Stack.Screen
-        options={useOptions(t("customer.detail"), navigation, true, true)}
+        options={useOptions({ title: t("customer.detail"), navigation, back: true })}
       />
       {responseQuery.isLoading ? (
         <Spinner />

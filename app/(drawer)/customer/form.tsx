@@ -135,9 +135,11 @@ export default () => {
     <Box bg="white" safeArea flex="1">
       <Stack.Screen
         options={useOptions(
-          post == "new" ? t("customer.new") : t("customer.edit"),
-          navigation,
-          true
+          {
+            title: post == "new" ? t("customer.new") : t("customer.edit"),
+            navigation,
+            back: true
+          }
         )}
       />
       {createMutation.isError &&

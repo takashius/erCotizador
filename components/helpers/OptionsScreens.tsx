@@ -4,14 +4,19 @@ import { HamburgerIcon, Icon, Menu } from "native-base";
 import { Pressable } from "react-native";
 import { type MenuItem } from "../../types/general";
 
-export const useOptions = (
+export const useOptions = ({
+  title,
+  navigation,
+  back = false,
+  dropdown = false,
+  menuItems
+}: {
   title: string,
   navigation: any,
-  back: boolean = false,
-  dropdown: boolean = false,
-  menuItems: Array<MenuItem> = [
-    { isDisabled: false, onPress: () => {}, title: "" },
-  ]
+  back?: boolean,
+  dropdown?: boolean,
+  menuItems?: Array<MenuItem>
+}
 ) => {
   const DisplayMenu = (display = true) => {
     if (display) {
@@ -29,7 +34,7 @@ export const useOptions = (
             );
           }}
         >
-          {menuItems.map((item) => (
+          {menuItems && menuItems.map((item) => (
             <Menu.Item onPress={item.onPress} isDisabled={item.isDisabled}>
               {item.title}
             </Menu.Item>

@@ -78,7 +78,7 @@ export default () => {
 
   return (
     <Box bg="white" safeArea flex="1">
-      <Stack.Screen options={useOptions(t("modules.customer"), navigation)} />
+      <Stack.Screen options={useOptions({ title: t("modules.customer"), navigation })} />
       <SearchBar filterData={filterData} />
       {responseQuery.isLoading ? (
         <Spinner />

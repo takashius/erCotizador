@@ -37,7 +37,7 @@ export default () => {
 
   return (
     <Box bg="white" safeArea flex="1">
-      <Stack.Screen options={useOptions(t("modules.cotiza"), navigation)} />
+      <Stack.Screen options={useOptions({ title: t("modules.cotiza"), navigation })} />
       <SearchBar filterData={filterData} />
       {responseQuery.isLoading && <Spinner />}
       <FlatList
