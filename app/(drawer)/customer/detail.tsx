@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Stack, router, useLocalSearchParams, useNavigation } from "expo-router";
 import { View } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import {
   Box,
   Heading,
@@ -17,11 +18,11 @@ import {
   Spinner,
   ModalAddress,
   DeleteButton,
+  read, remove
 } from "../../../components";
 import { t } from "i18next";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useGetCustomer, useDeleteAddress } from "../../../api/customer";
-import { MenuItem } from "../../../types/general";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { Address } from "../../../types/customer";
 
@@ -31,10 +32,10 @@ export default () => {
   const [post, setPost] = useState<string>("");
   const [submit, setSubmit] = useState(false);
   const [toEdit, setToEdit] = useState<Address>();
+  const isFocused = useIsFocused();
 
   const { id } = params;
   const navigation = useNavigation();
-  const menu: Array<MenuItem> = [];
   const responseQuery = useGetCustomer(id);
   const deleteAddressMutation = useDeleteAddress();
 
@@ -44,6 +45,20 @@ export default () => {
       responseQuery.refetch();
     }
   }, [submit]);
+
+  const isReturnFromForm = async () => {
+    const created = await read("mutateCustomer");
+    if (created && created === 'true') {
+      responseQuery.refetch();
+      await remove("mutateCustomer");
+    }
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      isReturnFromForm();
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     if (deleteAddressMutation.isSuccess) {
