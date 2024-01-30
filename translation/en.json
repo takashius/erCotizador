@@ -12,6 +12,7 @@
     "city": "City",
     "default": "Default",
     "price": "Price",
+    "number": "Number",
     "rif": "Rif",
     "email": "Email",
     "description": "Description",
@@ -83,6 +84,12 @@
     },
     "cotiza": {
         "new": "New quote",
-        "edit": "Edit quote"
+        "edit": "Edit quote",
+        "titleDescription": "Used to identify the quote.",
+        "placeholder": {
+            "title": "Quote title",
+            "description": "Quote description",
+            "number": "Invoice number"
+        }
     }
 }

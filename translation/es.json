@@ -12,6 +12,7 @@
     "city": "Ciudad",
     "default": "Por defecto",
     "price": "Precio",
+    "number": "Número",
     "rif": "Rif",
     "email": "Correo",
     "description": "Descripción",
@@ -83,6 +84,12 @@
     },
     "cotiza": {
         "new": "Nueva cotización",
-        "edit": "Editar cotización"
+        "edit": "Editar cotización",
+        "titleDescription": "Se usa para identificar la cotización.",
+        "placeholder": {
+            "title": "Título de la cotización",
+            "description": "Descripción de la cotización",
+            "number": "Número de la factura"
+        }
     }
 }
