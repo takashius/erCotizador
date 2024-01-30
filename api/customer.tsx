@@ -43,6 +43,9 @@ export const useUpdateCustomer = () => {
     mutationFn: (data: CustomerForm) => {
       return ERDEAxios.patch("/customer", data);
     },
+    onSuccess: () => {
+      write("mutateCustomer", 'true').then((res) => res);
+    },
   });
 
   return mutation;

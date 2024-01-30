@@ -42,7 +42,7 @@ export default () => {
     rif: params?.rif,
     email: params?.email,
     phone: params?.phone,
-    id: params?._id,
+    id: params?.id,
   });
 
   const [formData, setData] = useState<CustomerForm>(
@@ -77,41 +77,44 @@ export default () => {
         email: t("customer.validations.emailRequired"),
       });
       return false;
-    } else if (
-      (formData.address!.city === undefined || formData.address!.city === "") &&
-      post === "new"
-    ) {
-      setErrors({
-        ...errors,
-        "address.city": t("address.validations.city"),
-      });
-      return false;
-    } else if (
-      (formData.address!.line1 === undefined ||
-        formData.address!.line1 === "") &&
-      post === "new"
-    ) {
-      setErrors({
-        ...errors,
-        "address.line1": t("address.validations.line1"),
-      });
-      return false;
-    } else if (
-      (formData.address!.zip === undefined || formData.address!.zip === "") &&
-      post === "new"
-    ) {
-      setErrors({
-        ...errors,
-        "address.zip": t("address.validations.zip"),
-      });
-      return false;
     }
+
+    if (post === "new")
+      if (
+        (formData.address!.city === undefined || formData.address!.city === "") &&
+        post === "new"
+      ) {
+        setErrors({
+          ...errors,
+          "address.city": t("address.validations.city"),
+        });
+        return false;
+      } else if (
+        (formData.address!.line1 === undefined ||
+          formData.address!.line1 === "") &&
+        post === "new"
+      ) {
+        setErrors({
+          ...errors,
+          "address.line1": t("address.validations.line1"),
+        });
+        return false;
+      } else if (
+        (formData.address!.zip === undefined || formData.address!.zip === "") &&
+        post === "new"
+      ) {
+        setErrors({
+          ...errors,
+          "address.zip": t("address.validations.zip"),
+        });
+        return false;
+      }
     setErrors({});
     return true;
   };
 
   const onSubmit = () => {
-    const data = orderData(formData);
+    const data = post === "new" ? orderData(formData) : formData;
     validate(data) && submitForm(data);
   };
 
@@ -155,7 +158,7 @@ export default () => {
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           >
             <FormCustomer
-              post={"new"}
+              post={post}
               params={params}
               errors={errors}
               setErrors={setErrors}

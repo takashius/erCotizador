@@ -18,7 +18,7 @@ export interface MenuItem {
     isDisabled: boolean;
 }
 
-export interface AddressFormProps  {
+export interface AddressFormProps {
     post: string;
     params: any;
     errors: Object;
@@ -27,8 +27,8 @@ export interface AddressFormProps  {
     setData: Dispatch<SetStateAction<Address>>;
 }
 
-export interface CustomerFormProps  {
-    post: string;
+export interface CustomerFormProps {
+    post: string | string[];
     params: any;
     errors: Object;
     setErrors: Dispatch<SetStateAction<Object>>;

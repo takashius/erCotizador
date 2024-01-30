@@ -1,21 +1,26 @@
 import React from "react";
-import { AntDesign } from "@expo/vector-icons";
-import { HamburgerIcon, Icon, Menu } from "native-base";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Row, HamburgerIcon, Icon, Menu } from "native-base";
 import { Pressable } from "react-native";
 import { type MenuItem } from "../../types/general";
+import { router } from "expo-router";
 
 export const useOptions = ({
   title,
   navigation,
   back = false,
+  edit = false,
   dropdown = false,
-  menuItems
+  menuItems,
+  editAction
 }: {
   title: string,
   navigation: any,
   back?: boolean,
+  edit?: boolean,
   dropdown?: boolean,
-  menuItems?: Array<MenuItem>
+  menuItems?: Array<MenuItem>,
+  editAction?: any
 }
 ) => {
   const DisplayMenu = (display = true) => {
@@ -46,17 +51,41 @@ export const useOptions = ({
     }
   };
 
+  const displayRight = () => (
+    <Row>
+      {edit && <Icon
+        onPress={() => editAction()}
+        as={<AntDesign name="edit" />}
+        size={6}
+        color={"white"}
+      />}
+      {DisplayMenu(dropdown)}
+    </Row>
+  )
+
   if (back) {
     return {
       headerShown: true,
-      headerBackVisible: true,
+      headerBackVisible: false,
       headerBackTitleVisible: false,
       headerStyle: {
         backgroundColor: "#2196F3",
       },
-      headerRight: () => DisplayMenu(dropdown),
+      headerRight: () => displayRight(),
       headerTintColor: "white",
       title,
+      headerLeft: () => {
+        return (
+          <Icon
+            onPress={() => {
+              router.back();
+            }}
+            as={<MaterialCommunityIcons name="backburger" />}
+            size={6}
+            color={"white"}
+          />
+        );
+      },
     };
   } else {
     return {
@@ -65,7 +94,7 @@ export const useOptions = ({
       headerStyle: {
         backgroundColor: "#2196F3",
       },
-      headerRight: () => DisplayMenu(dropdown),
+      headerRight: () => displayRight(),
       headerTintColor: "white",
       title,
       headerLeft: () => {

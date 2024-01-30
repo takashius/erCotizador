@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, router, useLocalSearchParams, useNavigation } from "expo-router";
 import { View } from "react-native";
 import {
   Box,
@@ -19,7 +19,6 @@ import {
   DeleteButton,
 } from "../../../components";
 import { t } from "i18next";
-import { useNavigation } from "expo-router";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useGetCustomer, useDeleteAddress } from "../../../api/customer";
 import { MenuItem } from "../../../types/general";
@@ -59,10 +58,35 @@ export default () => {
     setToEdit(item);
   };
 
+  const onEditClick = () => {
+    const item = responseQuery.data;
+    if (item) {
+      router.push({
+        pathname: '/(drawer)/customer/form',
+        params: {
+          post: "edit",
+          id: item._id!,
+          title: item.title,
+          name: item.name,
+          lastname: item.lastname,
+          rif: item.rif,
+          email: item.email,
+          phone: item.phone
+        }
+      });
+    }
+  }
+
   return (
     <Box bg="white" safeArea flex="1">
       <Stack.Screen
-        options={useOptions({ title: t("customer.detail"), navigation, back: true })}
+        options={useOptions({
+          title: t("customer.detail"),
+          navigation,
+          back: true,
+          edit: true,
+          editAction: onEditClick
+        })}
       />
       {responseQuery.isLoading ? (
         <Spinner />
