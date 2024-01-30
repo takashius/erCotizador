@@ -1,6 +1,7 @@
 {
     "appName": "ErCotizador",
     "search": "Buscar",
+    "filter": "Filtrar",
     "cancel": "Cancelar",
     "submit": "Enviar",
     "tax": "Iva",
@@ -15,7 +16,9 @@
     "number": "Número",
     "rif": "Rif",
     "email": "Correo",
+    "date": "Fecha",
     "description": "Descripción",
+    "datePicker": "Seleccionar Fecha",
     "modules": {
         "cotiza": "Cotizaciones",
         "customer": "Clientes",
@@ -89,7 +92,8 @@
         "placeholder": {
             "title": "Título de la cotización",
             "description": "Descripción de la cotización",
-            "number": "Número de la factura"
+            "number": "Número de la factura",
+            "date": "Fecha de la cotización"
         }
     }
 }

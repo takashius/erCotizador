@@ -1,6 +1,7 @@
 {
     "appName": "ErCotizador",
     "search": "Search",
+    "filter": "Filter",
     "cancel": "Cancel",
     "submit": "Submit",
     "tax": "Tax",
@@ -15,7 +16,9 @@
     "number": "Number",
     "rif": "Rif",
     "email": "Email",
+    "date": "Date",
     "description": "Description",
+    "datePicker": "Date Picker",
     "modules": {
         "cotiza": "Quotes",
         "customer": "Customers",
@@ -89,7 +92,8 @@
         "placeholder": {
             "title": "Quote title",
             "description": "Quote description",
-            "number": "Invoice number"
+            "number": "Invoice number",
+            "date": "Quote date"
         }
     }
 }
