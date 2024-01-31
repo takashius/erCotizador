@@ -38,6 +38,30 @@ export default () => {
       )
   }, [])
 
+  const validate = () => {
+    if (formData.title === undefined || formData.title === "") {
+      setErrors({ ...errors, name: t("cotiza.validations.titleRequired") });
+      return false;
+    } else if (formData.title.length < 3) {
+      setErrors({ ...errors, name: t("cotiza.validations.titleShort") });
+      return false;
+    } else if (!formData.number) {
+      setErrors({ ...errors, price: t("cotiza.validations.numberRequired") });
+      return false;
+    } else if (formData.price < 0) {
+      setErrors({ ...errors, number: t("cotiza.validations.numberIncorrect") });
+      return false;
+    } else if (formData.date === undefined || formData.date === '') {
+      setErrors({ ...errors, number: t("cotiza.validations.dateRequired") });
+      return false;
+    } else if (formData.customer === undefined || formData.customer === '') {
+      setErrors({ ...errors, number: t("cotiza.validations.customerRequired") });
+      return false;
+    }
+    setErrors({});
+    return true;
+  };
+
   const onSubmit = () => {
   };
 

@@ -95,6 +95,14 @@
             "number": "Número de la factura",
             "date": "Fecha de la cotización",
             "customer": "Selecione un cliente"
+        },
+        "validations": {
+            "titleRequired": "El título es requerido",
+            "titleShort": "El título es muy corto",
+            "numberRequired": "El número es requerido",
+            "numberIncorrect": "El número no es válido",
+            "dateRequired": "La fecha es requerida",
+            "customerRequired": "La cliente es requerido"
         }
     }
 }

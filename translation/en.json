@@ -95,6 +95,14 @@
             "number": "Invoice number",
             "date": "Quote date",
             "customer": "Select a customer"
+        },
+        "validations": {
+            "title": "The title is mandatory",
+            "titleShort": "The title is very short",
+            "numberRequired": "The number is required",
+            "numberIncorrect": "The number is not valid",
+            "dateRequired": "Date is required",
+            "customerRequired": "The customer is required"
         }
     }
 }
