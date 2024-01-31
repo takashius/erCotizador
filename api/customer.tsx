@@ -14,6 +14,17 @@ export const useListCustomer = () => {
   return query;
 };
 
+export const useListSimpleCustomer = () => {
+  const query = useQuery<Customer[]>({
+    queryKey: ["customerSelectList"],
+    retry: false,
+    queryFn: () => {
+      return ERDEAxios.get("/customer/list");
+    },
+  });
+  return query;
+};
+
 export const useGetCustomer = (id: string | string[]) => {
   const query = useQuery<Customer>({
     queryKey: ["customerDetail"],

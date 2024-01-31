@@ -7,6 +7,7 @@ import { DatePicker } from 'react-native-woodpicker';
 import { KeyboardAvoidingView, Platform } from "react-native";
 import { CotizaForm } from "../../../types/cotiza";
 import { useCreateCotiza, useUpdateCotiza } from "../../../api/cotiza";
+import { useListSimpleCustomer } from "../../../api/customer";
 
 export default () => {
   const params = useLocalSearchParams();
@@ -17,6 +18,7 @@ export default () => {
   const [pickedDate, setPickedDate] = useState<Date | null>(null);
   const createMutation = useCreateCotiza();
   const updateMutation = useUpdateCotiza();
+  const customerList = useListSimpleCustomer();
   const defaultData = {
     title: "",
     description: "",
@@ -81,7 +83,6 @@ export default () => {
   };
 
   const submitForm = () => {
-    console.log('formData',)
     if (post === "new") {
       createMutation.mutate(formData);
     } else {
@@ -158,6 +159,7 @@ export default () => {
         data={{
           name: "customer",
           errors,
+          selectData: customerList.data,
           readonly: true,
           title: t("customer.detail"),
           placeholder: t("cotiza.placeholder.customer"),

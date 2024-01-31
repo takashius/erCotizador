@@ -50,7 +50,7 @@ export const InputForm = ({ data }: { data: any }) => {
 
 export const SelectForm = (dataObj: any) => {
   const { data } = dataObj;
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  console.log('data.selectData', data.selectData)
   return (
     <FormControl
       w={data.col === true ? "1/2" : "full"}
@@ -75,11 +75,7 @@ export const SelectForm = (dataObj: any) => {
         onSelectItem={(value) => {
           data.setData({ ...data.formData, [data.name]: value?.id })
         }}
-        dataSet={[
-          { id: '1', title: 'Alpha' },
-          { id: '2', title: 'Beta' },
-          { id: '3', title: 'Gamma' },
-        ]}
+        dataSet={data.selectData}
         inputContainerStyle={{
           backgroundColor: 'transparent',
           borderWidth: 1,
