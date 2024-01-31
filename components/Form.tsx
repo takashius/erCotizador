@@ -73,7 +73,7 @@ export const SelectForm = (dataObj: any) => {
         ignoreAccents={true}
         initialValue={{ id: '2' }}
         onSelectItem={(value) => {
-          data.setData({ ...data.formData, [data.name]: value })
+          data.setData({ ...data.formData, [data.name]: value?.id })
         }}
         dataSet={[
           { id: '1', title: 'Alpha' },
