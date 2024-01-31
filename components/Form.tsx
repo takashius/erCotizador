@@ -9,6 +9,7 @@ import {
   Icon,
 } from "native-base";
 import { useState } from "react";
+import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
 
 export const InputForm = ({ data }: { data: any }) => {
   return (
@@ -47,23 +48,9 @@ export const InputForm = ({ data }: { data: any }) => {
   );
 };
 
-export const SelectForm = (data: any) => {
-  const dataTemp = [
-    { label: 'Option 1', value: '1' },
-    { label: 'Option 2', value: '2' },
-    { label: 'Option 3', value: '3' },
-    { label: 'Option 4', value: '4' },
-    { label: 'Option 5', value: '5' }
-  ];
-  const [dataRender, setDataRender] = useState(dataTemp);
-  const filterData = (search: string) => {
-    setDataRender(
-      dataTemp.filter(
-        (item: any) =>
-          item.label.toUpperCase().includes(search.toUpperCase())
-      )
-    );
-  }
+export const SelectForm = (dataObj: any) => {
+  const { data } = dataObj;
+  const [selectedItem, setSelectedItem] = useState<any>(null);
   return (
     <FormControl
       w={data.col === true ? "1/2" : "full"}
@@ -71,64 +58,54 @@ export const SelectForm = (data: any) => {
       {...(data.require && { isRequired: true })}
     // isInvalid={`${data.name}` in data.errors}
     >
-      <FormControl.Label>Choose service</FormControl.Label>
-
-      <Select w={'full'} variant="outline"
-        minWidth="200"
-        accessibilityLabel={"Choose Service"}
-        placeholder={"Choose Service"}
-        _selectedItem={{ bg: "coolGray.200" }}
-        mt={1}
-        _actionSheetBody={{
-          ListHeaderComponent: <FormControl px={3} mb={3}>
-            <Input
-              px={15}
-              placeholder={t("filter")}
-              py={2}
-              borderRadius="4"
-              fontSize={14}
-              // value={searchValue}
-              _focus={{ bg: 'white', borderColor: 'darkBlue.600' }}
-              type='text'
-              onChangeText={(value: string) => {
-                filterData(value);
-              }}
-              InputRightElement={
-                <Icon
-                  m="2"
-                  ml="3"
-                  size="6"
-                  color="gray.400"
-                  as={<MaterialIcons name="search" />}
-                />
-              }
-            />
-          </FormControl>
+      <FormControl.Label
+        _text={{
+          bold: true,
         }}
       >
-        <Input
-          placeholder="Search"
-          variant="filled"
-          width="100%"
-          borderRadius="10"
-          py="1"
-          px="2"
-          borderWidth="0"
-        />
-        {(dataRender && dataRender.length) ? dataRender
-          .map((item: any) => {
-            return (
-              <Select.Item
-                label={item.label}
-                value={item.value}
-              />
-            )
-          }) : ""
-        }
-      </Select>
-      <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-        Please make a selection!
-      </FormControl.ErrorMessage>
+        {data.title}
+      </FormControl.Label>
+      <AutocompleteDropdown
+        clearOnFocus={true}
+        closeOnBlur={true}
+        closeOnSubmit={true}
+        direction="up"
+        ignoreAccents={true}
+        initialValue={{ id: '2' }}
+        onSelectItem={(value) => {
+          data.setData({ ...data.formData, [data.name]: value })
+        }}
+        dataSet={[
+          { id: '1', title: 'Alpha' },
+          { id: '2', title: 'Beta' },
+          { id: '3', title: 'Gamma' },
+        ]}
+        inputContainerStyle={{
+          backgroundColor: 'transparent',
+          borderWidth: 1,
+          borderColor: '#d4d4d4',
+          borderRadius: 5
+        }}
+        textInputProps={{
+          placeholder: data.placeholder,
+          placeholderTextColor: '#a3a3a3',
+          autoCorrect: false,
+          autoCapitalize: 'none',
+          style: {
+            color: '#a3a3a3',
+            paddingLeft: 14,
+            fontSize: 13
+          }
+        }}
+        inputHeight={32}
+      />
+      {`${data.name}` in data.errors ? (
+        <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+          {data.errors[data.name]}
+        </FormControl.ErrorMessage>
+      ) : (
+        <FormControl.HelperText>{data.description}</FormControl.HelperText>
+      )}
     </FormControl>
-  );
+  )
 };

@@ -4,6 +4,7 @@ import { useOptions, Spinner, InputForm, read, SelectForm } from "../../../compo
 import { Box, Button, VStack } from "native-base";
 import { t } from "i18next";
 import { DatePicker } from 'react-native-woodpicker';
+import { KeyboardAvoidingView, Platform } from "react-native";
 
 export default () => {
   const params = useLocalSearchParams();
@@ -17,6 +18,7 @@ export default () => {
     description: "",
     number: "",
     date: "",
+    customer: "",
     id: "",
   };
   const [formData, setData] = useState<any>(defaultData);
@@ -106,13 +108,15 @@ export default () => {
       />
       <SelectForm
         data={{
-          name: "date",
+          name: "customer",
           errors,
           readonly: true,
-          title: t("date"),
-          placeholder: t("cotiza.placeholder.date"),
-          value: formData.date,
+          title: t("customer.detail"),
+          placeholder: t("cotiza.placeholder.customer"),
+          value: formData.customer,
           require: true,
+          formData,
+          setData,
         }} />
       <Button bgColor={"blue.500"} rounded={"3xl"} onPress={onSubmit} mt="5">
         {t("submit")}
@@ -131,7 +135,12 @@ export default () => {
           }
         )}
       />
-      {renderForm()}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        enabled>
+        {renderForm()}
+      </KeyboardAvoidingView>
     </Box>
   )
 }

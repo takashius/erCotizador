@@ -93,7 +93,8 @@
             "title": "Título de la cotización",
             "description": "Descripción de la cotización",
             "number": "Número de la factura",
-            "date": "Fecha de la cotización"
+            "date": "Fecha de la cotización",
+            "customer": "Selecione un cliente"
         }
     }
 }

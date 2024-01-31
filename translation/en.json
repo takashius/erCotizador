@@ -93,7 +93,8 @@
             "title": "Quote title",
             "description": "Quote description",
             "number": "Invoice number",
-            "date": "Quote date"
+            "date": "Quote date",
+            "customer": "Select a customer"
         }
     }
 }

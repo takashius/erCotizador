@@ -8,10 +8,12 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
+import { useHeaderHeight } from '@react-navigation/elements';
 import { NativeBaseProvider } from "native-base";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
+import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown'
 import common_en from "../translation/en.json";
 import common_es from "../translation/es.json";
 import { read, write } from "../components";
@@ -93,9 +95,11 @@ function RootLayoutNav() {
       <NativeBaseProvider>
         <I18nextProvider i18n={i18next}>
           <QueryClientProvider client={queryClient}>
-            <Stack>
-              <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-            </Stack>
+            <AutocompleteDropdownContextProvider>
+              <Stack>
+                <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+              </Stack>
+            </AutocompleteDropdownContextProvider>
           </QueryClientProvider>
         </I18nextProvider>
       </NativeBaseProvider>
