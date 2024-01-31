@@ -8,6 +8,8 @@ import { KeyboardAvoidingView, Platform } from "react-native";
 import { CotizaForm } from "../../../types/cotiza";
 import { useCreateCotiza, useUpdateCotiza } from "../../../api/cotiza";
 import { useListSimpleCustomer } from "../../../api/customer";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { InputDate } from "../../../components/Form";
 
 export default () => {
   const params = useLocalSearchParams();
@@ -90,6 +92,10 @@ export default () => {
     }
   };
 
+  const handleText = (): string => pickedDate
+    ? pickedDate.toDateString()
+    : "No value Selected";
+
   const renderForm = () => (
     <VStack mx="3">
       <InputForm
@@ -139,18 +145,34 @@ export default () => {
         iosMode="date"
         InputComponent={(data) => {
           return (
-            <InputForm
-              data={{
-                name: "date",
-                errors,
-                readonly: true,
-                onItemClick: data.togglePicker,
-                title: t("date"),
-                placeholder: t("cotiza.placeholder.date"),
-                value: formData.date,
-                require: true,
-              }}
-            />
+            <>
+              {Platform.OS === 'ios' ?
+                <InputForm
+                  data={{
+                    name: "date",
+                    errors,
+                    onItemClick: data.togglePicker,
+                    readonly: true,
+                    title: t("date"),
+                    placeholder: t("cotiza.placeholder.date"),
+                    value: formData.date,
+                    require: true,
+                  }}
+                />
+                :
+                <InputDate
+                  data={{
+                    name: "date",
+                    errors,
+                    onItemClick: data.togglePicker,
+                    title: t("date"),
+                    placeholder: t("cotiza.placeholder.date"),
+                    value: formData.date,
+                    require: true,
+                  }}
+                />
+              }
+            </>
           )
         }}
         locale={locationUser}

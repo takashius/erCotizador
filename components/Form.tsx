@@ -1,14 +1,12 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import { t } from "i18next";
 import {
   FormControl,
   Input,
-  Select,
-  CheckIcon,
+  Text,
   WarningOutlineIcon,
-  Icon,
+  Box,
 } from "native-base";
-import { useState } from "react";
+import { Platform, TouchableWithoutFeedback } from "react-native";
 import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
 
 export const InputForm = ({ data }: { data: any }) => {
@@ -47,6 +45,45 @@ export const InputForm = ({ data }: { data: any }) => {
     </FormControl>
   );
 };
+
+export const InputDate = ({ data }: { data: any }) => {
+
+  return (
+    <TouchableWithoutFeedback onPress={data.onItemClick}>
+      <FormControl
+        w={data.col === true ? "1/2" : "full"}
+        px={data.col === true ? "2" : 0}
+        {...(data.require && { isRequired: true })}
+        isInvalid={`${data.name}` in data.errors}
+      >
+        <FormControl.Label
+          _text={{
+            bold: true,
+          }}
+        >
+          {data.title}
+        </FormControl.Label>
+
+        <Box
+          borderColor={'#d4d4d4'}
+          borderWidth={1}
+          borderRadius={'5'}
+          height={Platform.OS == 'ios' ? "1/3" : "12"}
+          padding={"2"}
+        >
+          <Text>{data.value ? data.value : t("cotiza.placeholder.date")}</Text>
+        </Box>
+        {`${data.name}` in data.errors ? (
+          <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+            {data.errors[data.name]}
+          </FormControl.ErrorMessage>
+        ) : (
+          <FormControl.HelperText>{data.description}</FormControl.HelperText>
+        )}
+      </FormControl>
+    </TouchableWithoutFeedback>
+  )
+}
 
 export const SelectForm = (dataObj: any) => {
   const { data } = dataObj;
