@@ -1,5 +1,14 @@
 import { type CustomerShort, type CreatedShort } from "./general";
 
+export interface CotizaForm {
+    title: string;
+    description: string;
+    number: number;
+    date: string;
+    customer: string;
+    id?: string;
+}
+
 export interface Cotiza {
     title: string;
     description: string;

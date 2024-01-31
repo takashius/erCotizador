@@ -1,10 +1,12 @@
-import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
+import { Stack, router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import { useOptions, Spinner, InputForm, read, SelectForm } from "../../../components";
 import { Box, Button, VStack } from "native-base";
 import { t } from "i18next";
 import { DatePicker } from 'react-native-woodpicker';
 import { KeyboardAvoidingView, Platform } from "react-native";
+import { CotizaForm } from "../../../types/cotiza";
+import { useCreateCotiza, useUpdateCotiza } from "../../../api/cotiza";
 
 export default () => {
   const params = useLocalSearchParams();
@@ -13,15 +15,27 @@ export default () => {
   const [errors, setErrors] = useState({});
   const [locationUser, setLocationUser] = useState<string>('');
   const [pickedDate, setPickedDate] = useState<Date | null>(null);
+  const createMutation = useCreateCotiza();
+  const updateMutation = useUpdateCotiza();
   const defaultData = {
     title: "",
     description: "",
-    number: "",
+    number: 0,
     date: "",
     customer: "",
     id: "",
   };
-  const [formData, setData] = useState<any>(defaultData);
+
+  const transformData = (params: any) => ({
+    title: params.title,
+    description: params.description,
+    number: Number(params.number),
+    date: params.date,
+    customer: params.customer._id,
+    id: params.id,
+  });
+
+  const [formData, setData] = useState<CotizaForm>(post === "new" ? defaultData : transformData(params));
 
   useEffect(() => {
     if (pickedDate) {
@@ -48,7 +62,7 @@ export default () => {
     } else if (!formData.number) {
       setErrors({ ...errors, number: t("cotiza.validations.numberRequired") });
       return false;
-    } else if (formData.price < 0) {
+    } else if (formData.number < 0) {
       setErrors({ ...errors, number: t("cotiza.validations.numberIncorrect") });
       return false;
     } else if (formData.date === undefined || formData.date === '') {
@@ -63,14 +77,15 @@ export default () => {
   };
 
   const onSubmit = () => {
-    console.log('formData', formData)
     validate() && submitForm();
   };
 
   const submitForm = () => {
     console.log('formData',)
     if (post === "new") {
+      createMutation.mutate(formData);
     } else {
+      updateMutation.mutate(formData);
     }
   };
 
@@ -158,22 +173,28 @@ export default () => {
   );
 
   return (
-    <Box bg="white" safeArea flex="1">
-      <Stack.Screen
-        options={useOptions(
-          {
-            title: post == "new" ? t("cotiza.new") : t("cotiza.edit"),
-            navigation,
-            back: true
-          }
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      enabled>
+      <Box bg="white" safeArea flex="1">
+        <Stack.Screen
+          options={useOptions(
+            {
+              title: post == "new" ? t("cotiza.new") : t("cotiza.edit"),
+              navigation,
+              back: true
+            }
+          )}
+        />
+        {createMutation.isPending || updateMutation.isPending ? (
+          <Spinner />
+        ) : createMutation.isSuccess || updateMutation.isSuccess ? (
+          router.back()
+        ) : (
+          renderForm()
         )}
-      />
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        enabled>
-        {renderForm()}
-      </KeyboardAvoidingView>
-    </Box>
+      </Box>
+    </KeyboardAvoidingView>
   )
 }
