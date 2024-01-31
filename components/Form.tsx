@@ -50,7 +50,6 @@ export const InputForm = ({ data }: { data: any }) => {
 
 export const SelectForm = (dataObj: any) => {
   const { data } = dataObj;
-  console.log('data.selectData', data.selectData)
   return (
     <FormControl
       w={data.col === true ? "1/2" : "full"}
