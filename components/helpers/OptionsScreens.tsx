@@ -1,6 +1,6 @@
 import React from "react";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
-import { Row, HamburgerIcon, Icon, Menu } from "native-base";
+import { Row, HamburgerIcon, Icon, Menu, Text } from "native-base";
 import { Pressable } from "react-native";
 import { type MenuItem } from "../../types/general";
 import { router } from "expo-router";
@@ -63,6 +63,10 @@ export const useOptions = ({
     </Row>
   )
 
+  const renderTitle = () => (
+    <Text ml="1.5" color={'white'} fontWeight={"semibold"} fontSize={"md"}>{title}</Text>
+  )
+
   if (back) {
     return {
       headerShown: true,
@@ -72,8 +76,7 @@ export const useOptions = ({
         backgroundColor: "#2196F3",
       },
       headerRight: () => displayRight(),
-      headerTintColor: "white",
-      title,
+      headerTitle: () => renderTitle(),
       headerLeft: () => {
         return (
           <Icon
@@ -95,8 +98,7 @@ export const useOptions = ({
         backgroundColor: "#2196F3",
       },
       headerRight: () => displayRight(),
-      headerTintColor: "white",
-      title,
+      headerTitle: () => renderTitle(),
       headerLeft: () => {
         return (
           <Icon
