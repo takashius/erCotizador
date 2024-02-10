@@ -1,4 +1,6 @@
+import { CustomerBase } from "./customer";
 import { type CustomerShort, type CreatedShort } from "./general";
+import { ProductForm } from "./products";
 
 export interface CotizaForm {
     title: string;
@@ -9,7 +11,7 @@ export interface CotizaForm {
     id?: string;
 }
 
-export interface Cotiza {
+export interface CotizaBase {
     title: string;
     description: string;
     status: string;
@@ -19,7 +21,15 @@ export interface Cotiza {
     rate: number;
     discount: number;
     typeDiscount: string;
-    customer: CustomerShort;
     created: CreatedShort;
     _id: string;
+}
+
+export interface Cotiza extends CotizaBase {
+    customer: CustomerShort;
+}
+
+export interface CotizaFull extends CotizaBase {
+    customer?: CustomerBase;
+    products?: ProductForm;
 }

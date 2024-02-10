@@ -6,6 +6,18 @@ export interface ProductForm {
     price: number;
     iva: boolean;
     id: string;
+    amount?: number;
+    master?: string;
+}
+
+export interface ProductCotiza {
+    master: string;
+    name: string;
+    description: string;
+    price: number;
+    iva: boolean;
+    id: string;
+    amount?: number;
 }
 
 export interface Product extends ProductForm {

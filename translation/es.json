@@ -13,6 +13,7 @@
     "city": "Ciudad",
     "default": "Por defecto",
     "price": "Precio",
+    "amount": "Cantidad",
     "number": "Número",
     "rif": "Rif",
     "email": "Correo",
@@ -29,7 +30,9 @@
         "logout": "Salir"
     },
     "products": {
+        "title": "Productos",
         "new": "Nuevo producto",
+        "add": "Agregar producto",
         "edit": "Editar producto",
         "nameDescription": "El nombre debe contener al menos 3 caracteres.",
         "priceDescription": "Debe colocar el monto sin separador de miles",
@@ -88,13 +91,15 @@
     "cotiza": {
         "new": "Nueva cotización",
         "edit": "Editar cotización",
+        "detail": "Cotización",
         "titleDescription": "Se usa para identificar la cotización.",
         "placeholder": {
             "title": "Título de la cotización",
             "description": "Descripción de la cotización",
             "number": "Número de la factura",
             "date": "Fecha de la cotización",
-            "customer": "Selecione un cliente"
+            "customer": "Selecione un cliente",
+            "product": "Selecione un producto"
         },
         "validations": {
             "titleRequired": "El título es requerido",

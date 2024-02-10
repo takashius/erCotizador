@@ -1,66 +1,48 @@
-import { Button, Modal } from "native-base";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import AddressForm from "./AddressForm";
+import { useEffect, useState } from "react";
+import { ProductForm } from "../types/products";
+import { ModalProductProps } from "../types/general";
+import { useCreateProduct, useUpdateProduct } from "../api/cotiza";
 import { t } from "i18next";
-import { Address } from "../types/customer";
-import { useCreateAddress, useUpdateAddress } from "../api/customer";
+import { Button, Modal } from "native-base";
 import Spinner from "./helpers/Spinner";
-import { ModalAddressProps } from "../types/general";
+import FormProduct from "./FormProduct";
+import { useListSimpleProduct } from "../api/product";
 
-const ModalAddress = ({
-  idCustomer,
+const ModalProducts = ({
+  idCotiza,
   post,
   open,
   setOpen,
   setSubmit,
   params,
-}: ModalAddressProps) => {
-  const defaultData: Address = {
-    title: "",
-    city: "",
-    line1: "",
-    line2: "",
-    zip: "",
-    id: idCustomer,
-    default: false,
+}: ModalProductProps) => {
+  const defaultData: ProductForm = {
+    master: "",
+    name: "",
+    description: "",
+    price: 0,
+    id: idCotiza,
+    amount: 1,
+    iva: false,
   };
-
-  const transformData = (params: Address) => ({
-    title: params?.title ? params.title : "",
-    city: params?.city ? params.city : "",
-    line1: params?.line1 ? params.line1 : "",
-    line2: params?.line2 ? params.line2 : "",
-    zip: params?.zip ? params.zip : "",
-    id: params?.id!,
-    idAddress: params?._id!,
-    default: params?.default!,
-  });
   const [errors, setErrors] = useState<Object>({});
-  const [formData, setData] = useState<Address>(defaultData);
-  const createMutation = useCreateAddress();
-  const updateMutation = useUpdateAddress();
+  const [formData, setData] = useState<ProductForm>(defaultData);
+  const createMutation = useCreateProduct();
+  const updateMutation = useUpdateProduct();
+  const productList = useListSimpleProduct();
 
-  const validate = (formData: Address) => {
-    if (formData.title === undefined || formData.title === "") {
-      setErrors({ ...errors, title: t("address.validations.title") });
-      return false;
-    } else if (!formData.city) {
-      setErrors({ ...errors, city: t("address.validations.city") });
-      return false;
-    } else if (!formData.line1) {
-      setErrors({ ...errors, line1: t("address.validations.line1") });
-      return false;
-    } else if (!formData.zip) {
-      setErrors({ ...errors, zip: t("address.validations.zip") });
+  const validate = (formData: ProductForm) => {
+    if (formData.price === 0 || formData.price === undefined) {
+      setErrors({ ...errors, price: t("products.validations.priceRequired") });
       return false;
     }
     setErrors({});
     return true;
   };
 
-  const onSubmit = (formData: Address) => {
+  const onSubmit = (formData: ProductForm) => {
     if (validate(formData)) {
-      formData.id = idCustomer;
+      formData.id = idCotiza;
       setData(defaultData);
       if (post === "new") {
         createMutation.mutate(formData);
@@ -90,24 +72,35 @@ const ModalAddress = ({
     setData(defaultData);
   };
 
+  const transformData = (params: ProductForm) => ({
+    master: params?.master ? params.master : "",
+    name: params?.name ? params.name : "",
+    description: params?.description ? params.description : "",
+    price: params?.price ? params.price : 0,
+    amount: params?.amount ? params.amount : 1,
+    iva: params?.iva ? params.iva : false,
+    id: params?.id!
+  });
+
   return (
     <Modal isOpen={open} onClose={() => onClose()} safeAreaTop={true}>
       <Modal.Content maxWidth="450">
         <Modal.CloseButton />
         <Modal.Header>
-          {post === "new" ? t("address.new") : t("address.edit")}
+          {post === "new" ? t("products.add") : t("products.edit")}
         </Modal.Header>
         <Modal.Body>
           {createMutation.isPending ? (
             <Spinner />
           ) : (
-            <AddressForm
+            <FormProduct
               post={"new"}
               params={params}
               errors={errors}
               setErrors={setErrors}
               formData={formData}
               setData={setData}
+              productList={productList}
             />
           )}
         </Modal.Body>
@@ -132,6 +125,6 @@ const ModalAddress = ({
       </Modal.Content>
     </Modal>
   );
-};
 
-export default ModalAddress;
+}
+export default ModalProducts;

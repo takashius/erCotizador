@@ -92,7 +92,6 @@ export const SelectForm = (dataObj: any) => {
       w={data.col === true ? "1/2" : "full"}
       px={data.col === true ? "2" : 0}
       {...(data.require && { isRequired: true })}
-    // isInvalid={`${data.name}` in data.errors}
     >
       <FormControl.Label
         _text={{

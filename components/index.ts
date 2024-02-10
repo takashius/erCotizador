@@ -17,6 +17,7 @@ import { FormatDate } from "./helpers/Utils";
 import Card from "./helpers/Card";
 import AddressForm from "./AddressForm";
 import ModalAddress from "./ModalAddress";
+import ModalProducts from "./ModalProducts";
 import CustomerForm from "./CustomerForm";
 
 export {
@@ -41,5 +42,6 @@ export {
     Card,
     AddressForm,
     ModalAddress,
+    ModalProducts,
     CustomerForm as FormCustomer
 }

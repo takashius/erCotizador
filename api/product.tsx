@@ -1,7 +1,8 @@
-import { useQuery, useMutation, QueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
 import { Product, ProductForm } from "../types/products";
 import { write } from "../components/helpers/LocalStorage";
+import { Select } from "../types/general";
 
 export const useListProduct = () => {
   const query = useQuery<Product[]>({
@@ -9,6 +10,17 @@ export const useListProduct = () => {
     retry: false,
     queryFn: () => {
       return ERDEAxios.get("/product");
+    },
+  });
+  return query;
+};
+
+export const useListSimpleProduct = () => {
+  const query = useQuery<Select[]>({
+    queryKey: ["productSelectList"],
+    retry: false,
+    queryFn: () => {
+      return ERDEAxios.get("/product/list");
     },
   });
   return query;

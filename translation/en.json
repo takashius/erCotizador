@@ -13,6 +13,7 @@
     "city": "City",
     "default": "Default",
     "price": "Price",
+    "amount": "Amount",
     "number": "Number",
     "rif": "Rif",
     "email": "Email",
@@ -29,6 +30,8 @@
         "logout": "Logout"
     },
     "products": {
+        "title": "Products",
+        "add": "Add product",
         "new": "New Product",
         "edit": "Edit Product",
         "nameDescription": "Name should contain at least 3 character.",
@@ -88,6 +91,7 @@
     "cotiza": {
         "new": "New quote",
         "edit": "Edit quote",
+        "detail": "Quote",
         "titleDescription": "Used to identify the quote.",
         "placeholder": {
             "title": "Quote title",
