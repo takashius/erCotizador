@@ -12,11 +12,11 @@ import {
 } from "native-base";
 import Card from "./helpers/Card";
 import { AntDesign, FontAwesome, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
-import { type Product } from "../types/products";
+import { ProductForm } from "../types/products";
 import { t } from "i18next";
 import { Pressable } from "react-native";
 
-const CardProductItem = ({ item, openLink = true, onClick }: { item: Product, openLink?: Boolean, onClick?: any }) => {
+const CardProductItem = ({ item, openLink = true, onClick }: { item: ProductForm, openLink?: Boolean, onClick?: any }) => {
   const iva = false;
 
   const renderCard = () => (
@@ -83,7 +83,7 @@ const CardProductItem = ({ item, openLink = true, onClick }: { item: Product, op
           pathname: "/(drawer)/products/form",
           params: {
             post: "edit",
-            id: item._id,
+            id: item._id!,
             name: item.name,
             description: item.description,
             price: item.price,

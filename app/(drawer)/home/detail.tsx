@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Stack, router, useLocalSearchParams, useNavigation } from "expo-router";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { SwipeListView } from "react-native-swipe-list-view";
-import { View } from "react-native";
+import { Animated, View } from "react-native";
 import {
   Box,
   Heading,
@@ -16,7 +16,6 @@ import {
 import {
   useOptions,
   Spinner,
-  ModalAddress,
   DeleteButton,
   read, remove, Card, CardProductItem, ModalProducts
 } from "../../../components";
@@ -30,6 +29,7 @@ export default () => {
   const [toEdit, setToEdit] = useState<ProductForm>();
   const [open, setOpen] = useState(false);
   const [post, setPost] = useState<string>("");
+  const [dataList, setDataList] = useState<ProductForm[] | undefined>();
 
   const { id } = params;
   const navigation = useNavigation();
@@ -37,11 +37,34 @@ export default () => {
   const deleteProductMutation = useDeleteProduct();
 
   useEffect(() => {
+    setDataList(responseQuery.data?.products);
+  }, [responseQuery.data]);
+
+  useEffect(() => {
     if (submit) {
       setSubmit(false);
       responseQuery.refetch();
     }
   }, [submit]);
+
+  const deleteRow = (rowMap: any, rowKey: any) => {
+    if (dataList !== undefined) {
+      rowMap[rowKey].closeRow();
+      const config = {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      };
+      Animated.timing(new Animated.Value(50), config).start(() => {
+        const newData = [...dataList];
+        const prevIndex = dataList.findIndex(
+          (item: any) => item._id === rowKey
+        );
+        newData.splice(prevIndex, 1);
+        setDataList(newData);
+      });
+    }
+  };
 
   const onEditClick = (item: ProductForm) => {
     setOpen(true);
@@ -153,11 +176,11 @@ export default () => {
             </Heading>
           </_Stack>
 
-          {responseQuery.isFetching ? (
+          {responseQuery.isFetching || deleteProductMutation.isPending ? (
             <Spinner />
           ) : (
             <SwipeListView
-              data={responseQuery.data?.products!}
+              data={dataList}
               useFlatList={true}
               disableRightSwipe={true}
               closeOnRowBeginSwipe={true}
@@ -182,6 +205,7 @@ export default () => {
                     rowMap={rowMap}
                     deleteMutation={deleteProductMutation}
                     idParent={responseQuery.data!._id}
+                    deleteRow={deleteRow}
                   />
                 </View>
               )}

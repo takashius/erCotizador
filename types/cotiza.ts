@@ -31,5 +31,5 @@ export interface Cotiza extends CotizaBase {
 
 export interface CotizaFull extends CotizaBase {
     customer?: CustomerBase;
-    products?: ProductForm;
+    products?: ProductForm[];
 }
