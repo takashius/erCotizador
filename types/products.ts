@@ -6,6 +6,7 @@ export interface ProductForm {
     price: number;
     iva: boolean;
     id: string;
+    _id?: string;
     amount?: number;
     master?: string;
 }

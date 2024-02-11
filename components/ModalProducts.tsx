@@ -6,7 +6,7 @@ import { t } from "i18next";
 import { Button, Modal } from "native-base";
 import Spinner from "./helpers/Spinner";
 import FormProduct from "./FormProduct";
-import { useListSimpleProduct } from "../api/product";
+import { useListProduct } from "../api/product";
 
 const ModalProducts = ({
   idCotiza,
@@ -29,7 +29,7 @@ const ModalProducts = ({
   const [formData, setData] = useState<ProductForm>(defaultData);
   const createMutation = useCreateProduct();
   const updateMutation = useUpdateProduct();
-  const productList = useListSimpleProduct();
+  const productList = useListProduct();
 
   const validate = (formData: ProductForm) => {
     if (formData.price === 0 || formData.price === undefined) {
@@ -43,11 +43,12 @@ const ModalProducts = ({
   const onSubmit = (formData: ProductForm) => {
     if (validate(formData)) {
       formData.id = idCotiza;
-      setData(defaultData);
+      console.log('formData', JSON.stringify(formData, null, 2));
+      // setData(defaultData);
       if (post === "new") {
-        createMutation.mutate(formData);
+        // createMutation.mutate(formData);
       } else {
-        updateMutation.mutate(formData);
+        // updateMutation.mutate(formData);
       }
     }
   };

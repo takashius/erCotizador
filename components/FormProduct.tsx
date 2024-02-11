@@ -1,18 +1,33 @@
 import { Box, HStack, Switch, Text } from "native-base";
 import { ProductsFormProps } from "../types/general";
-import { InputForm, SelectForm } from "./Form";
+import { InputForm, SelectDropdownForm, SelectForm } from "./Form";
 import { t } from "i18next";
 import { Spinner } from ".";
+import { useEffect, useState } from "react";
+import { ProductForm } from "../types/products";
 
 const FormProduct = (props: ProductsFormProps) => {
   const { post, params, errors, setErrors, formData, setData, productList } = props;
+  const [selectedProd, setSelectedProd] = useState<ProductForm>();
+
+
+
+  const ActiveSwitch = () => {
+    if (selectedProd) {
+      return selectedProd.iva;
+    } else if (params) {
+      return params['iva'] === true;
+    } else {
+      return false
+    }
+  }
 
   return (
     <Box>
       {productList.isPending ? (
         <Spinner />
       ) : (
-        <SelectForm
+        <SelectDropdownForm
           data={{
             name: "master",
             errors,
@@ -23,7 +38,7 @@ const FormProduct = (props: ProductsFormProps) => {
             value: formData.master,
             require: true,
             formData,
-            setData,
+            setData
           }} />
       )}
       <InputForm
@@ -32,7 +47,7 @@ const FormProduct = (props: ProductsFormProps) => {
           errors,
           title: t("price"),
           placeholder: t("products.placeholder.price"),
-          value: String(formData.price),
+          value: selectedProd ? String(selectedProd.price) : String(formData.price),
           formData,
           setData,
           keyboardType: "number-pad",
@@ -60,7 +75,7 @@ const FormProduct = (props: ProductsFormProps) => {
           onTrackColor="blue.200"
           onThumbColor="blue.500"
           offThumbColor="blue.50"
-          defaultIsChecked={params ? params["iva"] === "true" : false}
+          defaultIsChecked={ActiveSwitch()}
           onValueChange={() => {
             setData({ ...formData, iva: formData?.iva });
           }}

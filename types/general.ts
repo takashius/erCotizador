@@ -34,7 +34,7 @@ export interface AddressFormProps extends FormProps {
 
 export interface ProductsFormProps extends FormProps {
     formData: ProductForm;
-    productList: UseQueryResult<Select[], Error>;
+    productList: UseQueryResult<ProductForm[], Error>;
     setData: Dispatch<SetStateAction<ProductForm>>;
 }
 
