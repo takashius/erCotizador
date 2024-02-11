@@ -108,7 +108,6 @@ export default () => {
               {t("customer.detail")}
             </Heading>
           </_Stack>
-
           <HStack justifyContent="center">
             <Card>
               <_Stack p="4" space={0}>

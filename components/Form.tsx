@@ -163,7 +163,6 @@ export const SelectDropdownForm = (dataObj: any) => {
       </FormControl.Label>
       <SelectDropdown
         data={countries}
-        defaultValueByIndex={1}
         onSelect={(selectedItem, index) => {
           data.setData({
             ...data.formData,

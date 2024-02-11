@@ -9,6 +9,7 @@ export interface ProductForm {
     _id?: string;
     amount?: number;
     master?: string;
+    idProduct?: string;
 }
 
 export interface ProductCotiza {

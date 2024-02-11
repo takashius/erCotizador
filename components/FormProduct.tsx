@@ -1,32 +1,16 @@
-import { Box, HStack, Switch, Text } from "native-base";
+import { Box, HStack, Heading, Switch, Text } from "native-base";
 import { ProductsFormProps } from "../types/general";
-import { InputForm, SelectDropdownForm, SelectForm } from "./Form";
+import { InputForm, SelectDropdownForm } from "./Form";
 import { t } from "i18next";
-import { Spinner } from ".";
 import { useEffect, useState } from "react";
-import { ProductForm } from "../types/products";
 
 const FormProduct = (props: ProductsFormProps) => {
   const { post, params, errors, setErrors, formData, setData, productList } = props;
-  const [selectedProd, setSelectedProd] = useState<ProductForm>();
-
-
-
-  const ActiveSwitch = () => {
-    if (selectedProd) {
-      return selectedProd.iva;
-    } else if (params) {
-      return params['iva'] === true;
-    } else {
-      return false
-    }
-  }
+  const [valueIva, setValueIva] = useState(params ? params['iva'] : false);
 
   return (
     <Box>
-      {productList.isPending ? (
-        <Spinner />
-      ) : (
+      {post === 'new' ?
         <SelectDropdownForm
           data={{
             name: "master",
@@ -39,15 +23,18 @@ const FormProduct = (props: ProductsFormProps) => {
             require: true,
             formData,
             setData
-          }} />
-      )}
+          }} /> :
+        <Heading size="md" mb="2" alignSelf={"center"} color={"blue.500"}>
+          {formData.name}
+        </Heading>
+      }
       <InputForm
         data={{
           name: "price",
           errors,
           title: t("price"),
           placeholder: t("products.placeholder.price"),
-          value: selectedProd ? String(selectedProd.price) : String(formData.price),
+          value: String(formData.price),
           formData,
           setData,
           keyboardType: "number-pad",
@@ -75,9 +62,10 @@ const FormProduct = (props: ProductsFormProps) => {
           onTrackColor="blue.200"
           onThumbColor="blue.500"
           offThumbColor="blue.50"
-          defaultIsChecked={ActiveSwitch()}
-          onValueChange={() => {
-            setData({ ...formData, iva: formData?.iva });
+          value={valueIva}
+          onValueChange={(value) => {
+            setData({ ...formData, iva: value });
+            setValueIva(value);
           }}
         />
       </HStack>

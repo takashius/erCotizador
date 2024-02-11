@@ -24,6 +24,7 @@ const ModalProducts = ({
     id: idCotiza,
     amount: 1,
     iva: false,
+    idProduct: ''
   };
   const [errors, setErrors] = useState<Object>({});
   const [formData, setData] = useState<ProductForm>(defaultData);
@@ -43,12 +44,11 @@ const ModalProducts = ({
   const onSubmit = (formData: ProductForm) => {
     if (validate(formData)) {
       formData.id = idCotiza;
-      console.log('formData', JSON.stringify(formData, null, 2));
-      // setData(defaultData);
+      setData(defaultData);
       if (post === "new") {
-        // createMutation.mutate(formData);
+        createMutation.mutate(formData);
       } else {
-        // updateMutation.mutate(formData);
+        updateMutation.mutate(formData);
       }
     }
   };
@@ -80,7 +80,8 @@ const ModalProducts = ({
     price: params?.price ? params.price : 0,
     amount: params?.amount ? params.amount : 1,
     iva: params?.iva ? params.iva : false,
-    id: params?.id!
+    id: params?.id!,
+    idProduct: params?._id!
   });
 
   return (
@@ -91,11 +92,11 @@ const ModalProducts = ({
           {post === "new" ? t("products.add") : t("products.edit")}
         </Modal.Header>
         <Modal.Body>
-          {createMutation.isPending ? (
+          {createMutation.isPending || updateMutation.isPending ? (
             <Spinner />
           ) : (
             <FormProduct
-              post={"new"}
+              post={post}
               params={params}
               errors={errors}
               setErrors={setErrors}
