@@ -62,7 +62,7 @@ const CustomDrawer = (props: any) => {
             inactiveTintColor="white"
             label={t("auth.logout")}
             onPress={() => {
-              router.replace("/login");
+              router.replace("/logout");
             }}
           />
         </View>
