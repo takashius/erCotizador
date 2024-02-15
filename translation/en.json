@@ -6,6 +6,7 @@
     "submit": "Submit",
     "tax": "Tax",
     "delete": "Delete",
+    "edit": "Edit",
     "deleteMessage": "Surely you want to erase? \n This action can not be undone",
     "name": "Name",
     "lastname": "Lastname",
@@ -20,6 +21,8 @@
     "date": "Date",
     "description": "Description",
     "datePicker": "Date Picker",
+    "sendMail": "Send quote by email",
+    "pdf": "Generate in PDF",
     "modules": {
         "cotiza": "Quotes",
         "customer": "Customers",

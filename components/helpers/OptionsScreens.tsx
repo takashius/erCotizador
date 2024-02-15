@@ -1,6 +1,6 @@
 import React from "react";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
-import { Row, HamburgerIcon, Icon, Menu, Text } from "native-base";
+import { AntDesign, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { Row, HamburgerIcon, Icon, Menu, Text, Button, HStack } from "native-base";
 import { Pressable } from "react-native";
 import { type MenuItem } from "../../types/general";
 import { router } from "expo-router";
@@ -27,7 +27,7 @@ export const useOptions = ({
     if (display) {
       return (
         <Menu
-          w="190"
+          marginX={1}
           trigger={(triggerProps) => {
             return (
               <Pressable
@@ -41,7 +41,10 @@ export const useOptions = ({
         >
           {menuItems && menuItems.map((item) => (
             <Menu.Item onPress={item.onPress} isDisabled={item.isDisabled}>
-              {item.title}
+              <HStack>
+                <Icon color={"blue.500"} size="lg" as={<MaterialIcons name={item.icon} />} />
+                <Text color={"blue.500"} ml={5}>{item.title}</Text>
+              </HStack>
             </Menu.Item>
           ))}
         </Menu>
@@ -54,6 +57,7 @@ export const useOptions = ({
   const displayRight = () => (
     <Row>
       {edit && <Icon
+        marginRight={15}
         onPress={() => editAction()}
         as={<AntDesign name="edit" />}
         size={6}

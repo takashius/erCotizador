@@ -72,6 +72,32 @@ export const useCreateProduct = () => {
   return mutation;
 };
 
+export const useGetPdf = () => {
+  const mutation = useMutation({
+    mutationFn: (id: string) => {
+      return ERDEAxios.get(`/cotiza/pdf/${id}`, {
+        responseType: 'arraybuffer',
+        headers: {
+          Accept: 'application/pdf',
+          'Content-Type': 'application/json'
+        }
+      });
+    },
+  });
+
+  return mutation;
+};
+
+export const useSendCotiza = () => {
+  const mutation = useMutation({
+    mutationFn: (id: string) => {
+      return ERDEAxios.get(`/cotiza/send/${id}`);
+    },
+  });
+
+  return mutation;
+};
+
 export const useUpdateProduct = () => {
   const mutation = useMutation({
     mutationFn: (data: ProductForm) => {

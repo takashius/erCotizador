@@ -6,6 +6,7 @@
     "submit": "Enviar",
     "tax": "Iva",
     "delete": "Borrar",
+    "edit": "Editar",
     "deleteMessage": "¿Seguro que desea borrar? \n Esta acción no se puede deshacer",
     "name": "Nombre",
     "lastname": "Apellido",
@@ -20,6 +21,8 @@
     "date": "Fecha",
     "description": "Descripción",
     "datePicker": "Seleccionar Fecha",
+    "sendMail": "Enviar por correo",
+    "pdf": "Generar en PDF",
     "modules": {
         "cotiza": "Cotizaciones",
         "customer": "Clientes",

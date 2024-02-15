@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Stack, router, useLocalSearchParams, useNavigation } from "expo-router";
+import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { SwipeListView } from "react-native-swipe-list-view";
-import { Animated, View } from "react-native";
+import * as FileSystem from 'expo-file-system';
+import { Alert, Animated, View } from "react-native";
+import * as Sharing from "expo-sharing";
+import { Buffer } from "buffer";
 import {
   Box,
   Heading,
@@ -19,9 +22,10 @@ import {
   DeleteButton,
   read, remove, Card, CardProductItem, ModalProducts
 } from "../../../components";
-import { useGetCotiza, useDeleteProduct } from "../../../api/cotiza";
+import { useGetCotiza, useDeleteProduct, useGetPdf, useSendCotiza } from "../../../api/cotiza";
 import { t } from "i18next";
 import { ProductForm } from "../../../types/products";
+import { MenuItem } from "../../../types/general";
 
 export default () => {
   const params = useLocalSearchParams();
@@ -35,6 +39,20 @@ export default () => {
   const navigation = useNavigation();
   const responseQuery = useGetCotiza(id);
   const deleteProductMutation = useDeleteProduct();
+  const getPdf = useGetPdf();
+  const sendCotiza = useSendCotiza();
+
+  const saveReportFile = async (pdfData: any) => {
+    try {
+      const buff = Buffer.from(pdfData, 'base64');
+      const pdf = buff.toString('base64');
+      const fileUri = FileSystem.documentDirectory + `${encodeURI('invoice_' + responseQuery.data?.number)}.pdf`;
+      await FileSystem.writeAsStringAsync(fileUri, pdf, { encoding: FileSystem.EncodingType.Base64 });
+      await Sharing.shareAsync(fileUri);
+    } catch (error) {
+      Alert.alert('Error', `Could not Download file ${error}`);
+    }
+  }
 
   useEffect(() => {
     setDataList(responseQuery.data?.products);
@@ -46,6 +64,18 @@ export default () => {
       responseQuery.refetch();
     }
   }, [submit]);
+
+  useEffect(() => {
+    if (getPdf.isSuccess) {
+      saveReportFile(getPdf.data)
+    }
+  }, [getPdf.isSuccess]);
+
+  useEffect(() => {
+    if (sendCotiza.isSuccess) {
+      Alert.alert("Exito", "Se ha enviado la cotización correctamente");
+    }
+  }, [sendCotiza.isSuccess]);
 
   const deleteRow = (rowMap: any, rowKey: any) => {
     if (dataList !== undefined) {
@@ -72,6 +102,40 @@ export default () => {
     item.id = responseQuery.data?._id!;
     setToEdit(item);
   }
+  const menuItems: MenuItem[] = [{
+    icon: 'edit',
+    title: t('edit'),
+    onPress: () => { alert("Under Construction") },
+    isDisabled: false
+  }, {
+    icon: 'picture-as-pdf',
+    title: t('pdf'),
+    onPress: () => { getPdf.mutate(responseQuery.data?._id!) },
+    isDisabled: false
+  },
+  {
+    icon: 'outgoing-mail',
+    title: t('sendMail'),
+    onPress: () => { sendCotiza.mutate(responseQuery.data?._id!) },
+    isDisabled: false
+  },
+  {
+    icon: 'delete',
+    title: t('delete'),
+    onPress: () => {
+      Alert.alert(t('delete'), t('deleteMessage'), [
+        {
+          text: "OK",
+          onPress: () => { alert("Under Construction") }
+        },
+        {
+          text: t('cancel'),
+          onPress: () => console.log('Cancel Pressed')
+        }
+      ])
+    },
+    isDisabled: false
+  }]
 
   return (
     <Box bg="white" safeArea flex="1">
@@ -80,11 +144,11 @@ export default () => {
           title: t("cotiza.detail"),
           navigation,
           back: true,
-          edit: true,
-          editAction: onEditClick
+          dropdown: true,
+          menuItems: menuItems
         })}
       />
-      {responseQuery.isLoading ? (
+      {responseQuery.isLoading || getPdf.isPending || sendCotiza.isPending ? (
         <Spinner />
       ) : (
         <_Stack p="4" pt="0" space={0}>
