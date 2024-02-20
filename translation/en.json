@@ -40,7 +40,13 @@
     "company": {
         "data": "Company data",
         "name": "Company name",
-        "docId": "Document ID"
+        "docId": "Document ID",
+        "validations": {
+            "passwordRequired": "The password is required",
+            "passwordRepeat": "You must check your password",
+            "passwordMatch": "Passwords must be the same",
+            "companyNameRequired": "The company name is required"
+        }
     },
     "products": {
         "title": "Products",

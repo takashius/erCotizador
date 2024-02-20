@@ -40,7 +40,13 @@
     "company": {
         "data": "Datos de la empresa",
         "name": "Nombre de la empresa",
-        "docId": "RIF"
+        "docId": "RIF",
+        "validations": {
+            "passwordRequired": "La contraseña es requerida",
+            "passwordRepeat": "Debe comprobar su contraseña",
+            "passwordMatch": "Las contraseñas deben ser iguales",
+            "companyNameRequired": "El nombre de la empresa es requerido"
+        }
     },
     "products": {
         "title": "Productos",

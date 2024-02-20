@@ -13,21 +13,36 @@ export default function register() {
   const logo = require("../assets/images/logo.png");
   const [show, setShow] = useState(false);
   const [showRepeat, setShowRepeat] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Register>({});
   const [formData, setData] = useState<Register>({});
 
   const validate = (formData: any) => {
-    if (formData.name === undefined) {
-      setErrors({
-        ...errors,
-        name: 'Name is required'
-      });
+    if (formData.name === undefined || formData.name === "") {
+      setErrors({ ...errors, name: t('products.validations.nameRequired') });
       return false;
-    } else if (formData.name.length < 3) {
-      setErrors({
-        ...errors,
-        name: 'Name is too short'
-      });
+    } else if (formData.name?.length < 3) {
+      setErrors({ ...errors, name: t('products.validations.nameShort') });
+      return false;
+    } else if (formData.email === undefined || formData.email === "") {
+      setErrors({ ...errors, email: t('customer.validations.emailRequired') });
+      return false;
+    } else if (formData.password === undefined || formData.password === "") {
+      setErrors({ ...errors, password: t('company.validations.passwordRequired') });
+      return false;
+    } else if (formData.repeatPassword === undefined || formData.repeatPassword === "") {
+      setErrors({ ...errors, repeatPassword: t('company.validations.passwordRepeat') });
+      return false;
+    } else if (formData.password !== formData.repeatPassword) {
+      setErrors({ ...errors, repeatPassword: t('company.validations.passwordMatch') });
+      return false;
+    } else if (formData.companyName === undefined || formData.companyName === "") {
+      setErrors({ ...errors, companyName: t('company.validations.companyNameRequired') });
+      return false;
+    } else if (formData.companyName?.length < 3) {
+      setErrors({ ...errors, companyName: t('products.validations.nameShort') });
+      return false;
+    } else if (formData.docId === undefined || formData.docId === "") {
+      setErrors({ ...errors, docId: t('customer.validations.rifRequired') });
       return false;
     }
 
@@ -35,7 +50,7 @@ export default function register() {
   };
 
   const onSubmit = () => {
-    validate(formData) ? console.log('Submitted') : console.log('Validation Failed');
+    validate(formData) ? console.log('Submitted', JSON.stringify(formData, null, 2)) : console.log('Validation Failed');
   };
 
   return (
