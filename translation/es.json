@@ -110,7 +110,7 @@
             "numberRequired": "El número es requerido",
             "numberIncorrect": "El número no es válido",
             "dateRequired": "La fecha es requerida",
-            "customerRequired": "La cliente es requerido"
+            "customerRequired": "El cliente es requerido"
         }
     }
 }

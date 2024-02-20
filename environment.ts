@@ -10,7 +10,7 @@ const ENV = {
     type: "staging",
   },
   prod: {
-    apiUrl: "https://cotizador-dev-tdrr.4.us-1.fl0.io",
+    apiUrl: "https://cotizador-eyee.onrender.com",
     type: "production",
   },
 };

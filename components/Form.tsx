@@ -111,7 +111,7 @@ export const SelectForm = (dataObj: any) => {
         closeOnSubmit={true}
         direction="up"
         ignoreAccents={true}
-        initialValue={{ id: '2' }}
+        initialValue={{ id: data.value }}
         onSelectItem={(value) => {
           data.setData({ ...data.formData, [data.name]: value?.id })
         }}
@@ -145,6 +145,7 @@ export const SelectForm = (dataObj: any) => {
     </FormControl>
   )
 };
+
 export const SelectDropdownForm = (dataObj: any) => {
   const { data } = dataObj;
   const countries = data.selectData.map((item: any) => item.name)

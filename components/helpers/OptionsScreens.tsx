@@ -34,7 +34,7 @@ export const useOptions = ({
                 accessibilityLabel="More options menu"
                 {...triggerProps}
               >
-                <HamburgerIcon style={{ color: "white" }} />
+                <HamburgerIcon size="lg" style={{ color: "white" }} />
               </Pressable>
             );
           }}
@@ -88,7 +88,7 @@ export const useOptions = ({
               router.back();
             }}
             as={<MaterialCommunityIcons name="backburger" />}
-            size={6}
+            size="lg"
             color={"white"}
           />
         );

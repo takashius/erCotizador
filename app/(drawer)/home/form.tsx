@@ -8,7 +8,6 @@ import { KeyboardAvoidingView, Platform } from "react-native";
 import { CotizaForm } from "../../../types/cotiza";
 import { useCreateCotiza, useUpdateCotiza } from "../../../api/cotiza";
 import { useListSimpleCustomer } from "../../../api/customer";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { InputDate } from "../../../components/Form";
 
 export default () => {
@@ -30,14 +29,17 @@ export default () => {
     id: "",
   };
 
-  const transformData = (params: any) => ({
-    title: params.title,
-    description: params.description,
-    number: Number(params.number),
-    date: params.date,
-    customer: params.customer._id,
-    id: params.id,
-  });
+  const transformData = (params: any) => {
+    return {
+      title: params.title,
+      description: params.description,
+      number: Number(params.number),
+      date: params.date,
+      customer: params.customer,
+      customerId: params.customer,
+      id: params.id,
+    }
+  };
 
   const [formData, setData] = useState<CotizaForm>(post === "new" ? defaultData : transformData(params));
 
@@ -72,8 +74,8 @@ export default () => {
     } else if (formData.date === undefined || formData.date === '') {
       setErrors({ ...errors, date: t("cotiza.validations.dateRequired") });
       return false;
-    } else if (formData.customer === undefined || formData.customer === '') {
-      setErrors({ ...errors, date: t("cotiza.validations.customerRequired") });
+    } else if (formData.customerId === undefined && (formData.customer === undefined || formData.customer === '')) {
+      setErrors({ ...errors, customer: t("cotiza.validations.customerRequired") });
       return false;
     }
     setErrors({});
@@ -91,10 +93,6 @@ export default () => {
       updateMutation.mutate(formData);
     }
   };
-
-  const handleText = (): string => pickedDate
-    ? pickedDate.toDateString()
-    : "No value Selected";
 
   const renderForm = () => (
     <VStack mx="3">
@@ -185,7 +183,7 @@ export default () => {
           readonly: true,
           title: t("customer.detail"),
           placeholder: t("cotiza.placeholder.customer"),
-          value: formData.customer,
+          value: formData.customerId,
           require: true,
           formData,
           setData,

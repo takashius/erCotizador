@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
+import { Stack, router, useLocalSearchParams, useNavigation } from "expo-router";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { SwipeListView } from "react-native-swipe-list-view";
 import * as FileSystem from 'expo-file-system';
@@ -20,12 +20,13 @@ import {
   useOptions,
   Spinner,
   DeleteButton,
-  read, remove, Card, CardProductItem, ModalProducts
+  read, remove, write, Card, CardProductItem, ModalProducts
 } from "../../../components";
 import { useGetCotiza, useDeleteProduct, useGetPdf, useSendCotiza } from "../../../api/cotiza";
 import { t } from "i18next";
 import { ProductForm } from "../../../types/products";
 import { MenuItem } from "../../../types/general";
+import { useIsFocused } from "@react-navigation/native";
 
 export default () => {
   const params = useLocalSearchParams();
@@ -34,6 +35,7 @@ export default () => {
   const [open, setOpen] = useState(false);
   const [post, setPost] = useState<string>("");
   const [dataList, setDataList] = useState<ProductForm[] | undefined>();
+  const isFocused = useIsFocused();
 
   const { id } = params;
   const navigation = useNavigation();
@@ -55,6 +57,21 @@ export default () => {
   }
 
   useEffect(() => {
+    if (isFocused) {
+      isReturnFromForm();
+    }
+  }, [isFocused]);
+
+  const isReturnFromForm = async () => {
+    const created = await read("mutateCotiza");
+    if (created && created === 'true') {
+      responseQuery.refetch();
+      await remove("mutateCotiza");
+      await write("editCotizaInDetail", 'true');
+    }
+  };
+
+  useEffect(() => {
     setDataList(responseQuery.data?.products);
   }, [responseQuery.data]);
 
@@ -62,6 +79,7 @@ export default () => {
     if (submit) {
       setSubmit(false);
       responseQuery.refetch();
+      write("editCotizaInDetail", 'true').then((res) => res);
     }
   }, [submit]);
 
@@ -92,6 +110,7 @@ export default () => {
         );
         newData.splice(prevIndex, 1);
         setDataList(newData);
+        write("editCotizaInDetail", 'true').then((res) => res);
       });
     }
   };
@@ -102,10 +121,26 @@ export default () => {
     item.id = responseQuery.data?._id!;
     setToEdit(item);
   }
+
+  const onEditCotiza = () => {
+    const item = responseQuery.data!;
+    router.push({
+      pathname: '/(drawer)/home/form',
+      params: {
+        post: "edit",
+        id: item._id!,
+        title: item.title,
+        number: item.number,
+        description: item.description,
+        date: item.date,
+        customer: item.customer?._id!
+      }
+    });
+  }
   const menuItems: MenuItem[] = [{
     icon: 'edit',
     title: t('edit'),
-    onPress: () => { alert("Under Construction") },
+    onPress: () => onEditCotiza(),
     isDisabled: false
   }, {
     icon: 'picture-as-pdf',
@@ -117,23 +152,6 @@ export default () => {
     icon: 'outgoing-mail',
     title: t('sendMail'),
     onPress: () => { sendCotiza.mutate(responseQuery.data?._id!) },
-    isDisabled: false
-  },
-  {
-    icon: 'delete',
-    title: t('delete'),
-    onPress: () => {
-      Alert.alert(t('delete'), t('deleteMessage'), [
-        {
-          text: "OK",
-          onPress: () => { alert("Under Construction") }
-        },
-        {
-          text: t('cancel'),
-          onPress: () => console.log('Cancel Pressed')
-        }
-      ])
-    },
     isDisabled: false
   }]
 
@@ -148,7 +166,7 @@ export default () => {
           menuItems: menuItems
         })}
       />
-      {responseQuery.isLoading || getPdf.isPending || sendCotiza.isPending ? (
+      {responseQuery.isFetching || getPdf.isPending || sendCotiza.isPending ? (
         <Spinner />
       ) : (
         <_Stack p="4" pt="0" space={0}>
@@ -240,7 +258,7 @@ export default () => {
             </Heading>
           </_Stack>
 
-          {responseQuery.isFetching || deleteProductMutation.isPending ? (
+          {responseQuery.isLoading || deleteProductMutation.isPending ? (
             <Spinner />
           ) : (
             <SwipeListView

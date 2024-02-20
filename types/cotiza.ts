@@ -9,6 +9,7 @@ export interface CotizaForm {
     date: string;
     customer: string;
     id?: string;
+    customerId?: string;
 }
 
 export interface CotizaBase {
