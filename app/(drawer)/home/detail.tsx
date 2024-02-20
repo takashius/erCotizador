@@ -270,7 +270,7 @@ export default () => {
                 <CardProductItem openLink={false} item={item} onClick={onEditClick} />
               )}
               keyExtractor={(item: any) => item._id}
-              contentContainerStyle={{ paddingBottom: 200 }}
+              contentContainerStyle={{ paddingBottom: 300 }}
               renderHiddenItem={(data, rowMap) => (
                 <View
                   style={{
