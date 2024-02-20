@@ -1,5 +1,10 @@
 {
     "appName": "ErCotizador",
+    "welcome": "Bienvenid@",
+    "signUp": "Registrar",
+    "signSubtitle": "Registrate para continuar",
+    "password": "Contraseña",
+    "repeatPassword": "Repetir contraseña",
     "search": "Buscar",
     "filter": "Filtrar",
     "cancel": "Cancelar",
@@ -31,6 +36,11 @@
     "auth": {
         "login": "Iniciar Sesion",
         "logout": "Salir"
+    },
+    "company": {
+        "data": "Datos de la empresa",
+        "name": "Nombre de la empresa",
+        "docId": "RIF"
     },
     "products": {
         "title": "Productos",

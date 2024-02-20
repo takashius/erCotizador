@@ -10,6 +10,15 @@ export interface CustomerShort {
     lastname: string;
 }
 
+export interface Register {
+    name?: string;
+    email?: string;
+    password?: string;
+    repeatPassword?: string;
+    companyName?: string;
+    docId?: string;
+}
+
 export interface CreatedShort {
     date: string;
 }

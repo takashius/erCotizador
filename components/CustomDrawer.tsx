@@ -12,9 +12,19 @@ import {
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import { t } from "i18next";
+import { read } from "./helpers/LocalStorage";
+import { useState } from "react";
 const ratio = (width * 0.4) / 270;
 
 const CustomDrawer = (props: any) => {
+  const [userName, setUserName] = useState();
+  const [userLastName, setUserLastName] = useState();
+  const [userEmail, setUserEmail] = useState();
+
+  read("userName").then((res) => { setUserName(res) });
+  read("userLastName").then((res) => { setUserLastName(res) });
+  read("userEmail").then((res) => { setUserEmail(res) });
+
   return (
     <Box flex={1}>
       <ImageBackground source={bg} resizeMode="cover" style={styles.image}>
@@ -36,10 +46,10 @@ const CustomDrawer = (props: any) => {
             </Avatar>
             <Box>
               <Text color={"white"} marginLeft={2}>
-                Pedro Perez
+                {`${userName} ${userLastName}`}
               </Text>
               <Text color={"white"} marginLeft={2} italic maxWidth={190}>
-                Takashi.onimaru@gmail.com
+                {userEmail}
               </Text>
             </Box>
           </Box>

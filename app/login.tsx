@@ -1,7 +1,7 @@
 import { Image, Dimensions, StyleSheet, Alert } from "react-native";
-import { Box, Input, Icon, Pressable, Text, Button } from "native-base";
+import { Box, Input, Icon, Pressable, Text, Button, Heading } from "native-base";
 import Spinner from "../components/helpers/Spinner";
-import { Stack, router } from "expo-router";
+import { Link, Stack, router } from "expo-router";
 import { write, read } from "../components/helpers/LocalStorage";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useLogin } from "../api/auth";
@@ -58,9 +58,9 @@ export default function login() {
   const renderBodyLogin = () => (
     <Box>
       <Box alignSelf={"center"} marginTop={10}>
-        <Text fontSize="xl" color={"coolGray.500"}>
+        <Heading size="lg" color="blue.500">
           Login
-        </Text>
+        </Heading>
       </Box>
       <Box marginTop={"1"} p="10" pb={4} pt={10}>
         <Input
@@ -107,7 +107,7 @@ export default function login() {
         </Button>
       </Box>
       <Box paddingX={20} marginTop={2}>
-        <Button rounded={"3xl"}>Registrar</Button>
+        <Button rounded={"3xl"} onPress={() => router.push('/register')}>Registrar</Button>
       </Box>
     </Box>
   );

@@ -36,6 +36,8 @@ export const InputForm = ({ data }: { data: any }) => {
         onTouchStart={data.onItemClick}
         {...(data.readonly && { value: data.value })}
         {...(data.keyboardType && { keyboardType: data.keyboardType })}
+        {...(data.type && { type: data.type })}
+        {...(data.InputRightElement && { InputRightElement: data.InputRightElement })}
         onChangeText={(value) =>
           data.setData({ ...data.formData, [data.name]: value })
         }

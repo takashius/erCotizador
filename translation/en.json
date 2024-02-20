@@ -1,5 +1,10 @@
 {
     "appName": "ErCotizador",
+    "welcome": "Welcome",
+    "signUp": "SignUp",
+    "signSubtitle": "Sign up to continue!",
+    "password": "Password",
+    "repeatPassword": "Confirm password",
     "search": "Search",
     "filter": "Filter",
     "cancel": "Cancel",
@@ -31,6 +36,11 @@
     "auth": {
         "login": "Login",
         "logout": "Logout"
+    },
+    "company": {
+        "data": "Company data",
+        "name": "Company name",
+        "docId": "Document ID"
     },
     "products": {
         "title": "Products",
