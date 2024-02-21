@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { Register, useMutation, useQuery } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
 
 export interface UserLogin {
@@ -29,4 +29,14 @@ export const useLogout = () => {
     },
   });
   return query;
+};
+
+export const useRegister = () => {
+  const mutation = useMutation({
+    mutationFn: (data: Register) => {
+      return ERDEAxios.post("/user/register", data);
+    }
+  });
+
+  return mutation;
 };

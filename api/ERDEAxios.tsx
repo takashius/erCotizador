@@ -75,10 +75,13 @@ ERDEAxios.interceptors.response.use(
         case 404:
           console.log("Not Found", errorMsg);
           break;
+        case 502:
+          return Promise.reject('Falla Temporal de comunicacion  con el servidor, intente nuevamente mas tarde');
+          break;
         default:
-          console.log("Non 400 response error", errorMsg);
+          return Promise.reject(errorMsg);
       }
-      return Promise.reject(error);
+      return Promise.reject(error.response.data);
     }
   }
 );

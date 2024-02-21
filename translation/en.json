@@ -28,6 +28,7 @@
     "datePicker": "Date Picker",
     "sendMail": "Send quote by email",
     "pdf": "Generate in PDF",
+    "registerSuccessToast": "Successful registration, check your email",
     "modules": {
         "cotiza": "Quotes",
         "customer": "Customers",

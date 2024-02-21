@@ -1,11 +1,12 @@
-import { Stack } from "expo-router";
-import { Box, Button, HStack, Heading, Icon, VStack } from "native-base";
-import { useState } from "react";
-import { Image, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Pressable } from "react-native";
-import { InputForm } from "../components";
+import { Stack, router } from "expo-router";
+import { Box, Button, HStack, Heading, Icon, VStack, useToast, Text } from "native-base";
+import { useEffect, useState } from "react";
+import { Image, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Pressable, Alert } from "react-native";
+import { InputForm, Spinner } from "../components";
 import { t } from "i18next";
 import { Register } from "../types/general";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useRegister } from "../api/auth";
 const width = 170;
 const ratio = (width * 0.8) / 270;
 
@@ -15,6 +16,8 @@ export default function register() {
   const [showRepeat, setShowRepeat] = useState(false);
   const [errors, setErrors] = useState<Register>({});
   const [formData, setData] = useState<Register>({});
+  const createMutation = useRegister();
+  const toast = useToast();
 
   const validate = (formData: any) => {
     if (formData.name === undefined || formData.name === "") {
@@ -50,8 +53,34 @@ export default function register() {
   };
 
   const onSubmit = () => {
-    validate(formData) ? console.log('Submitted', JSON.stringify(formData, null, 2)) : console.log('Validation Failed');
+    validate(formData) ? createMutation.mutate(formData) : console.log('Validation Failed');
   };
+
+  const onError = (error: any) => {
+    let keys = Object.keys(error);
+    let messages = "";
+    for (let i = 0; i < keys.length; i++) {
+      let clave = keys[i];
+      messages += error[clave];
+    }
+
+    Alert.alert('Error', messages, [
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  }
+
+  useEffect(() => {
+    if (createMutation.isError) {
+      onError(createMutation.error);
+    }
+  }, [createMutation.isError])
+
+  const onRegister = () => {
+    router.back();
+    toast.show({
+      title: t('registerSuccessToast')
+    })
+  }
 
   return (
     <Box safeArea flex={1} p={2} w="100%" padding='5' mx="auto" bgColor={"blue.100"}>
@@ -72,123 +101,130 @@ export default function register() {
         </VStack>
       </HStack>
 
-      <ScrollView automaticallyAdjustKeyboardInsets>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
-          <VStack space={2} mt={5}>
-            <InputForm
-              data={{
-                name: "name",
-                errors,
-                title: t("name"),
-                value: formData.name,
-                formData,
-                setData,
-                require: true,
-                description: t("products.nameDescription"),
-              }}
-            />
-            <InputForm
-              data={{
-                name: "email",
-                errors,
-                title: t("email"),
-                value: formData.email,
-                formData,
-                setData,
-                require: true,
-              }}
-            />
-            <InputForm
-              data={{
-                name: "password",
-                errors,
-                title: t("password"),
-                value: formData.password,
-                formData,
-                setData,
-                require: true,
-                type: show ? "text" : "password",
-                InputRightElement: (
-                  <Pressable onPress={() => setShow(!show)}>
-                    <Icon
-                      as={
-                        <MaterialIcons
-                          name={show ? "visibility" : "visibility-off"}
-                        />
-                      }
-                      size={6}
-                      mr="2"
-                      color="muted.400"
-                    />
-                  </Pressable>
-                )
-              }}
-            />
-            <InputForm
-              data={{
-                name: "repeatPassword",
-                errors,
-                title: t("repeatPassword"),
-                value: formData.repeatPassword,
-                formData,
-                setData,
-                require: true,
-                type: showRepeat ? "text" : "password",
-                InputRightElement: (
-                  <Pressable onPress={() => setShowRepeat(!showRepeat)}>
-                    <Icon
-                      as={
-                        <MaterialIcons
-                          name={showRepeat ? "visibility" : "visibility-off"}
-                        />
-                      }
-                      size={6}
-                      mr="2"
-                      color="muted.400"
-                    />
-                  </Pressable>
-                )
-              }}
-            />
-
-            <Heading color="blue.300" my='3' size="lg">
-              {t('company.data')}
-            </Heading>
-
-            <InputForm
-              data={{
-                name: "companyName",
-                errors,
-                title: t("company.name"),
-                value: formData.companyName,
-                formData,
-                setData,
-                require: true,
-                description: t("products.nameDescription"),
-              }}
-            />
-            <InputForm
-              data={{
-                name: "docId",
-                errors,
-                title: t("company.docId"),
-                value: formData.docId,
-                formData,
-                setData,
-                require: true,
-              }}
-            />
-
+      {createMutation.isPending ? (
+        <Spinner />
+      ) : createMutation.isSuccess ? (
+        onRegister()
+      ) : (
+        <ScrollView automaticallyAdjustKeyboardInsets>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
             <VStack space={2} mt={5}>
-              <Button bgColor={"blue.500"} rounded={"3xl"} onPress={onSubmit}>
-                {t('signUp')}
-              </Button>
+              <InputForm
+                data={{
+                  name: "name",
+                  errors,
+                  title: t("name"),
+                  value: formData.name,
+                  formData,
+                  setData,
+                  require: true,
+                  description: t("products.nameDescription"),
+                }}
+              />
+              <InputForm
+                data={{
+                  name: "email",
+                  errors,
+                  title: t("email"),
+                  value: formData.email,
+                  formData,
+                  setData,
+                  require: true,
+                  keyboardType: 'email-address'
+                }}
+              />
+              <InputForm
+                data={{
+                  name: "password",
+                  errors,
+                  title: t("password"),
+                  value: formData.password,
+                  formData,
+                  setData,
+                  require: true,
+                  type: show ? "text" : "password",
+                  InputRightElement: (
+                    <Pressable onPress={() => setShow(!show)}>
+                      <Icon
+                        as={
+                          <MaterialIcons
+                            name={show ? "visibility" : "visibility-off"}
+                          />
+                        }
+                        size={6}
+                        mr="2"
+                        color="muted.400"
+                      />
+                    </Pressable>
+                  )
+                }}
+              />
+              <InputForm
+                data={{
+                  name: "repeatPassword",
+                  errors,
+                  title: t("repeatPassword"),
+                  value: formData.repeatPassword,
+                  formData,
+                  setData,
+                  require: true,
+                  type: showRepeat ? "text" : "password",
+                  InputRightElement: (
+                    <Pressable onPress={() => setShowRepeat(!showRepeat)}>
+                      <Icon
+                        as={
+                          <MaterialIcons
+                            name={showRepeat ? "visibility" : "visibility-off"}
+                          />
+                        }
+                        size={6}
+                        mr="2"
+                        color="muted.400"
+                      />
+                    </Pressable>
+                  )
+                }}
+              />
+
+              <Heading color="blue.300" my='3' size="lg">
+                {t('company.data')}
+              </Heading>
+
+              <InputForm
+                data={{
+                  name: "companyName",
+                  errors,
+                  title: t("company.name"),
+                  value: formData.companyName,
+                  formData,
+                  setData,
+                  require: true,
+                  description: t("products.nameDescription"),
+                }}
+              />
+              <InputForm
+                data={{
+                  name: "docId",
+                  errors,
+                  title: t("company.docId"),
+                  value: formData.docId,
+                  formData,
+                  setData,
+                  require: true,
+                }}
+              />
+
+              <VStack space={2} mt={5}>
+                <Button bgColor={"blue.500"} rounded={"3xl"} onPress={onSubmit}>
+                  {t('signUp')}
+                </Button>
+              </VStack>
             </VStack>
-          </VStack>
-        </KeyboardAvoidingView>
-      </ScrollView>
+          </KeyboardAvoidingView>
+        </ScrollView>
+      )}
     </Box>
   );
 

@@ -28,6 +28,7 @@
     "datePicker": "Seleccionar Fecha",
     "sendMail": "Enviar por correo",
     "pdf": "Generar en PDF",
+    "registerSuccessToast": "Registro exitoso, revisa tu correo electrónico",
     "modules": {
         "cotiza": "Cotizaciones",
         "customer": "Clientes",
