@@ -47,9 +47,13 @@
         },
         "step2": {
             "title": "Revise su bandeja de entrada",
-            "subtitle": "Se envio un correo con un codigo para confirmar su cambio de contraseña",
+            "subtitle": "Se envio un correo con un código para confirmar su cambio de contraseña",
             "code": "Código"
-        }
+        },
+        "empty_field": "El correo es obligatorio",
+        "empty_code": "El código es obligatorio",
+        "wrong_code": "El código debe tener 6 digitos",
+        "success_change": "Clave cambiada exitosamente, ya puede iniciar sesion con su nueva clave"
     },
     "company": {
         "data": "Datos de la empresa",

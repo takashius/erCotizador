@@ -69,6 +69,7 @@ export default function login() {
           onChangeText={setUsername}
           size="lg"
           placeholder="Username"
+          keyboardType="email-address"
           InputRightElement={
             <Icon
               as={<MaterialIcons name="person" />}
@@ -108,7 +109,7 @@ export default function login() {
             color: "blue.500"
           }}
           alignSelf="flex-end" mt="3"
-          onPress={() => router.push('/recoverPass/step2')}
+          onPress={() => router.push('/recoverPass/step1')}
         >
           {t('forgetPassword')}
         </Link>

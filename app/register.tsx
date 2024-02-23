@@ -7,6 +7,7 @@ import { t } from "i18next";
 import { Register } from "../types/general";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRegister } from "../api/auth";
+import { onError } from "../components/helpers/Utils";
 const width = 170;
 const ratio = (width * 0.8) / 270;
 
@@ -55,19 +56,6 @@ export default function register() {
   const onSubmit = () => {
     validate(formData) ? createMutation.mutate(formData) : console.log('Validation Failed');
   };
-
-  const onError = (error: any) => {
-    let keys = Object.keys(error);
-    let messages = "";
-    for (let i = 0; i < keys.length; i++) {
-      let clave = keys[i];
-      messages += error[clave];
-    }
-
-    Alert.alert('Error', messages, [
-      { text: 'OK', onPress: () => console.log('OK Pressed') },
-    ]);
-  }
 
   useEffect(() => {
     if (createMutation.isError) {

@@ -46,7 +46,8 @@
         },
         "step2": {
             "title": ""
-        }
+        },
+        "empty_field": "The email is required"
     },
     "company": {
         "data": "Company data",
