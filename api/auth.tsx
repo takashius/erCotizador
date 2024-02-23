@@ -9,6 +9,12 @@ export interface UserLogin {
   _id: string;
 }
 
+export interface Recovery {
+  code: string;
+  email: string;
+  newPass: string;
+}
+
 export const useLogin = (email: String, password: String) => {
   const query = useQuery<UserLogin>({
     queryKey: ["login"],
@@ -35,6 +41,26 @@ export const useRegister = () => {
   const mutation = useMutation({
     mutationFn: (data: Register) => {
       return ERDEAxios.post("/user/register", data);
+    }
+  });
+
+  return mutation;
+};
+
+export const useRecoveryOne = () => {
+  const mutation = useMutation({
+    mutationFn: (email: String) => {
+      return ERDEAxios.get("/user/recovery/" + email);
+    }
+  });
+
+  return mutation;
+};
+
+export const useRecoveryTwo = () => {
+  const mutation = useMutation({
+    mutationFn: (data: Recovery) => {
+      return ERDEAxios.post("/user/recovery", data);
     }
   });
 

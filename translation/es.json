@@ -28,7 +28,9 @@
     "datePicker": "Seleccionar Fecha",
     "sendMail": "Enviar por correo",
     "pdf": "Generar en PDF",
+    "register": "Registrarse",
     "registerSuccessToast": "Registro exitoso, revisa tu correo electrónico",
+    "forgetPassword": "Recuperar contraseña",
     "modules": {
         "cotiza": "Cotizaciones",
         "customer": "Clientes",
@@ -37,6 +39,17 @@
     "auth": {
         "login": "Iniciar Sesion",
         "logout": "Salir"
+    },
+    "recoveryPass": {
+        "step1": {
+            "title": "Recuperar Contraseña",
+            "subtitle": "Ingrese su correo electronico para confirmar su identidad"
+        },
+        "step2": {
+            "title": "Revise su bandeja de entrada",
+            "subtitle": "Se envio un correo con un codigo para confirmar su cambio de contraseña",
+            "code": "Código"
+        }
     },
     "company": {
         "data": "Datos de la empresa",

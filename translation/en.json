@@ -28,7 +28,9 @@
     "datePicker": "Date Picker",
     "sendMail": "Send quote by email",
     "pdf": "Generate in PDF",
+    "register": "Sign Up",
     "registerSuccessToast": "Successful registration, check your email",
+    "forgetPassword": "Forget Password?",
     "modules": {
         "cotiza": "Quotes",
         "customer": "Customers",
@@ -37,6 +39,14 @@
     "auth": {
         "login": "Login",
         "logout": "Logout"
+    },
+    "recoveryPass": {
+        "step1": {
+            "title": ""
+        },
+        "step2": {
+            "title": ""
+        }
     },
     "company": {
         "data": "Company data",

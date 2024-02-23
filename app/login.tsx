@@ -1,11 +1,12 @@
 import { Image, Dimensions, StyleSheet, Alert } from "react-native";
-import { Box, Input, Icon, Pressable, Text, Button, Heading } from "native-base";
+import { Box, Input, Icon, Pressable, Text, Button, Heading, Link } from "native-base";
 import Spinner from "../components/helpers/Spinner";
-import { Link, Stack, router } from "expo-router";
+import { Stack, router } from "expo-router";
 import { write, read } from "../components/helpers/LocalStorage";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useLogin } from "../api/auth";
 import { useState, useEffect } from "react";
+import { t } from "i18next";
 const { width } = Dimensions.get("screen");
 const ratio = (width * 0.8) / 270;
 
@@ -100,6 +101,17 @@ export default function login() {
             </Pressable>
           }
         />
+        <Link
+          _text={{
+            fontSize: "sm",
+            fontWeight: "500",
+            color: "blue.500"
+          }}
+          alignSelf="flex-end" mt="3"
+          onPress={() => router.push('/recoverPass/step2')}
+        >
+          {t('forgetPassword')}
+        </Link>
       </Box>
       <Box paddingX={20} marginTop={9}>
         <Button bgColor={"blue.500"} rounded={"3xl"} onPress={submitForm}>
@@ -107,7 +119,7 @@ export default function login() {
         </Button>
       </Box>
       <Box paddingX={20} marginTop={2}>
-        <Button rounded={"3xl"} onPress={() => router.push('/register')}>Registrar</Button>
+        <Button rounded={"3xl"} onPress={() => router.push('/register')}>{t('register')}</Button>
       </Box>
     </Box>
   );
