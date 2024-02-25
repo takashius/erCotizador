@@ -85,6 +85,7 @@ export default () => {
       ) : (
         <>
           <SwipeListView
+            accessibilityLabel="Customer list swipe"
             data={dataList}
             useFlatList={true}
             keyExtractor={(item) => item._id!}

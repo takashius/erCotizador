@@ -1,4 +1,4 @@
-import { Animated, FlatList, View } from "react-native";
+import { Animated, View } from "react-native";
 import { Stack, router, useNavigation } from "expo-router";
 import { Box, Fab, Icon } from "native-base";
 import {
@@ -8,7 +8,7 @@ import {
   useOptions,
   read,
   remove,
-  DeleteButton,
+  DeleteButton
 } from "../../../components";
 import { useListCotiza, useDeleteCotiza } from "../../../api/cotiza";
 import { useEffect, useState } from "react";
@@ -23,6 +23,7 @@ export default () => {
   const deleteMutation = useDeleteCotiza();
   const [dataList, setDataList] = useState<Cotiza[]>();
   const [dataDefault, setDataDefault] = useState<Cotiza[]>();
+  const [ready, setReady] = useState<Boolean>(false);
   const navigation = useNavigation();
   const isFocused = useIsFocused();
 
@@ -42,6 +43,9 @@ export default () => {
   useEffect(() => {
     if (isFocused) {
       isReturnFromForm();
+      setReady(true);
+    } else {
+      setReady(false);
     }
   }, [isFocused]);
 
@@ -79,54 +83,59 @@ export default () => {
   return (
     <Box bg="white" safeArea flex="1">
       <Stack.Screen options={useOptions({ title: t("modules.cotiza"), navigation })} />
-      <SearchBar filterData={filterData} />
-      {responseQuery.isLoading ? (
-        <Spinner />
-      ) : (
-        <SwipeListView
-          data={dataList}
-          useFlatList={true}
-          keyExtractor={(item) => item._id}
-          disableRightSwipe={true}
-          closeOnRowBeginSwipe={true}
-          onRefresh={() => responseQuery.refetch()}
-          refreshing={responseQuery.isFetching || deleteMutation.isPending}
-          renderItem={({ item }) => <CardCotizaItem item={item} />}
-          renderHiddenItem={(data, rowMap) => (
-            <View
-              style={{
-                marginLeft: 280,
-                height: "90%",
-                width: 60,
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <DeleteButton
-                data={data}
-                rowMap={rowMap}
-                deleteMutation={deleteMutation}
-                deleteRow={deleteRow}
-              />
-            </View>
-          )}
-          rightOpenValue={-75}
+
+      {ready && <>
+        <SearchBar filterData={filterData} />
+        {responseQuery.isLoading ? (
+          <Spinner />
+        ) : (
+          <SwipeListView
+            accessibilityLabel="Quotes list"
+            data={dataList}
+            useFlatList={true}
+            keyExtractor={(item) => item._id}
+            disableRightSwipe={true}
+            closeOnRowBeginSwipe={true}
+            onRefresh={() => responseQuery.refetch()}
+            refreshing={responseQuery.isFetching || deleteMutation.isPending}
+            renderItem={({ item }) => <CardCotizaItem item={item} />}
+            renderHiddenItem={(data, rowMap) => (
+              <View
+                style={{
+                  marginLeft: 280,
+                  height: "90%",
+                  width: 60,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <DeleteButton
+                  data={data}
+                  rowMap={rowMap}
+                  deleteMutation={deleteMutation}
+                  deleteRow={deleteRow}
+                />
+              </View>
+            )}
+            rightOpenValue={-75}
+          />
+        )}
+        <Fab
+          renderInPortal={false}
+          shadow={2}
+          backgroundColor={"blue.500"}
+          onPress={() => {
+            router.push({
+              pathname: "/(drawer)/home/form",
+              params: { post: "new" },
+            });
+          }}
+          size="sm"
+          icon={<Icon color="white" as={AntDesign} name="plus" size="sm" />}
         />
-      )}
-      <Fab
-        renderInPortal={false}
-        shadow={2}
-        backgroundColor={"blue.500"}
-        onPress={() => {
-          router.push({
-            pathname: "/(drawer)/home/form",
-            params: { post: "new" },
-          });
-        }}
-        size="sm"
-        icon={<Icon color="white" as={AntDesign} name="plus" size="sm" />}
-      />
+      </>}
     </Box>
+
   );
 };
