@@ -80,7 +80,7 @@ const CardProductItem = ({ item, openLink = true, onClick }: { item: ProductForm
     <Box alignItems="center" marginBottom={5}>
       {openLink ? <Link
         href={{
-          pathname: "/(drawer)/products/form",
+          pathname: "/(tabs)/products/form",
           params: {
             post: "edit",
             id: item._id!,

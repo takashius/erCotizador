@@ -18,7 +18,7 @@ const CardCustomerItem = ({ item }: { item: Customer }) => {
     <Box alignItems="center" marginBottom={5}>
       <Link
         href={{
-          pathname: "/(drawer)/customer/detail",
+          pathname: "/(tabs)/customer/detail",
           params: {
             id: item._id!,
           },

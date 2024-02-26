@@ -1,29 +1,27 @@
-import { Animated, View } from "react-native";
+import { View, Animated } from "react-native";
 import { Stack, router, useNavigation } from "expo-router";
 import { Box, Fab, Icon } from "native-base";
-import {
-  SearchBar,
-  CardCotizaItem,
-  Spinner,
-  useOptions,
-  read,
-  remove,
-  DeleteButton
-} from "../../../components";
-import { useListCotiza, useDeleteCotiza } from "../../../api/cotiza";
-import { useEffect, useState } from "react";
-import { type Cotiza } from "../../../types/cotiza";
-import { t } from "i18next";
-import { AntDesign } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
 import { SwipeListView } from "react-native-swipe-list-view";
+import {
+  SearchBar,
+  CardCustomerItem,
+  Spinner,
+  useOptions,
+  DeleteButton,
+  read, remove
+} from "../../../components";
+import { useListCustomer, useDeleteCustomer } from "../../../api/customer";
+import { type Customer } from "../../../types/customer";
+import { useEffect, useState } from "react";
+import { t } from "i18next";
+import { AntDesign } from "@expo/vector-icons";
 
 export default () => {
-  const responseQuery = useListCotiza();
-  const deleteMutation = useDeleteCotiza();
-  const [dataList, setDataList] = useState<Cotiza[]>();
-  const [dataDefault, setDataDefault] = useState<Cotiza[]>();
-  const [ready, setReady] = useState<Boolean>(false);
+  const responseQuery = useListCustomer();
+  const deleteMutation = useDeleteCustomer();
+  const [dataList, setDataList] = useState<Customer[]>();
+  const [dataDefault, setDataDefault] = useState<Customer[]>();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
 
@@ -33,19 +31,16 @@ export default () => {
   }, [responseQuery.data]);
 
   const isReturnFromForm = async () => {
-    const updated = await read("editCotizaInDetail");
-    if (updated && updated === 'true') {
+    const created = await read("mutateCustomer");
+    if (created && created === 'true') {
       responseQuery.refetch();
-      await remove("editCotizaInDetail");
+      await remove("mutateCustomer");
     }
   };
 
   useEffect(() => {
     if (isFocused) {
       isReturnFromForm();
-      setReady(true);
-    } else {
-      setReady(false);
     }
   }, [isFocused]);
 
@@ -53,8 +48,9 @@ export default () => {
     if (dataDefault) {
       setDataList(
         dataDefault.filter(
-          (item: Cotiza) =>
-            item.description.toUpperCase().includes(search.toUpperCase()) ||
+          (item: Customer) =>
+            item.lastname.toUpperCase().includes(search.toUpperCase()) ||
+            item.name.toUpperCase().includes(search.toUpperCase()) ||
             item.title.toUpperCase().includes(search.toUpperCase())
         )
       );
@@ -82,23 +78,22 @@ export default () => {
 
   return (
     <Box bg="white" safeArea flex="1">
-      <Stack.Screen options={useOptions({ title: t("modules.cotiza"), navigation })} />
-
-      {ready && <>
-        <SearchBar filterData={filterData} />
-        {responseQuery.isLoading ? (
-          <Spinner />
-        ) : (
+      <Stack.Screen options={useOptions({ title: t("modules.customer"), navigation })} />
+      <SearchBar filterData={filterData} />
+      {responseQuery.isLoading ? (
+        <Spinner />
+      ) : (
+        <>
           <SwipeListView
-            accessibilityLabel="Quotes list"
+            accessibilityLabel="Customer list swipe"
             data={dataList}
             useFlatList={true}
-            keyExtractor={(item) => item._id}
+            keyExtractor={(item) => item._id!}
             disableRightSwipe={true}
             closeOnRowBeginSwipe={true}
             onRefresh={() => responseQuery.refetch()}
             refreshing={responseQuery.isFetching || deleteMutation.isPending}
-            renderItem={({ item }) => <CardCotizaItem item={item} />}
+            renderItem={({ item }) => <CardCustomerItem item={item} />}
             renderHiddenItem={(data, rowMap) => (
               <View
                 style={{
@@ -120,22 +115,21 @@ export default () => {
             )}
             rightOpenValue={-75}
           />
-        )}
-        <Fab
-          renderInPortal={false}
-          shadow={2}
-          backgroundColor={"blue.500"}
-          onPress={() => {
-            router.push({
-              pathname: "/(drawer)/home/form",
-              params: { post: "new" },
-            });
-          }}
-          size="sm"
-          icon={<Icon color="white" as={AntDesign} name="plus" size="sm" />}
-        />
-      </>}
+          <Fab
+            renderInPortal={false}
+            shadow={2}
+            backgroundColor={"blue.500"}
+            onPress={() => {
+              router.push({
+                pathname: "/(tabs)/customer/form",
+                params: { post: "new" },
+              });
+            }}
+            size="sm"
+            icon={<Icon color="white" as={AntDesign} name="plus" size="sm" />}
+          />
+        </>
+      )}
     </Box>
-
   );
 };

@@ -29,12 +29,16 @@
     "sendMail": "Enviar por correo",
     "pdf": "Generar en PDF",
     "register": "Registrarse",
+    "phone": "Teléfono",
+    "colors": "Colores",
+    "images": "Imágenes",
     "registerSuccessToast": "Registro exitoso, revisa tu correo electrónico",
     "forgetPassword": "Recuperar contraseña",
     "modules": {
         "cotiza": "Cotizaciones",
         "customer": "Clientes",
-        "product": "Productos"
+        "product": "Productos",
+        "settings": "Ajustes"
     },
     "auth": {
         "login": "Iniciar Sesion",
@@ -146,5 +150,8 @@
             "dateRequired": "La fecha es requerida",
             "customerRequired": "El cliente es requerido"
         }
+    },
+    "settings": {
+        "language": "Idioma"
     }
 }

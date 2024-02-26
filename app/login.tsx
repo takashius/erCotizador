@@ -38,7 +38,7 @@ export default function login() {
   const readUserLogged = async () => {
     const data = await read("userToken");
     if (data) {
-      router.replace("/(drawer)/home");
+      router.replace("/(tabs)/home");
     }
   };
 
@@ -52,7 +52,7 @@ export default function login() {
       write("userEmail", response.email).then((res) => res);
       setUsername("");
       setPassword("");
-      router.replace("/(drawer)/home");
+      router.replace("/(tabs)/home");
     }
   }, [responseQuery.isSuccess]);
 

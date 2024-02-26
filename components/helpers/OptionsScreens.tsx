@@ -10,17 +10,21 @@ export const useOptions = ({
   navigation,
   back = false,
   edit = false,
+  save = false,
   dropdown = false,
   menuItems,
-  editAction
+  editAction,
+  saveAction
 }: {
   title: string,
   navigation: any,
   back?: boolean,
   edit?: boolean,
+  save?: boolean,
   dropdown?: boolean,
   menuItems?: Array<MenuItem>,
   editAction?: any
+  saveAction?: any
 }
 ) => {
   const DisplayMenu = (display = true) => {
@@ -60,6 +64,13 @@ export const useOptions = ({
         marginRight={15}
         onPress={() => editAction()}
         as={<AntDesign name="edit" />}
+        size={6}
+        color={"white"}
+      />}
+      {save && <Icon
+        marginRight={15}
+        onPress={() => saveAction()}
+        as={<AntDesign name="save" />}
         size={6}
         color={"white"}
       />}
@@ -103,18 +114,6 @@ export const useOptions = ({
       },
       headerRight: () => displayRight(),
       headerTitle: () => renderTitle(),
-      headerLeft: () => {
-        return (
-          <Icon
-            onPress={() => {
-              navigation.openDrawer();
-            }}
-            as={<AntDesign name="appstore-o" />}
-            size={6}
-            color={"white"}
-          />
-        );
-      },
     };
   }
 };

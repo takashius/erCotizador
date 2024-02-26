@@ -77,7 +77,7 @@ export default () => {
     const item = responseQuery.data;
     if (item) {
       router.push({
-        pathname: '/(drawer)/customer/form',
+        pathname: '/(tabs)/customer/form',
         params: {
           post: "edit",
           id: item._id!,

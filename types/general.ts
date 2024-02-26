@@ -10,6 +10,15 @@ export interface CustomerShort {
     lastname: string;
 }
 
+export interface Settings {
+    id: string,
+    iva: string,
+    address: string,
+    description: string,
+    phone: string,
+    rif: string
+}
+
 export interface Register {
     name?: string;
     email?: string;

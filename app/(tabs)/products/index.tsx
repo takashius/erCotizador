@@ -120,7 +120,7 @@ export default () => {
         backgroundColor={"blue.500"}
         onPress={() => {
           router.push({
-            pathname: "/(drawer)/products/form",
+            pathname: "/(tabs)/products/form",
             params: { post: "new" },
           });
         }}

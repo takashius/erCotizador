@@ -19,7 +19,7 @@ const CardCotizaItem = ({ item }: { item: Cotiza }) => {
     <Box alignItems="center" marginBottom={5}>
       <Link
         href={{
-          pathname: "/(drawer)/home/detail",
+          pathname: "/(tabs)/home/detail",
           params: {
             id: item._id!,
           },

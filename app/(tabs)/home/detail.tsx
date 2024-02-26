@@ -125,7 +125,7 @@ export default () => {
   const onEditCotiza = () => {
     const item = responseQuery.data!;
     router.push({
-      pathname: '/(drawer)/home/form',
+      pathname: '/(tabs)/home/form',
       params: {
         post: "edit",
         id: item._id!,

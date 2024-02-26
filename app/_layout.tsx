@@ -97,7 +97,7 @@ function RootLayoutNav() {
           <QueryClientProvider client={queryClient}>
             <AutocompleteDropdownContextProvider>
               <Stack>
-                <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               </Stack>
             </AutocompleteDropdownContextProvider>
           </QueryClientProvider>

@@ -29,12 +29,16 @@
     "sendMail": "Send quote by email",
     "pdf": "Generate in PDF",
     "register": "Sign Up",
+    "phone": "Phone",
+    "colors": "Colors",
+    "images": "Images",
     "registerSuccessToast": "Successful registration, check your email",
     "forgetPassword": "Forget Password?",
     "modules": {
         "cotiza": "Quotes",
         "customer": "Customers",
-        "product": "Products"
+        "product": "Products",
+        "settings": "Settings"
     },
     "auth": {
         "login": "Login",
@@ -139,5 +143,8 @@
             "dateRequired": "Date is required",
             "customerRequired": "The customer is required"
         }
+    },
+    "settings": {
+        "language": "Language"
     }
 }
