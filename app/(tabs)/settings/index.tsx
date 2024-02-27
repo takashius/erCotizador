@@ -1,11 +1,10 @@
 import { Box, Divider, HStack, Icon, VStack } from "native-base"
-import { useOptions } from "../../../components"
+import { useOptions, write } from "../../../components"
 import { t } from "i18next"
 import { Stack, router, useNavigation } from "expo-router"
 import { ScrollView, Text } from "react-native"
 import { MaterialIcons } from "@expo/vector-icons"
 import { TouchableOpacity } from "react-native-gesture-handler"
-
 
 export default () => {
   const navigation = useNavigation();

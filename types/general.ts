@@ -11,8 +11,8 @@ export interface CustomerShort {
 }
 
 export interface Settings {
-    id: string,
-    iva: string,
+    id?: string,
+    iva: number,
     address: string,
     description: string,
     phone: string,
