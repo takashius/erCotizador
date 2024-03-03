@@ -5,14 +5,22 @@ import {
   Text,
   WarningOutlineIcon,
   Box,
+  Button,
+  VStack,
+  Badge,
+  Icon
 } from "native-base";
-import { View, SafeAreaView, StatusBar, Dimensions, StyleSheet, ScrollView, Image } from 'react-native';
-const { width } = Dimensions.get('window');
+import { Dimensions, StyleSheet, Image } from 'react-native';
 import { Platform, TouchableWithoutFeedback } from "react-native";
 import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
 import SelectDropdown from 'react-native-select-dropdown'
-import { Select } from "../types/general";
-import { FontAwesome } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import * as ImagePicker from 'expo-image-picker';
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Spinner from "./helpers/Spinner";
+import { useEffect, useState } from "react";
+const { width } = Dimensions.get('window');
+const ratio = (width * 0.8) / 270;
 
 export const InputForm = ({ data }: { data: any }) => {
   return (
@@ -89,6 +97,76 @@ export const InputDate = ({ data }: { data: any }) => {
         )}
       </FormControl>
     </TouchableWithoutFeedback>
+  )
+}
+
+export const SelectImage = ({ data }: { data: any }) => {
+  const [image, setImage] = useState<any>();
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  useEffect(() => {
+    setIsLoading(data.isLoading);
+  }, [data.isLoading])
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setIsLoading(true);
+      data.setImage(result.assets[0]);
+      setImage(result.assets[0].uri);
+    }
+  };
+  return (
+    <FormControl
+      w={data.col === true ? "1/2" : "full"}
+      px={data.col === true ? "2" : 0}
+      {...(data.require && { isRequired: true })}
+    >
+      <FormControl.Label
+        _text={{
+          bold: true,
+        }}
+      >
+        {data.title}
+      </FormControl.Label>
+      {data.value ?
+        <Box alignItems="center">
+          <TouchableOpacity onPress={pickImage}>
+            <VStack>
+              {data.isLoading || isLoading ?
+                <Spinner /> :
+                <Box>
+                  <Badge
+                    rounded="full" mb={-6} mr={-6} zIndex={1} alignSelf="flex-end">
+                    <Icon
+                      onPress={() => { }}
+                      as={<AntDesign name="edit" />}
+                      size={6}
+                      color={"blue.500"}
+                      shadow={"1"}
+                    />
+                  </Badge>
+                  {image ?
+                    <Image source={{ uri: image }} style={styles.logo} /> :
+                    <Image source={{ uri: data.value }} style={styles.logo} />}
+
+                </Box>
+              }
+            </VStack>
+          </TouchableOpacity>
+        </Box>
+        :
+        <Button
+          variant="outline"
+          color={'blue.500'}
+          onPress={pickImage}
+          isLoading={data.isLoading}
+          isLoadingText={t('uploading')}
+        >{t('selectImage')}</Button>
+      }
+    </FormControl>
   )
 }
 
@@ -230,5 +308,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#d4d4d4',
+  },
+  logo: {
+    width: width * 0.6,
+    height: 100 * ratio,
+    resizeMode: "contain",
   },
 })

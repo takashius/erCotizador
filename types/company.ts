@@ -1,15 +1,15 @@
 export interface Company {
     _id?: string;
     id?: string;
-    name: string;
-    description: string;
-    email: string;
-    phone: string;
-    rif: string;
-    address: string;
-    banner: string;
+    name?: string;
+    description?: string;
+    email?: string;
+    phone?: string;
+    rif?: string;
+    address?: string;
+    banner?: string;
     currencySymbol?: string;
-    iva: number;
+    iva?: number;
     logo?: string;
     logoAlpha?: string;
     configMail?: ConfigMail;
@@ -36,4 +36,9 @@ export interface Logo {
     width: number;
     x: number;
     y: number;
+}
+
+export interface Image {
+    image: any,
+    imageType: string
 }

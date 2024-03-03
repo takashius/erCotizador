@@ -14,11 +14,16 @@ const ERDEAxios = axios.create();
 ERDEAxios.interceptors.request.use(
   async (config) => {
     const userToken = await read("userToken");
+    const contentType = await read("contentType");
     if (userToken) {
       config.headers["Authorization"] = "Bearer " + userToken;
     }
     config.headers["Accept-Language"] = locale;
-    config.headers["Content-type"] = "application/json";
+    if (contentType) {
+      config.headers["Content-type"] = "multipart/form-data";
+    } else {
+      config.headers["Content-type"] = "application/json";
+    }
     config.url = urlJoin(apiUrl, `${config.url}`);
     if (DEBUG) {
       console.log("URL", config.method, config.url);

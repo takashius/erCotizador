@@ -1,45 +1,18 @@
-import { Stack, router, useNavigation } from "expo-router"
-import { VStack, Box, useToast } from "native-base"
-import { InputForm, Spinner, useOptions, write } from "../../../components"
-import { t } from "i18next"
-import { useEffect, useState } from "react"
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native"
-import { useGetCompany, useSetConfig, useUploadImage } from "../../../api/company"
-import { Company, Image } from "../../../types/company"
-import { SelectImage } from "../../../components/Form"
+import { Stack, useNavigation } from "expo-router";
+import { Box, VStack } from "native-base";
+import { InputForm, Spinner, useOptions } from "../../../components";
+import { t } from "i18next";
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { useGetCompany, useSetConfig } from "../../../api/company";
+import { Company } from "../../../types/company";
+import { useState } from "react";
 
 export default () => {
   const navigation = useNavigation();
-  const [errors, setErrors] = useState({});
-  const responseQuery = useGetCompany();
-  const uploadMutation = useUploadImage();
   const configMutation = useSetConfig();
-  const toast = useToast();
-
+  const responseQuery = useGetCompany();
+  const [errors, setErrors] = useState({});
   const [formData, setData] = useState<Company>();
-  const [image, setImage] = useState<any>();
-
-  useEffect(() => {
-    if (responseQuery.isSuccess) {
-      setData(responseQuery.data)
-      setData({ ...responseQuery.data, id: responseQuery.data._id })
-    }
-  }, [responseQuery.isSuccess])
-
-  useEffect(() => {
-    if (image) {
-      uploadMutation.mutate({ image, imageType: 'logo' });
-    }
-  }, [image])
-
-  useEffect(() => {
-    if (configMutation.isSuccess) {
-      router.back();
-      toast.show({
-        title: t('settings.toastSave')
-      })
-    }
-  }, [configMutation.isSuccess])
 
   const saveAction = () => {
     configMutation.mutate(formData!)
@@ -99,20 +72,12 @@ export default () => {
           setData,
         }}
       />
-      <SelectImage
-        data={{
-          name: "logo",
-          title: t("logo"),
-          value: String(formData?.logo),
-          setImage,
-          isLoading: uploadMutation.isPending
-        }}
-      />
 
     </VStack>
   );
 
   return (
+
     <Box safeArea flex={1} p={2} w="100%" padding='5' mx="auto">
       <Stack.Screen options={useOptions({ title: t("modules.settings"), navigation, back: true, save: true, saveAction })} />
       <ScrollView automaticallyAdjustKeyboardInsets>

@@ -2,6 +2,7 @@
     "appName": "ErCotizador",
     "welcome": "Bienvenid@",
     "signUp": "Registrar",
+    "logo": "Logo",
     "signSubtitle": "Registrate para continuar",
     "password": "Contraseña",
     "repeatPassword": "Repetir contraseña",
@@ -32,6 +33,8 @@
     "phone": "Teléfono",
     "colors": "Colores",
     "images": "Imágenes",
+    "selectImage": "Seleccionar imagen",
+    "uploading": "Subiendo ...",
     "registerSuccessToast": "Registro exitoso, revisa tu correo electrónico",
     "forgetPassword": "Recuperar contraseña",
     "modules": {
