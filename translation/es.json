@@ -156,6 +156,11 @@
     },
     "settings": {
         "language": "Idioma",
+        "pdf": "Ajustes del PDF",
+        "width": "Ancho",
+        "logoAlpha": "Marca de agua",
+        "x": "Posición X",
+        "y": "Posición Y",
         "toastSave": "Actualizada correctamente la configuración"
     }
 }

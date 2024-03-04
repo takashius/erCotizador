@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
-import { Company, Image } from "../types/company";
+import { Company, ConfigPDF, Image } from "../types/company";
 import { parseImage } from "../components/helpers/ParseImage";
-import { write } from "../components";
+import { write, remove } from "../components";
 
 export const useGetCompany = () => {
   const query = useQuery<Company>({
@@ -17,8 +17,22 @@ export const useGetCompany = () => {
 
 export const useSetConfig = () => {
   const mutation = useMutation({
-    mutationFn: (data: Company) => {
+    mutationFn: (data: ConfigPDF) => {
       return ERDEAxios.patch("/company/config", data);
+    }
+  });
+
+  return mutation;
+};
+
+export const useSetConfigPdf = () => {
+  const mutation = useMutation({
+    mutationFn: (data: ConfigPDF) => {
+      const dataFull: Company = {
+        id: data.id,
+        pdf: data
+      };
+      return ERDEAxios.patch("/company/config", dataFull);
     }
   });
 
@@ -34,9 +48,12 @@ export const useUploadImage: any = () => {
       formData.append("imageType", data.imageType);
       return ERDEAxios.post("/company/upload", formData);
     },
-    onSuccess: () => {
-      write("contentType", 'false').then((res) => res);
+    onSuccess: async () => {
+      await remove("contentType");
     },
+    onError: async () => {
+      await remove("contentType");
+    }
   });
 
   return mutation;

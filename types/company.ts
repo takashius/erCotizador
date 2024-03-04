@@ -14,6 +14,7 @@ export interface Company {
     logoAlpha?: string;
     configMail?: ConfigMail;
     configPdf?: ConfigPDF;
+    pdf?: ConfigPDF;
 }
 
 export interface ConfigMail {
@@ -28,6 +29,7 @@ export interface Colors {
 }
 
 export interface ConfigPDF {
+    id?: string;
     logo: Logo;
     logoAlpha: Logo;
 }

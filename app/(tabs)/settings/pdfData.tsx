@@ -1,84 +1,167 @@
 import { Stack, useNavigation } from "expo-router";
-import { Box, VStack } from "native-base";
+import { Box, VStack, Text, HStack } from "native-base";
 import { InputForm, Spinner, useOptions } from "../../../components";
 import { t } from "i18next";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
-import { useGetCompany, useSetConfig } from "../../../api/company";
-import { Company } from "../../../types/company";
-import { useState } from "react";
+import { useGetCompany, useSetConfigPdf, useUploadImage } from "../../../api/company";
+import { ConfigPDF } from "../../../types/company";
+import { useEffect, useState } from "react";
+import { SelectImage } from "../../../components/Form";
 
 export default () => {
   const navigation = useNavigation();
-  const configMutation = useSetConfig();
+  const configMutation = useSetConfigPdf();
   const responseQuery = useGetCompany();
   const [errors, setErrors] = useState({});
-  const [formData, setData] = useState<Company>();
+  const [formData, setData] = useState<ConfigPDF>();
+  const [image, setImage] = useState<any>();
+  const uploadMutation = useUploadImage();
 
   const saveAction = () => {
-    configMutation.mutate(formData!)
+    transformData(formData);
+    configMutation.mutate(formData!);
   }
 
-  const renderForm = () => (
+  const transformData = (dataForm: any) => {
+    if (formData) {
+      formData.id = responseQuery?.data?._id!;
+      if (dataForm.xLogo) {
+        formData.logo.x = dataForm.xLogo;
+      }
+      if (dataForm.yLogo) {
+        formData.logo.y = dataForm.yLogo;
+      }
+      if (dataForm.widthLogo) {
+        formData.logo.width = dataForm.widthLogo;
+      }
+      if (dataForm.xAlpha) {
+        formData.logoAlpha.x = dataForm.xAlpha;
+      }
+      if (dataForm.yAlpha) {
+        formData.logoAlpha.y = dataForm.yAlpha;
+      }
+      if (dataForm.widthAlpha) {
+        formData.logoAlpha.width = dataForm.widthAlpha;
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (image) {
+      uploadMutation.mutate({ image, imageType: 'logoAlpha' });
+    }
+  }, [image])
+
+  useEffect(() => {
+    if (responseQuery.isSuccess) {
+      setData(responseQuery.data.configPdf);
+    }
+  }, [responseQuery.isSuccess])
+
+  const renderColorLogo = () => (
     <VStack mx="3">
+      <Text color={"blue.500"} fontWeight="500" fontSize={20} pl={1} pb={4}>
+        {t("logo")}
+      </Text>
       <InputForm
         data={{
-          name: "iva",
+          name: "widthLogo",
           errors,
-          title: t("tax"),
-          value: String(formData?.iva),
+          title: t("settings.width"),
+          value: String(formData?.logo.width),
           formData,
           setData,
           keyboardType: "decimal-pad"
         }}
       />
-      <InputForm
+      <HStack>
+        <InputForm
+          data={{
+            col: true,
+            name: "xLogo",
+            errors,
+            title: t("settings.x"),
+            value: String(formData?.logo.x),
+            formData,
+            setData,
+            keyboardType: "decimal-pad"
+          }}
+        />
+        <InputForm
+          data={{
+            col: true,
+            name: "yLogo",
+            errors,
+            title: t("settings.y"),
+            value: String(formData?.logo.y),
+            formData,
+            setData,
+            keyboardType: "decimal-pad"
+          }}
+        />
+      </HStack>
+
+    </VStack>
+  );
+
+  const renderColorLogoAlpha = () => (
+    <VStack mx="3">
+      <Text color={"blue.500"} fontWeight="500" fontSize={20} pl={1} py={4}>
+        {t("settings.logoAlpha")}
+      </Text>
+      <SelectImage
         data={{
-          name: "address",
-          errors,
-          title: t("address.title_single"),
-          value: formData?.address,
-          formData,
-          setData,
+          name: "logoAlpha",
+          title: t("logo"),
+          value: responseQuery?.data?.logoAlpha,
+          setImage,
+          isLoading: uploadMutation.isPending
         }}
       />
       <InputForm
         data={{
-          name: "description",
+          name: "widthAlpha",
           errors,
-          title: t("description"),
-          value: formData?.description,
+          title: t("settings.width"),
+          value: String(formData?.logoAlpha.width),
           formData,
           setData,
+          keyboardType: "decimal-pad"
         }}
       />
-      <InputForm
-        data={{
-          name: "phone",
-          errors,
-          title: t("phone"),
-          value: formData?.phone,
-          formData,
-          setData,
-          keyboardType: "phone-pad"
-        }}
-      />
-      <InputForm
-        data={{
-          name: "rif",
-          errors,
-          title: t("rif"),
-          value: formData?.rif,
-          formData,
-          setData,
-        }}
-      />
+      <HStack>
+        <InputForm
+          data={{
+            col: true,
+            name: "xAlpha",
+            errors,
+            title: t("settings.x"),
+            value: String(formData?.logoAlpha.x),
+            formData,
+            setData,
+            keyboardType: "decimal-pad"
+          }}
+        />
+        <InputForm
+          data={{
+            col: true,
+            name: "yAlpha",
+            errors,
+            title: t("settings.y"),
+            value: String(formData?.logoAlpha.y),
+            formData,
+            setData,
+            keyboardType: "decimal-pad"
+          }}
+        />
+      </HStack>
 
     </VStack>
   );
 
   return (
 
-    <Box safeArea flex={1} p={2} w="100%" padding='5' mx="auto">
+    <Box safeArea flex={1} p={2} w="100%" px='5' mx="auto">
       <Stack.Screen options={useOptions({ title: t("modules.settings"), navigation, back: true, save: true, saveAction })} />
       <ScrollView automaticallyAdjustKeyboardInsets>
         <KeyboardAvoidingView
@@ -86,7 +169,10 @@ export default () => {
         >
           {responseQuery.isLoading || configMutation.isPending ? (
             <Spinner />
-          ) : renderForm()
+          ) : <Box>
+            {renderColorLogo()}
+            {renderColorLogoAlpha()}
+          </Box>
           }
         </KeyboardAvoidingView>
 

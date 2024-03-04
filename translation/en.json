@@ -148,6 +148,11 @@
         }
     },
     "settings": {
+        "pdf": "PDF settings",
+        "width": "Width",
+        "logoAlpha": "Logo Alpha",
+        "x": "Position X",
+        "y": "Position Y",
         "language": "Language",
         "toastSave": "Successfully updated configuration"
     }

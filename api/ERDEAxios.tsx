@@ -21,7 +21,9 @@ ERDEAxios.interceptors.request.use(
     config.headers["Accept-Language"] = locale;
     if (contentType) {
       config.headers["Content-type"] = "multipart/form-data";
+      console.log('Content-type', "multipart/form-data");
     } else {
+      console.log('Content-type', "application/json");
       config.headers["Content-type"] = "application/json";
     }
     config.url = urlJoin(apiUrl, `${config.url}`);

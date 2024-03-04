@@ -32,7 +32,7 @@ export default () => {
       <ScrollView>
         <VStack space={3} divider={<Divider />}>
           {renderItem("General", "/(tabs)/settings/basicData")}
-          {renderItem(t('colors'), null)}
+          {renderItem(t('settings.pdf'), "/(tabs)/settings/pdfData")}
           {renderItem(t('images'), null)}
           {renderItem(t('settings.language'), null)}
         </VStack>
