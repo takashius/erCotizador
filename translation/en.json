@@ -149,11 +149,16 @@
     },
     "settings": {
         "pdf": "PDF settings",
+        "email": "Email settings",
         "width": "Width",
         "logoAlpha": "Logo Alpha",
         "x": "Position X",
         "y": "Position Y",
         "language": "Language",
-        "toastSave": "Successfully updated configuration"
+        "toastSave": "Successfully updated configuration",
+        "background": "Background",
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "title": "Title"
     }
 }

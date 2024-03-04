@@ -1,0 +1,115 @@
+import { Stack, useNavigation } from "expo-router";
+import { Box, VStack, Text, HStack } from "native-base";
+import { InputForm, Spinner, useOptions } from "../../../components";
+import { t } from "i18next";
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { useGetCompany, useSetConfigEmail, useUploadImage } from "../../../api/company";
+import { Colors, ConfigPDF } from "../../../types/company";
+import { useEffect, useState } from "react";
+import { SelectImage } from "../../../components/Form";
+
+export default () => {
+  const navigation = useNavigation();
+  const configMutation = useSetConfigEmail();
+  const responseQuery = useGetCompany();
+  const [errors, setErrors] = useState({});
+  const [formData, setData] = useState<Colors>();
+  const [image, setImage] = useState<any>();
+  const uploadMutation = useUploadImage();
+
+  const saveAction = () => {
+    if (formData)
+      formData.id = responseQuery?.data?._id;
+    configMutation.mutate(formData!);
+  }
+
+  useEffect(() => {
+    if (image) {
+      uploadMutation.mutate({ image, imageType: 'logoAlpha' });
+    }
+  }, [image])
+
+  useEffect(() => {
+    if (responseQuery.isSuccess) {
+      console.log('responseQuery.data', JSON.stringify(responseQuery.data, null, 2));
+      setData(responseQuery.data.configMail?.colors);
+    }
+  }, [responseQuery.isSuccess])
+
+  const renderColorsEmail = () => (
+    <VStack mx="3">
+      <SelectImage
+        data={{
+          name: "banner",
+          title: t("logo"),
+          value: responseQuery?.data?.banner,
+          setImage,
+          isLoading: uploadMutation.isPending
+        }}
+      />
+      <Box mt={25}>
+        <InputForm
+          data={{
+            name: "background",
+            errors,
+            title: t("settings.background"),
+            value: String(formData?.background),
+            formData,
+            setData
+          }}
+        />
+        <InputForm
+          data={{
+            name: "primary",
+            errors,
+            title: t("settings.primary"),
+            value: String(formData?.primary),
+            formData,
+            setData
+          }}
+        />
+        <InputForm
+          data={{
+            name: "secundary",
+            errors,
+            title: t("settings.secondary"),
+            value: String(formData?.secundary),
+            formData,
+            setData
+          }}
+        />
+        <InputForm
+          data={{
+            name: "title",
+            errors,
+            title: t("settings.title"),
+            value: String(formData?.title),
+            formData,
+            setData
+          }}
+        />
+      </Box>
+
+    </VStack>
+  );
+
+  return (
+    <Box safeArea flex={1} p={2} w="100%" px='5' mx="auto">
+      <Stack.Screen options={useOptions({ title: t("settings.email"), navigation, back: true, save: true, saveAction })} />
+      <ScrollView automaticallyAdjustKeyboardInsets>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          {responseQuery.isLoading || configMutation.isPending ? (
+            <Spinner />
+          ) : <Box>
+            {renderColorsEmail()}
+          </Box>
+          }
+        </KeyboardAvoidingView>
+
+      </ScrollView>
+
+    </Box>
+  )
+}

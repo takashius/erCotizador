@@ -162,7 +162,7 @@ export default () => {
   return (
 
     <Box safeArea flex={1} p={2} w="100%" px='5' mx="auto">
-      <Stack.Screen options={useOptions({ title: t("modules.settings"), navigation, back: true, save: true, saveAction })} />
+      <Stack.Screen options={useOptions({ title: t("settings.pdf"), navigation, back: true, save: true, saveAction })} />
       <ScrollView automaticallyAdjustKeyboardInsets>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

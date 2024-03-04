@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
-import { Company, ConfigPDF, Image } from "../types/company";
+import { Colors, Company, ConfigPDF, Image } from "../types/company";
 import { parseImage } from "../components/helpers/ParseImage";
 import { write, remove } from "../components";
 
@@ -31,6 +31,20 @@ export const useSetConfigPdf = () => {
       const dataFull: Company = {
         id: data.id,
         pdf: data
+      };
+      return ERDEAxios.patch("/company/config", dataFull);
+    }
+  });
+
+  return mutation;
+};
+
+export const useSetConfigEmail = () => {
+  const mutation = useMutation({
+    mutationFn: (data: Colors) => {
+      const dataFull: Company = {
+        id: data.id,
+        colors: data
       };
       return ERDEAxios.patch("/company/config", dataFull);
     }

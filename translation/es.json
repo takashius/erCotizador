@@ -157,10 +157,15 @@
     "settings": {
         "language": "Idioma",
         "pdf": "Ajustes del PDF",
+        "email": "Ajuste de email",
         "width": "Ancho",
         "logoAlpha": "Marca de agua",
         "x": "Posición X",
         "y": "Posición Y",
-        "toastSave": "Actualizada correctamente la configuración"
+        "toastSave": "Actualizada correctamente la configuración",
+        "background": "Color de Fondo",
+        "primary": "Color Primario",
+        "secondary": "Color Secundario",
+        "title": "Titulos"
     }
 }
