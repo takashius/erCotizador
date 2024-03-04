@@ -159,6 +159,7 @@
         "background": "Background",
         "primary": "Primary",
         "secondary": "Secondary",
-        "title": "Title"
+        "title": "Title",
+        "changeLanguage": "To view the change you must restart the App"
     }
 }

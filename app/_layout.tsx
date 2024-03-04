@@ -1,9 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { TaskProvider } from "../components/helpers/TaskContext";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect, useState } from "react";
@@ -42,12 +38,12 @@ export default function RootLayout() {
     getLocationEnv().then((response: string) => {
       setLocationUser(response);
     });
-  }, []);
+  }, [i18next.changeLanguage]);
 
   const getLocationEnv = async () => {
     let locationUser = await read("locationUser");
     if (!locationUser) {
-      write("locationUser", 'es');
+      await write("locationUser", 'es');
       locationUser = 'es';
     }
     return locationUser;
@@ -92,17 +88,19 @@ function RootLayoutNav() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NativeBaseProvider>
-        <I18nextProvider i18n={i18next}>
-          <QueryClientProvider client={queryClient}>
-            <AutocompleteDropdownContextProvider>
-              <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              </Stack>
-            </AutocompleteDropdownContextProvider>
-          </QueryClientProvider>
-        </I18nextProvider>
-      </NativeBaseProvider>
+      <TaskProvider>
+        <NativeBaseProvider>
+          <I18nextProvider i18n={i18next}>
+            <QueryClientProvider client={queryClient}>
+              <AutocompleteDropdownContextProvider>
+                <Stack>
+                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                </Stack>
+              </AutocompleteDropdownContextProvider>
+            </QueryClientProvider>
+          </I18nextProvider>
+        </NativeBaseProvider>
+      </TaskProvider>
     </GestureHandlerRootView>
   );
 }

@@ -166,6 +166,7 @@
         "background": "Color de Fondo",
         "primary": "Color Primario",
         "secondary": "Color Secundario",
-        "title": "Titulos"
+        "title": "Titulos",
+        "changeLanguage": "Para visualizar el cambio debe reiniciar el App"
     }
 }

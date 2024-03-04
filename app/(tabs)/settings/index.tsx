@@ -34,7 +34,7 @@ export default () => {
           {renderItem("General", "/(tabs)/settings/basicData")}
           {renderItem(t('settings.pdf'), "/(tabs)/settings/pdfData")}
           {renderItem(t('settings.email'), "/(tabs)/settings/emailData")}
-          {renderItem(t('settings.language'), null)}
+          {renderItem(t('settings.language'), "/(tabs)/settings/languageData")}
         </VStack>
       </ScrollView>
     </Box>
