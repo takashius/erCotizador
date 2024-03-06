@@ -136,7 +136,8 @@
             "description": "Quote description",
             "number": "Invoice number",
             "date": "Quote date",
-            "customer": "Select a customer"
+            "customer": "Select a customer",
+            "product": "Select a product"
         },
         "validations": {
             "title": "The title is mandatory",

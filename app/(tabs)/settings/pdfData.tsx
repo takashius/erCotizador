@@ -1,6 +1,6 @@
 import { Stack, useNavigation } from "expo-router";
 import { Box, VStack, Text, HStack } from "native-base";
-import { InputForm, Spinner, useOptions } from "../../../components";
+import { InputForm, Spinner, onError, useOptions } from "../../../components";
 import { t } from "i18next";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { useGetCompany, useSetConfigPdf, useUploadImage } from "../../../api/company";
@@ -56,7 +56,13 @@ export default () => {
     if (responseQuery.isSuccess) {
       setData(responseQuery.data.configPdf);
     }
-  }, [responseQuery.isSuccess])
+  }, [responseQuery.isSuccess]);
+
+  useEffect(() => {
+    if (configMutation.isError) {
+      onError(configMutation.error);
+    }
+  }, [configMutation.isError]);
 
   const renderColorLogo = () => (
     <VStack mx="3">

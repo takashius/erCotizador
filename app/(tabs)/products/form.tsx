@@ -6,12 +6,13 @@ import {
 } from "expo-router";
 import { Box, VStack, HStack, Text, Switch, Button } from "native-base";
 import { useOptions } from "../../../components/helpers/OptionsScreens";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCreateProduct, useUpdateProduct } from "../../../api/product";
 import { ProductForm } from "../../../types/products";
 import { InputForm } from "../../../components/Form";
 import Spinner from "../../../components/helpers/Spinner";
 import { t } from "i18next";
+import { onError } from "../../../components";
 
 export default () => {
   const params = useLocalSearchParams();
@@ -39,6 +40,12 @@ export default () => {
   const [formData, setData] = useState<ProductForm>(
     post === "new" ? defaultData : transformData(params)
   );
+
+  useEffect(() => {
+    if (createMutation.isError) {
+      onError(createMutation.error);
+    }
+  }, [createMutation.isError]);
 
   const validate = () => {
     if (formData.name === undefined || formData.name === "") {

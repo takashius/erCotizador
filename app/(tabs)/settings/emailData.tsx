@@ -1,6 +1,6 @@
 import { Stack, useNavigation } from "expo-router";
 import { Box, VStack, Text, HStack } from "native-base";
-import { InputForm, Spinner, useOptions } from "../../../components";
+import { InputForm, Spinner, onError, useOptions } from "../../../components";
 import { t } from "i18next";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { useGetCompany, useSetConfigEmail, useUploadImage } from "../../../api/company";
@@ -30,6 +30,12 @@ export default () => {
   }, [image])
 
   useEffect(() => {
+    if (configMutation.isError) {
+      onError(configMutation.error);
+    }
+  }, [configMutation.isError]);
+
+  useEffect(() => {
     if (responseQuery.isSuccess) {
       console.log('responseQuery.data', JSON.stringify(responseQuery.data, null, 2));
       setData(responseQuery.data.configMail?.colors);
@@ -41,7 +47,7 @@ export default () => {
       <SelectImage
         data={{
           name: "banner",
-          title: t("logo"),
+          title: "Banner",
           value: responseQuery?.data?.banner,
           setImage,
           isLoading: uploadMutation.isPending

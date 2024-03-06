@@ -142,8 +142,8 @@
             "description": "Descripción de la cotización",
             "number": "Número de la factura",
             "date": "Fecha de la cotización",
-            "customer": "Selecione un cliente",
-            "product": "Selecione un producto"
+            "customer": "Seleccione un cliente",
+            "product": "Seleccione un producto"
         },
         "validations": {
             "titleRequired": "El título es requerido",

@@ -1,6 +1,6 @@
 import { Stack, router, useNavigation } from "expo-router"
 import { VStack, Box, useToast } from "native-base"
-import { InputForm, Spinner, useOptions, write } from "../../../components"
+import { InputForm, Spinner, onError, useOptions, write } from "../../../components"
 import { t } from "i18next"
 import { useEffect, useState } from "react"
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native"
@@ -39,7 +39,13 @@ export default () => {
         title: t('settings.toastSave')
       })
     }
-  }, [configMutation.isSuccess])
+  }, [configMutation.isSuccess]);
+
+  useEffect(() => {
+    if (configMutation.isError) {
+      onError(configMutation.error);
+    }
+  }, [configMutation.isError]);
 
   const saveAction = () => {
     configMutation.mutate(formData!)
