@@ -1,7 +1,7 @@
 import { Stack, router } from "expo-router";
-import { Box, Button, HStack, Heading, Icon, VStack, useToast, Text } from "native-base";
+import { Box, Button, HStack, Heading, Icon, VStack, useToast } from "native-base";
 import { useEffect, useState } from "react";
-import { Image, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Pressable, Alert } from "react-native";
+import { Image, StyleSheet, KeyboardAvoidingView, ScrollView, Pressable } from "react-native";
 import { InputForm, Spinner } from "../components";
 import { t } from "i18next";
 import { Register } from "../types/general";
@@ -96,7 +96,7 @@ export default function register() {
       ) : (
         <ScrollView automaticallyAdjustKeyboardInsets>
           <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            behavior={'padding'}
           >
             <VStack space={2} mt={5}>
               <InputForm

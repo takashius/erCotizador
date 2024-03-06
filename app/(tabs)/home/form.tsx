@@ -130,7 +130,6 @@ export default () => {
           formData,
           setData,
           keyboardType: "number-pad",
-          require: true,
         }}
       />
       <DatePicker
@@ -154,7 +153,6 @@ export default () => {
                     title: t("date"),
                     placeholder: t("cotiza.placeholder.date"),
                     value: formData.date,
-                    require: true,
                   }}
                 />
                 :
@@ -166,7 +164,6 @@ export default () => {
                     title: t("date"),
                     placeholder: t("cotiza.placeholder.date"),
                     value: formData.date,
-                    require: true,
                   }}
                 />
               }

@@ -35,6 +35,7 @@ export default () => {
           {renderItem(t('settings.pdf'), "/(tabs)/settings/pdfData")}
           {renderItem(t('settings.email'), "/(tabs)/settings/emailData")}
           {renderItem(t('settings.language'), "/(tabs)/settings/languageData")}
+          {renderItem(t('auth.logout'), "/logout")}
         </VStack>
       </ScrollView>
     </Box>

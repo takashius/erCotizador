@@ -154,7 +154,6 @@ const CustomerForm = (props: CustomerFormProps) => {
                 value: "",
                 formData,
                 setData,
-                require: true,
               }}
             />
           </HStack>
