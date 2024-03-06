@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
 import { Cotiza, CotizaFull, CotizaForm } from "../types/cotiza";
-import { write } from "../components";
+import { write } from "../components/helpers/LocalStorage";
 import { ProductForm } from "../types/products";
 
 export const useListCotiza = () => {
