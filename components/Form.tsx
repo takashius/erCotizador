@@ -131,7 +131,7 @@ export const SelectImage = ({ data }: { data: any }) => {
       >
         {data.title}
       </FormControl.Label>
-      {data.value ?
+      {(data.value && data.value !== 'undefined' && data.value !== undefined) ?
         <Box alignItems="center">
           <TouchableOpacity onPress={pickImage}>
             <VStack>
@@ -139,7 +139,7 @@ export const SelectImage = ({ data }: { data: any }) => {
                 <Spinner /> :
                 <Box>
                   <Badge
-                    rounded="full" mb={-6} mr={-6} zIndex={1} alignSelf="flex-end">
+                    rounded="full" mb={-6} zIndex={1} alignSelf="flex-end">
                     <Icon
                       onPress={() => { }}
                       as={<AntDesign name="edit" />}

@@ -117,7 +117,7 @@ export default () => {
       <Stack.Screen options={useOptions({ title: t("modules.settings"), navigation, back: true, save: true, saveAction })} />
       <ScrollView automaticallyAdjustKeyboardInsets>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={'padding'}
         >
           {responseQuery.isLoading || configMutation.isPending ? (
             <Spinner />

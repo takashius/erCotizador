@@ -1,6 +1,6 @@
 import { Stack, router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
-import { useOptions, Spinner, InputForm, read, SelectForm } from "../../../components";
+import { useOptions, Spinner, InputForm, read, SelectForm, onError } from "../../../components";
 import { Box, Button, VStack } from "native-base";
 import { t } from "i18next";
 import { DatePicker } from 'react-native-woodpicker';
@@ -51,6 +51,12 @@ export default () => {
   }, [pickedDate]);
 
   useEffect(() => {
+    if (createMutation.isError) {
+      onError(createMutation.error);
+    }
+  }, [createMutation.isError]);
+
+  useEffect(() => {
     read("locationUser")
       .then((location) => {
         setLocationUser(location);
@@ -64,15 +70,6 @@ export default () => {
       return false;
     } else if (formData.title.length < 3) {
       setErrors({ ...errors, title: t("cotiza.validations.titleShort") });
-      return false;
-    } else if (!formData.number) {
-      setErrors({ ...errors, number: t("cotiza.validations.numberRequired") });
-      return false;
-    } else if (formData.number < 0) {
-      setErrors({ ...errors, number: t("cotiza.validations.numberIncorrect") });
-      return false;
-    } else if (formData.date === undefined || formData.date === '') {
-      setErrors({ ...errors, date: t("cotiza.validations.dateRequired") });
       return false;
     } else if (formData.customerId === undefined && (formData.customer === undefined || formData.customer === '')) {
       setErrors({ ...errors, customer: t("cotiza.validations.customerRequired") });

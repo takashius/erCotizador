@@ -17,7 +17,7 @@ export const useGetCompany = () => {
 
 export const useSetConfig = () => {
   const mutation = useMutation({
-    mutationFn: (data: ConfigPDF) => {
+    mutationFn: (data: Company) => {
       return ERDEAxios.patch("/company/config", data);
     }
   });

@@ -19,6 +19,7 @@ import AddressForm from "./AddressForm";
 import ModalAddress from "./ModalAddress";
 import ModalProducts from "./ModalProducts";
 import CustomerForm from "./CustomerForm";
+import { onError } from "./helpers/Utils";
 
 export {
     CardCotizaItem,
@@ -43,5 +44,6 @@ export {
     AddressForm,
     ModalAddress,
     ModalProducts,
+    onError,
     CustomerForm as FormCustomer
 }

@@ -6,10 +6,10 @@ import {
 } from "expo-router";
 import { Box, ScrollView, Text } from "native-base";
 import { Platform, KeyboardAvoidingView } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { t } from "i18next";
 import { type CustomerForm } from "../../../types/customer";
-import { useOptions, Spinner, FormCustomer } from "../../../components";
+import { useOptions, Spinner, FormCustomer, onError } from "../../../components";
 import { useCreateCustomer, useUpdateCustomer } from "../../../api/customer";
 
 export default () => {
@@ -48,6 +48,12 @@ export default () => {
   const [formData, setData] = useState<CustomerForm>(
     post === "new" ? defaultData : transformData(params)
   );
+
+  useEffect(() => {
+    if (createMutation.isError) {
+      onError(createMutation.error);
+    }
+  }, [createMutation.isError])
 
   const validate = (formData: CustomerForm) => {
     if (formData.title === undefined || formData.title === "") {
@@ -97,15 +103,6 @@ export default () => {
         setErrors({
           ...errors,
           "address.line1": t("address.validations.line1"),
-        });
-        return false;
-      } else if (
-        (formData.address!.zip === undefined || formData.address!.zip === "") &&
-        post === "new"
-      ) {
-        setErrors({
-          ...errors,
-          "address.zip": t("address.validations.zip"),
         });
         return false;
       }

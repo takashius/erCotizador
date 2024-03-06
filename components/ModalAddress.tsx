@@ -50,9 +50,6 @@ const ModalAddress = ({
     } else if (!formData.line1) {
       setErrors({ ...errors, line1: t("address.validations.line1") });
       return false;
-    } else if (!formData.zip) {
-      setErrors({ ...errors, zip: t("address.validations.zip") });
-      return false;
     }
     setErrors({});
     return true;
