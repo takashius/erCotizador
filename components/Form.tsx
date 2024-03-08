@@ -107,6 +107,14 @@ export const SelectImage = ({ data }: { data: any }) => {
     setIsLoading(data.isLoading);
   }, [data.isLoading])
   const pickImage = async () => {
+
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       quality: 1,
