@@ -32,10 +32,10 @@ export default () => {
   }, [responseQuery.data]);
 
   const isReturnFromForm = async () => {
-    const updated = await read("editCotizaInDetail");
+    const updated = await read("mutateCotiza");
     if (updated && updated === 'true') {
       responseQuery.refetch();
-      await remove("editCotizaInDetail");
+      await remove("mutateCotiza");
     }
   };
 
