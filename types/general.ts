@@ -3,6 +3,7 @@ import { GestureResponderEvent } from "react-native/Libraries/Types/CoreEventTyp
 import { type CustomerForm, type Address } from "./customer";
 import { ProductForm } from "./products";
 import { UseQueryResult } from "@tanstack/react-query";
+import { Company } from "./company";
 
 export interface CustomerShort {
     _id: string;
@@ -17,6 +18,21 @@ export interface Settings {
     description: string,
     phone: string,
     rif: string
+}
+
+export interface Account {
+    _id: string
+    name: string
+    lastname: string
+    phone: string
+    email: string
+    date: string
+    companys: CompanyAccount[]
+}
+
+export interface CompanyAccount {
+    company: Company,
+    selected: boolean
 }
 
 export interface Register {

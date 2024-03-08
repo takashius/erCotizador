@@ -151,6 +151,7 @@
     "settings": {
         "pdf": "PDF settings",
         "email": "Email settings",
+        "company": "Change company",
         "width": "Width",
         "logoAlpha": "Logo Alpha",
         "x": "Position X",
@@ -161,6 +162,7 @@
         "primary": "Primary",
         "secondary": "Secondary",
         "title": "Title",
-        "changeLanguage": "To view the change you must restart the App"
+        "changeLanguage": "To view the change you must restart the App",
+        "changeCompany": "The company has been changed successfully"
     }
 }

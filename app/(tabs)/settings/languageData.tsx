@@ -1,6 +1,5 @@
 import { Box, Divider, HStack, Radio, VStack, useToast } from "native-base"
 import { read, useOptions, write } from "../../../components"
-import i18next from "i18next";
 import { t } from "i18next"
 import { Stack, useNavigation } from "expo-router"
 import { ScrollView, Text } from "react-native"

@@ -156,6 +156,7 @@
     },
     "settings": {
         "language": "Idioma",
+        "company": "Cambiar de empresa",
         "pdf": "Ajustes del PDF",
         "email": "Ajuste de email",
         "width": "Ancho",
@@ -167,6 +168,7 @@
         "primary": "Color Primario",
         "secondary": "Color Secundario",
         "title": "Titulos",
-        "changeLanguage": "Para visualizar el cambio debe reiniciar el App"
+        "changeLanguage": "Para visualizar el cambio debe reiniciar el App",
+        "changeCompany": "Se ha cambiado la empresa correctamente"
     }
 }
