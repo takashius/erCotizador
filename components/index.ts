@@ -19,6 +19,7 @@ import AddressForm from "./AddressForm";
 import ModalAddress from "./ModalAddress";
 import ModalProducts from "./ModalProducts";
 import CustomerForm from "./CustomerForm";
+import useDebounce from "./helpers/useDebounce";
 import { onError } from "./helpers/Utils";
 
 export {
@@ -45,5 +46,6 @@ export {
     ModalAddress,
     ModalProducts,
     onError,
-    CustomerForm as FormCustomer
+    CustomerForm as FormCustomer,
+    useDebounce
 }

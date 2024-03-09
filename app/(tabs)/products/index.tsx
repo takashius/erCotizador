@@ -8,7 +8,7 @@ import {
   Spinner,
   useOptions,
   DeleteButton,
-  read, remove
+  read, remove, useDebounce
 } from "../../../components";
 import { useDeleteProduct, useListProducts } from "../../../api/product";
 import { AntDesign } from "@expo/vector-icons";
@@ -18,10 +18,11 @@ import CardProductItemList from "../../../components/CardProductItemList";
 
 export default () => {
   const [pattern, setPattern] = useState<string>('');
-  const responseQuery = useListProducts(pattern);
   const deleteMutation = useDeleteProduct();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
+  const debounce = useDebounce(pattern, 50);
+  const responseQuery = useListProducts(debounce);
 
   const isReturnFromForm = async () => {
     const created = await read("mutateProduct");
@@ -36,10 +37,6 @@ export default () => {
       isReturnFromForm();
     }
   }, [isFocused]);
-
-  useEffect(() => {
-
-  }, [pattern])
 
   useEffect(() => {
     if (deleteMutation.isSuccess) {
