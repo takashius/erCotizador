@@ -236,7 +236,7 @@ export const SelectForm = (dataObj: any) => {
 
 export const SelectDropdownForm = (dataObj: any) => {
   const { data } = dataObj;
-  const countries = data.selectData.map((item: any) => item.name)
+  const countries = data.selectData?.map((item: any) => item.name)
   return (
     <FormControl
       w={data.col === true ? "1/2" : "full"}
@@ -255,7 +255,7 @@ export const SelectDropdownForm = (dataObj: any) => {
         onSelect={(selectedItem, index) => {
           data.setData({
             ...data.formData,
-            master: data.selectData[index]?._id,
+            master: data.selectData[index]?.id,
             name: data.selectData[index]?.name,
             description: data.selectData[index]?.description,
             price: data.selectData[index]?.price,

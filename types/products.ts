@@ -1,5 +1,9 @@
 import { type CreatedShort } from "./general";
 
+export interface Total {
+    total: Number
+}
+
 export interface ProductForm {
     name: string;
     description: string;

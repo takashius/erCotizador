@@ -4,17 +4,6 @@ import { Product, ProductForm } from "../types/products";
 import { write } from "../components/helpers/LocalStorage";
 import { Select } from "../types/general";
 
-export const useListProduct = () => {
-  const query = useQuery<Product[]>({
-    queryKey: ["productList"],
-    retry: false,
-    queryFn: () => {
-      return ERDEAxios.get("/product");
-    },
-  });
-  return query;
-};
-
 export const useListProducts = (pattern?: string) => {
   const query = useInfiniteQuery<any>({
     queryKey: ["productList", pattern],
@@ -33,7 +22,7 @@ export const useListSimpleProduct = () => {
     queryKey: ["productSelectList"],
     retry: false,
     queryFn: () => {
-      return ERDEAxios.get("/product/list");
+      return ERDEAxios.get("/product/simple");
     },
   });
   return query;

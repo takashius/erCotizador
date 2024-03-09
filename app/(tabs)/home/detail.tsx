@@ -31,6 +31,7 @@ import { useIsFocused } from "@react-navigation/native";
 export default () => {
   const params = useLocalSearchParams();
   const [submit, setSubmit] = useState(false);
+  const [total, setTotal] = useState<Number>(0);
   const [toEdit, setToEdit] = useState<ProductForm>();
   const [open, setOpen] = useState(false);
   const [post, setPost] = useState<string>("");
@@ -62,6 +63,12 @@ export default () => {
     }
   }, [isFocused]);
 
+  useEffect(() => {
+    if (deleteProductMutation.isSuccess) {
+      setTotal(deleteProductMutation.data.total);
+    }
+  }, [deleteProductMutation.isSuccess])
+
   const isReturnFromForm = async () => {
     const created = await read("mutateCotiza");
     if (created && created === 'true') {
@@ -72,7 +79,10 @@ export default () => {
   };
 
   useEffect(() => {
-    setDataList(responseQuery.data?.products);
+    if (responseQuery.data) {
+      setDataList(responseQuery.data.products);
+      setTotal(responseQuery.data.amount);
+    }
   }, [responseQuery.data]);
 
   useEffect(() => {
@@ -204,7 +214,7 @@ export default () => {
                 size={4}
                 color={"blue.500"}
               />
-              <Text>{responseQuery.data?.rate}</Text>
+              <Text>{total.toString()}</Text>
             </HStack>
           </HStack>
 

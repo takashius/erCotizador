@@ -8,7 +8,7 @@ import {
   Spinner,
   useOptions,
   DeleteButton,
-  read, remove, useDebounce
+  read, remove
 } from "../../../components";
 import { useDeleteProduct, useListProducts } from "../../../api/product";
 import { AntDesign } from "@expo/vector-icons";
@@ -21,8 +21,7 @@ export default () => {
   const deleteMutation = useDeleteProduct();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const debounce = useDebounce(pattern, 50);
-  const responseQuery = useListProducts(debounce);
+  const responseQuery = useListProducts(pattern);
 
   const isReturnFromForm = async () => {
     const created = await read("mutateProduct");

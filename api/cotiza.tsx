@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
 import { Cotiza, CotizaFull, CotizaForm } from "../types/cotiza";
 import { write } from "../components/helpers/LocalStorage";
-import { ProductForm } from "../types/products";
+import { ProductForm, Total } from "../types/products";
 
 export const useListCotiza = () => {
   const query = useQuery<Cotiza[]>({
@@ -109,7 +109,7 @@ export const useUpdateProduct = () => {
 };
 
 export const useDeleteProduct = () => {
-  const mutation = useMutation({
+  const mutation = useMutation<Total>({
     mutationFn: (data: any) => {
       return ERDEAxios.delete("/cotiza/product", { data });
     },

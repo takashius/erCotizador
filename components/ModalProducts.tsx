@@ -6,7 +6,7 @@ import { t } from "i18next";
 import { Button, Modal } from "native-base";
 import Spinner from "./helpers/Spinner";
 import FormProduct from "./FormProduct";
-import { useListProduct } from "../api/product";
+import { useListSimpleProduct } from "../api/product";
 
 const ModalProducts = ({
   idCotiza,
@@ -30,7 +30,7 @@ const ModalProducts = ({
   const [formData, setData] = useState<ProductForm>(defaultData);
   const createMutation = useCreateProduct();
   const updateMutation = useUpdateProduct();
-  const productList = useListProduct();
+  const productList = useListSimpleProduct();
 
   const validate = (formData: ProductForm) => {
     if (formData.price === 0 || formData.price === undefined) {
