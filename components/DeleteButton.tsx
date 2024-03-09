@@ -28,12 +28,12 @@ export default ({
 
   const handleDelete = () => {
     setIsOpen(false);
-    deleteRow && deleteRow(rowMap, data?.item._id);
     if (idParent) {
       deleteMutation.mutate({ id: data.item._id, idParent });
     } else {
       deleteMutation.mutate(data.item._id);
     }
+    deleteRow && deleteRow(rowMap, data?.item._id);
   };
 
   return (

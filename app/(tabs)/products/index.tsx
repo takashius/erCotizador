@@ -1,34 +1,27 @@
 import { Stack, router, useNavigation } from "expo-router";
-import { Box, Fab, Icon } from "native-base";
-import { View, Animated } from "react-native";
+import { Box, Fab, Icon, Stack as _Stack } from "native-base";
+import { View } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import {
-  CardProductItem,
   SearchBar,
   Spinner,
   useOptions,
   DeleteButton,
   read, remove
 } from "../../../components";
-import { useListProduct, useDeleteProduct } from "../../../api/product";
+import { useDeleteProduct, useListProducts } from "../../../api/product";
 import { AntDesign } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
-import { Product } from "../../../types/products";
+import React, { useCallback, useEffect, useState } from "react";
 import { t } from "i18next";
+import CardProductItemList from "../../../components/CardProductItemList";
 
 export default () => {
-  const responseQuery = useListProduct();
+  const [pattern, setPattern] = useState<string>('');
+  const responseQuery = useListProducts(pattern);
   const deleteMutation = useDeleteProduct();
   const navigation = useNavigation();
-  const [dataList, setDataList] = useState<Product[]>();
-  const [dataDefault, setDataDefault] = useState<Product[]>();
   const isFocused = useIsFocused();
-
-  useEffect(() => {
-    setDataList(responseQuery.data);
-    setDataDefault(responseQuery.data);
-  }, [responseQuery.data]);
 
   const isReturnFromForm = async () => {
     const created = await read("mutateProduct");
@@ -44,53 +37,43 @@ export default () => {
     }
   }, [isFocused]);
 
-  const deleteRow = (rowMap: any, rowKey: any) => {
-    if (dataList !== undefined) {
-      rowMap[rowKey].closeRow();
-      const config = {
-        toValue: 0,
-        duration: 500,
-        useNativeDriver: true,
-      };
-      Animated.timing(new Animated.Value(50), config).start(() => {
-        const newData = [...dataList];
-        const prevIndex = dataList.findIndex(
-          (item: any) => item._id === rowKey
-        );
-        newData.splice(prevIndex, 1);
-        setDataList(newData);
-      });
-    }
-  };
+  useEffect(() => {
 
-  const filterData = (search: string) => {
-    if (dataDefault) {
-      setDataList(
-        dataDefault.filter(
-          (item: Product) =>
-            item.description.toUpperCase().includes(search.toUpperCase()) ||
-            item.name.toUpperCase().includes(search.toUpperCase())
-        )
-      );
+  }, [pattern])
+
+  useEffect(() => {
+    if (deleteMutation.isSuccess) {
+      responseQuery.refetch();
     }
-  };
+  }, [deleteMutation.isSuccess])
+
+  const renderItem = useCallback(({ item }: { item: any }) => (
+    <CardProductItemList item={item} />
+  ), []);
 
   return (
     <Box bg="white" safeArea flex="1">
       <Stack.Screen options={useOptions({ title: t("modules.product"), navigation })} />
-      <SearchBar filterData={filterData} />
+      <SearchBar filterData={setPattern} />
       {responseQuery.isLoading ? (
         <Spinner />
       ) : (
         <SwipeListView
-          data={dataList}
+          data={responseQuery.data?.pages.map(page => page.results).flat()}
           useFlatList={true}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item, index) => String(index)}
           disableRightSwipe={true}
           closeOnRowBeginSwipe={true}
           onRefresh={() => responseQuery.refetch()}
+          onEndReached={() => {
+            if (responseQuery.hasNextPage) {
+              responseQuery.fetchNextPage();
+            }
+          }}
+          onEndReachedThreshold={0.3}
           refreshing={responseQuery.isFetching || deleteMutation.isPending}
-          renderItem={({ item }) => <CardProductItem item={item} />}
+          ListFooterComponent={responseQuery.isFetchingNextPage ? <Spinner /> : null}
+          renderItem={renderItem}
           renderHiddenItem={(data, rowMap) => (
             <View
               style={{
@@ -106,7 +89,6 @@ export default () => {
                 data={data}
                 rowMap={rowMap}
                 deleteMutation={deleteMutation}
-                deleteRow={deleteRow}
               />
             </View>
           )}

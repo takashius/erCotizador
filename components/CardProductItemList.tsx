@@ -8,17 +8,13 @@ import {
   Stack as _Stack,
   Heading,
   VStack,
-  Badge,
 } from "native-base";
 import Card from "./helpers/Card";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { ProductForm } from "../types/products";
 import { t } from "i18next";
-import { Pressable } from "react-native";
 
-const CardProductItem = ({ item, openLink = true, onClick }: { item: ProductForm, openLink?: Boolean, onClick?: any }) => {
-  const iva = false;
-
+const CardProductItemList = ({ item }: { item: ProductForm }) => {
   const renderCard = () => (
     <Card>
       <_Stack p="4" space={0}>
@@ -40,18 +36,6 @@ const CardProductItem = ({ item, openLink = true, onClick }: { item: ProductForm
               <Text>{item.price}</Text>
             </HStack>
           </VStack>
-          {item.amount &&
-            <VStack flex={1}>
-              <HStack>
-                <Badge
-                  bg={"blue.500"} rounded="full" mb={-4} mr={-4} zIndex={1} variant="solid" alignSelf="flex-end" _text={{
-                    fontSize: 12
-                  }}>
-                  {item.amount}
-                </Badge>
-              </HStack>
-            </VStack>
-          }
           <VStack flex={1} alignItems={"flex-end"}>
             <HStack>
               <Text>{t("tax")}: </Text>
@@ -67,7 +51,7 @@ const CardProductItem = ({ item, openLink = true, onClick }: { item: ProductForm
                   />
                 }
                 size={4}
-                color={iva ? "blue.500" : "red.300"}
+                color={item.iva ? "blue.500" : "red.300"}
               />
             </HStack>
           </VStack>
@@ -78,7 +62,7 @@ const CardProductItem = ({ item, openLink = true, onClick }: { item: ProductForm
 
   return (
     <Box alignItems="center" marginBottom={5}>
-      {openLink ? <Link
+      <Link
         href={{
           pathname: "/(tabs)/products/form",
           params: {
@@ -90,11 +74,10 @@ const CardProductItem = ({ item, openLink = true, onClick }: { item: ProductForm
             iva: String(item.iva),
           },
         }}
-      >{renderCard()}</Link> :
-        <Pressable onPress={() => onClick(item)}>{renderCard()}</Pressable>}
+      >{renderCard()}</Link>
 
     </Box>
   );
 };
 
-export default CardProductItem;
+export default CardProductItemList;

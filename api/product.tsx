@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useInfiniteQuery } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
 import { Product, ProductForm } from "../types/products";
 import { write } from "../components/helpers/LocalStorage";
@@ -11,6 +11,19 @@ export const useListProduct = () => {
     queryFn: () => {
       return ERDEAxios.get("/product");
     },
+  });
+  return query;
+};
+
+export const useListProducts = (pattern?: string) => {
+  const query = useInfiniteQuery<any>({
+    queryKey: ["productList", pattern],
+    networkMode: 'offlineFirst',
+    initialPageParam: 1,
+    queryFn: async ({ pageParam = 0 }) => {
+      return ERDEAxios.get(`/product/list/${pageParam}/${pattern}`);
+    },
+    getNextPageParam: (lastPage) => lastPage.next,
   });
   return query;
 };
