@@ -178,7 +178,7 @@ export const SelectImage = ({ data }: { data: any }) => {
   )
 }
 
-export const SelectForm = (dataObj: any) => {
+export const SelectFormOld = (dataObj: any) => {
   const { data } = dataObj;
   return (
     <FormControl
@@ -234,9 +234,9 @@ export const SelectForm = (dataObj: any) => {
   )
 };
 
-export const SelectDropdownForm = (dataObj: any) => {
+export const SelectForm = (dataObj: any) => {
   const { data } = dataObj;
-  const countries = data.selectData?.map((item: any) => item.name)
+  const dataSelect = data.selectData?.map((item: any) => item.title);
   return (
     <FormControl
       w={data.col === true ? "1/2" : "full"}
@@ -251,7 +251,66 @@ export const SelectDropdownForm = (dataObj: any) => {
         {data.title}
       </FormControl.Label>
       <SelectDropdown
-        data={countries}
+        data={dataSelect}
+        onSelect={(selectedItem, index) => {
+          data.setData({ ...data.formData, [data.name]: data.selectData[index]?.id })
+        }}
+        defaultValue={data.value}
+        defaultButtonText={data.placeholder}
+        buttonTextAfterSelection={(selectedItem, index) => {
+          return selectedItem;
+        }}
+        rowTextForSelection={(item, index) => {
+          return item;
+        }}
+        {...(data.search && {
+          search: true,
+          searchInputStyle: styles.dropdown1searchInputStyleStyle,
+          searchPlaceHolder: t('filter'),
+          searchPlaceHolderColor: 'darkgrey',
+          renderSearchInputLeftIcon: () => {
+            return <FontAwesome name={'search'} color={'darkgrey'} size={18} />;
+          }
+        })}
+        buttonStyle={styles.dropdown1BtnStyle}
+        buttonTextStyle={styles.dropdown1BtnTxtStyle}
+        renderDropdownIcon={isOpened => {
+          return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'darkgrey'} size={12} />;
+        }}
+        dropdownIconPosition={'right'}
+        dropdownStyle={styles.dropdown1DropdownStyle}
+        rowStyle={styles.dropdown1RowStyle}
+        rowTextStyle={styles.dropdown1RowTxtStyle}
+      />
+      {`${data.name}` in data.errors ? (
+        <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+          {data.errors[data.name]}
+        </FormControl.ErrorMessage>
+      ) : (
+        <FormControl.HelperText>{data.description}</FormControl.HelperText>
+      )}
+    </FormControl>
+  )
+};
+
+export const SelectDropdownForm = (dataObj: any) => {
+  const { data } = dataObj;
+  const dataSelect = data.selectData?.map((item: any) => item.name)
+  return (
+    <FormControl
+      w={data.col === true ? "1/2" : "full"}
+      px={data.col === true ? "2" : 0}
+      {...(data.require && { isRequired: true })}
+    >
+      <FormControl.Label
+        _text={{
+          bold: true,
+        }}
+      >
+        {data.title}
+      </FormControl.Label>
+      <SelectDropdown
+        data={dataSelect}
         onSelect={(selectedItem, index) => {
           data.setData({
             ...data.formData,

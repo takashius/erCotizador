@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native"
 import { useGetCompany, useSetConfig, useUploadImage } from "../../../api/company"
 import { Company, Image } from "../../../types/company"
-import { SelectImage } from "../../../components/Form"
+import { SelectDropdownForm, SelectForm, SelectImage } from "../../../components/Form"
 
 export default () => {
   const navigation = useNavigation();
@@ -50,6 +50,12 @@ export default () => {
   const saveAction = () => {
     configMutation.mutate(formData!)
   }
+
+  const currencies = [
+    { id: "Bs", title: "Bs" },
+    { id: "$", title: "$" },
+    { id: "€", title: "€" }
+  ];
 
   const renderForm = () => (
     <VStack mx="3">
@@ -105,6 +111,18 @@ export default () => {
           setData,
         }}
       />
+      <SelectForm
+        data={{
+          name: "currencySymbol",
+          search: false,
+          errors,
+          selectData: currencies,
+          title: t("products.title"),
+          placeholder: t("cotiza.placeholder.product"),
+          value: formData?.currencySymbol,
+          formData,
+          setData
+        }} />
       <SelectImage
         data={{
           name: "logo",
