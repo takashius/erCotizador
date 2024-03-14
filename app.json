@@ -2,7 +2,7 @@
   "expo": {
     "name": "erCotizador",
     "slug": "erCotizador",
-    "version": "1.0.2",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "ercotizador",
@@ -24,7 +24,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.erdesarrollo.cotizador",
-      "versionCode": 3
+      "versionCode": 5
     },
     "web": {
       "bundler": "metro",
