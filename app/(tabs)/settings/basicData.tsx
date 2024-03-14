@@ -117,8 +117,8 @@ export default () => {
           search: false,
           errors,
           selectData: currencies,
-          title: t("products.title"),
-          placeholder: t("cotiza.placeholder.product"),
+          title: t("settings.currency"),
+          placeholder: t("settings.currencyPlaceholder"),
           value: formData?.currencySymbol,
           formData,
           setData
