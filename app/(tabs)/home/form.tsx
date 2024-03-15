@@ -74,6 +74,8 @@ export default () => {
     } else if (formData.customerId === undefined && (formData.customer === undefined || formData.customer === '')) {
       setErrors({ ...errors, customer: t("cotiza.validations.customerRequired") });
       return false;
+    } else if (formData.number === undefined && formData.number === '') {
+      setData({ ...formData, number: 0 });
     }
     setErrors({});
     return true;

@@ -214,7 +214,7 @@ export default () => {
                 size={4}
                 color={"blue.500"}
               />
-              <Text>{total.toString()}</Text>
+              <Text>{total?.toString()}</Text>
             </HStack>
           </HStack>
 
