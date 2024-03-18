@@ -13,22 +13,16 @@ import {
 } from "../../../components";
 import { useListCustomer, useDeleteCustomer } from "../../../api/customer";
 import { type Customer } from "../../../types/customer";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { t } from "i18next";
 import { AntDesign } from "@expo/vector-icons";
 
 export default () => {
-  const responseQuery = useListCustomer();
+  const [pattern, setPattern] = useState<string>('');
+  const responseQuery = useListCustomer(pattern);
   const deleteMutation = useDeleteCustomer();
-  const [dataList, setDataList] = useState<Customer[]>();
-  const [dataDefault, setDataDefault] = useState<Customer[]>();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-
-  useEffect(() => {
-    setDataList(responseQuery.data);
-    setDataDefault(responseQuery.data);
-  }, [responseQuery.data]);
 
   const isReturnFromForm = async () => {
     const created = await read("mutateCustomer");
@@ -44,56 +38,34 @@ export default () => {
     }
   }, [isFocused]);
 
-  const filterData = (search: string) => {
-    if (dataDefault) {
-      setDataList(
-        dataDefault.filter(
-          (item: Customer) =>
-            item.lastname.toUpperCase().includes(search.toUpperCase()) ||
-            item.name.toUpperCase().includes(search.toUpperCase()) ||
-            item.title.toUpperCase().includes(search.toUpperCase())
-        )
-      );
+  useEffect(() => {
+    if (deleteMutation.isSuccess) {
+      responseQuery.refetch();
     }
-  };
+  }, [deleteMutation.isSuccess])
 
-  const deleteRow = (rowMap: any, rowKey: any) => {
-    if (dataList !== undefined) {
-      rowMap[rowKey].closeRow();
-      const config = {
-        toValue: 0,
-        duration: 500,
-        useNativeDriver: true,
-      };
-      Animated.timing(new Animated.Value(50), config).start(() => {
-        const newData = [...dataList];
-        const prevIndex = dataList.findIndex(
-          (item: any) => item._id === rowKey
-        );
-        newData.splice(prevIndex, 1);
-        setDataList(newData);
-      });
-    }
-  };
+  const renderItem = useCallback(({ item }: { item: any }) => (
+    <CardCustomerItem item={item} />
+  ), []);
 
   return (
     <Box bg="white" safeArea flex="1">
       <Stack.Screen options={useOptions({ title: t("modules.customer"), navigation })} />
-      <SearchBar filterData={filterData} />
+      <SearchBar filterData={setPattern} />
       {responseQuery.isLoading ? (
         <Spinner />
       ) : (
         <>
           <SwipeListView
             accessibilityLabel="Customer list swipe"
-            data={dataList}
+            data={responseQuery.data?.pages.map(page => page.results).flat()}
             useFlatList={true}
             keyExtractor={(item) => item._id!}
             disableRightSwipe={true}
             closeOnRowBeginSwipe={true}
             onRefresh={() => responseQuery.refetch()}
             refreshing={responseQuery.isFetching || deleteMutation.isPending}
-            renderItem={({ item }) => <CardCustomerItem item={item} />}
+            renderItem={renderItem}
             renderHiddenItem={(data, rowMap) => (
               <View
                 style={{
@@ -109,7 +81,6 @@ export default () => {
                   data={data}
                   rowMap={rowMap}
                   deleteMutation={deleteMutation}
-                  deleteRow={deleteRow}
                 />
               </View>
             )}

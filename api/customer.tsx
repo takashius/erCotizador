@@ -1,15 +1,17 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
-import { Address, Customer, CustomerForm } from "../types/customer";
+import { Address, Customer, CustomerForm, CustomerList } from "../types/customer";
 import { write } from "../components/helpers/LocalStorage";
 
-export const useListCustomer = () => {
-  const query = useQuery<Customer[]>({
-    queryKey: ["customerList"],
-    retry: false,
-    queryFn: () => {
-      return ERDEAxios.get("/customer");
+export const useListCustomer = (pattern?: string) => {
+  const query = useInfiniteQuery<CustomerList>({
+    queryKey: ["customerList", pattern],
+    networkMode: 'offlineFirst',
+    initialPageParam: 1,
+    queryFn: async ({ pageParam = 0 }) => {
+      return ERDEAxios.get(`/customer/list/${pageParam}/${pattern}`);
     },
+    getNextPageParam: (lastPage) => lastPage.next,
   });
   return query;
 };

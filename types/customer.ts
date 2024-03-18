@@ -15,6 +15,14 @@ export interface Customer extends CustomerBase {
     addresses: Address[];
 }
 
+export interface CustomerList {
+    results: Customer[];
+    totalCustomers: number;
+    totalPages: number;
+    currentPage: number;
+    next?: number;
+}
+
 export interface CustomerForm extends CustomerBase {
     address?: Address;
 }
