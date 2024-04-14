@@ -181,6 +181,7 @@ export default () => {
           placeholder: t("cotiza.placeholder.customer"),
           value: formData.customerId,
           require: true,
+          search: true,
           formData,
           setData,
         }} />

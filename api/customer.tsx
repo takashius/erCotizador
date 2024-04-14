@@ -21,7 +21,7 @@ export const useListSimpleCustomer = () => {
     queryKey: ["customerSelectList"],
     retry: false,
     queryFn: () => {
-      return ERDEAxios.get("/customer/list");
+      return ERDEAxios.get("/customer/simple");
     },
   });
   return query;
