@@ -47,9 +47,10 @@ export default () => {
 
   const saveReportFile = async (pdfData: any) => {
     try {
+      console.log(JSON.stringify(responseQuery.data, null, 2))
       const buff = Buffer.from(pdfData, 'base64');
       const pdf = buff.toString('base64');
-      const fileUri = FileSystem.documentDirectory + `${encodeURI('invoice_' + responseQuery.data?.number)}.pdf`;
+      const fileUri = FileSystem.documentDirectory + `${encodeURI('invoice_' + responseQuery.data?.sequence)}.pdf`;
       await FileSystem.writeAsStringAsync(fileUri, pdf, { encoding: FileSystem.EncodingType.Base64 });
       await Sharing.shareAsync(fileUri);
     } catch (error) {

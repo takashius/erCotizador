@@ -23,6 +23,7 @@ export interface CotizaBase {
     discount: number;
     typeDiscount: string;
     created: CreatedShort;
+    sequence: number;
     _id: string;
 }
 

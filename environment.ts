@@ -2,7 +2,7 @@ import Constants from "expo-constants";
 
 const ENV = {
   dev: {
-    apiUrl: "http://192.168.0.108:8080",
+    apiUrl: "http://192.168.123.34:8080",
     type: "dev",
   },
   staging: {
@@ -25,7 +25,7 @@ const getEnvVars = (env = Constants.expoConfig) => {
   // } else {
   //   return ENV.staging;
   // }
-  return ENV.prod;
+  return ENV.dev;
 };
 
 export default getEnvVars;

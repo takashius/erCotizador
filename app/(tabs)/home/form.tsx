@@ -9,6 +9,7 @@ import { CotizaForm } from "../../../types/cotiza";
 import { useCreateCotiza, useUpdateCotiza } from "../../../api/cotiza";
 import { useListSimpleCustomer } from "../../../api/customer";
 import { InputDate } from "../../../components/Form";
+import { useGetCompany } from "../../../api/company";
 
 export default () => {
   const params = useLocalSearchParams();
@@ -17,6 +18,7 @@ export default () => {
   const [errors, setErrors] = useState({});
   const [locationUser, setLocationUser] = useState<string>('');
   const [pickedDate, setPickedDate] = useState<Date | null>(null);
+  const companyQuery = useGetCompany();
   const createMutation = useCreateCotiza();
   const updateMutation = useUpdateCotiza();
   const customerList = useListSimpleCustomer();
@@ -119,18 +121,20 @@ export default () => {
           setData,
         }}
       />
-      <InputForm
-        data={{
-          name: "number",
-          errors,
-          title: t("number"),
-          placeholder: t("cotiza.placeholder.number"),
-          value: String(formData.number),
-          formData,
-          setData,
-          keyboardType: "number-pad",
-        }}
-      />
+      {!companyQuery.data?.correlatives?.manageInvoiceCorrelative &&
+        <InputForm
+          data={{
+            name: "number",
+            errors,
+            title: t("number"),
+            placeholder: t("cotiza.placeholder.number"),
+            value: String(formData.number),
+            formData,
+            setData,
+            keyboardType: "number-pad",
+          }}
+        />
+      }
       <DatePicker
         value={pickedDate!}
         onDateChange={setPickedDate}

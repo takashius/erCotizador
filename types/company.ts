@@ -16,10 +16,16 @@ export interface Company {
     colors?: Colors;
     configPdf?: ConfigPDF;
     pdf?: ConfigPDF;
+    correlatives?: Correlative;
 }
 
 export interface ConfigMail {
     colors: Colors;
+}
+
+export interface Correlative {
+    manageInvoiceCorrelative: boolean;
+    invoice: number;
 }
 
 export interface Colors {
