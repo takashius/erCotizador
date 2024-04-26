@@ -156,7 +156,12 @@ export default () => {
   }, {
     icon: 'picture-as-pdf',
     title: t('pdf'),
-    onPress: () => { getPdf.mutate(responseQuery.data?._id!) },
+    onPress: () => { getPdf.mutate({ id: responseQuery.data?._id!, libre: false }) },
+    isDisabled: false
+  }, {
+    icon: 'picture-as-pdf',
+    title: t('pdfLibre'),
+    onPress: () => { getPdf.mutate({ id: responseQuery.data?._id!, libre: true }) },
     isDisabled: false
   },
   {

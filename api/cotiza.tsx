@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ERDEAxios from "./ERDEAxios";
-import { Cotiza, CotizaFull, CotizaForm } from "../types/cotiza";
+import { Cotiza, CotizaFull, CotizaForm, PdfEndpoint } from "../types/cotiza";
 import { write } from "../components/helpers/LocalStorage";
 import { ProductForm, Total } from "../types/products";
 
@@ -74,8 +74,12 @@ export const useCreateProduct = () => {
 
 export const useGetPdf = () => {
   const mutation = useMutation({
-    mutationFn: (id: string) => {
-      return ERDEAxios.get(`/cotiza/pdf/${id}`, {
+    mutationFn: (data: PdfEndpoint) => {
+      let url = `/cotiza/pdf/${data.id}`;
+      if (data.libre) {
+        url = `/cotiza/pdflibre/${data.id}`;
+      }
+      return ERDEAxios.get(url, {
         responseType: 'arraybuffer',
         headers: {
           Accept: 'application/pdf',

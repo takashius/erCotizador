@@ -12,6 +12,11 @@ export interface CotizaForm {
     customerId?: string;
 }
 
+export interface PdfEndpoint {
+    id: string;
+    libre: boolean;
+}
+
 export interface CotizaBase {
     title: string;
     description: string;
