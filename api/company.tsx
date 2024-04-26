@@ -41,10 +41,13 @@ export const useSetConfigPdf = () => {
 
 export const useSetConfigEmail = () => {
   const mutation = useMutation({
-    mutationFn: (data: Colors) => {
+    mutationFn: ({ data, textBody }: { data: Colors, textBody: string }) => {
       const dataFull: Company = {
         id: data.id,
-        colors: data
+        configMail: {
+          colors: data,
+          textBody
+        }
       };
       return ERDEAxios.patch("/company/config", dataFull);
     }

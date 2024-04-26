@@ -6,13 +6,14 @@ import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { useGetCompany, useSetConfigEmail, useUploadImage } from "../../../api/company";
 import { Colors, ConfigPDF } from "../../../types/company";
 import { useEffect, useState } from "react";
-import { SelectImage } from "../../../components/Form";
+import { SelectImage, TextAreaForm } from "../../../components/Form";
 
 export default () => {
   const navigation = useNavigation();
   const configMutation = useSetConfigEmail();
   const responseQuery = useGetCompany(false);
   const [errors, setErrors] = useState({});
+  const [textBody, setTextBody] = useState<string>('');
   const [formData, setData] = useState<Colors>();
   const [image, setImage] = useState<any>();
   const uploadMutation = useUploadImage();
@@ -20,7 +21,7 @@ export default () => {
   const saveAction = () => {
     if (formData)
       formData.id = responseQuery?.data?._id;
-    configMutation.mutate(formData!);
+    configMutation.mutate({ data: formData!, textBody });
   }
 
   useEffect(() => {
@@ -37,8 +38,8 @@ export default () => {
 
   useEffect(() => {
     if (responseQuery.isSuccess) {
-      console.log('responseQuery.data', JSON.stringify(responseQuery.data, null, 2));
       setData(responseQuery.data.configMail?.colors);
+      setTextBody(responseQuery.data.configMail?.textBody!);
     }
   }, [responseQuery.isSuccess])
 
@@ -92,6 +93,17 @@ export default () => {
             value: String(formData?.title),
             formData,
             setData
+          }}
+        />
+        <TextAreaForm
+          data={{
+            name: "textBody",
+            errors,
+            title: t("settings.textBody"),
+            value: String(textBody ? textBody : ''),
+            formData,
+            setValue: setTextBody,
+            description: t("settings.textBodyDescription"),
           }}
         />
       </Box>

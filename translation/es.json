@@ -173,6 +173,8 @@
         "currencyPlaceholder": "Solo para la representacion en la factura",
         "changeLanguage": "Para visualizar el cambio debe reiniciar el App",
         "changeCompany": "Se ha cambiado la empresa correctamente",
-        "correlatives": "Correlativos automáticos"
+        "correlatives": "Correlativos automáticos",
+        "textBody": "Cuerpo del mensaje",
+        "textBodyDescription": " No se permite html\n Puede usar las siguientes etiquetas: \n Salto de linea: {br}\n Numero de cotizacion: {cotizaNumber}\n Empresa: {CompanyName}\n Correo de empresa: {emailCompany}"
     }
 }

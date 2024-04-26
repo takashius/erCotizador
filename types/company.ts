@@ -21,6 +21,7 @@ export interface Company {
 
 export interface ConfigMail {
     colors: Colors;
+    textBody: string;
 }
 
 export interface Correlative {

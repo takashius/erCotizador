@@ -8,7 +8,8 @@ import {
   Button,
   VStack,
   Badge,
-  Icon
+  Icon,
+  TextArea
 } from "native-base";
 import { Dimensions, StyleSheet, Image } from 'react-native';
 import { Platform, TouchableWithoutFeedback } from "react-native";
@@ -48,6 +49,46 @@ export const InputForm = ({ data }: { data: any }) => {
         {...(data.InputRightElement && { InputRightElement: data.InputRightElement })}
         onChangeText={(value) =>
           data.setData({ ...data.formData, [data.name]: value })
+        }
+      />
+      {`${data.name}` in data.errors ? (
+        <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+          {data.errors[data.name]}
+        </FormControl.ErrorMessage>
+      ) : (
+        <FormControl.HelperText>{data.description}</FormControl.HelperText>
+      )}
+    </FormControl>
+  );
+};
+
+export const TextAreaForm = ({ data }: { data: any }) => {
+  return (
+    <FormControl
+      w={data.col === true ? "1/2" : "full"}
+      px={data.col === true ? "2" : 0}
+      {...(data.require && { isRequired: true })}
+      isInvalid={`${data.name}` in data.errors}
+    >
+      <FormControl.Label
+        _text={{
+          bold: true,
+        }}
+      >
+        {data.title}
+      </FormControl.Label>
+      <TextArea
+        h={20}
+        w="100%"
+        placeholder={data.placeholder}
+        defaultValue={data.value}
+        isReadOnly={data.readonly}
+        {...(data.readonly && { value: data.value })}
+        {...(data.keyboardType && { keyboardType: data.keyboardType })}
+        onChangeText={(value) => {
+          data.setData && data.setData({ ...data.formData, [data.name]: value });
+          data.setValue && data.setValue(value);
+        }
         }
       />
       {`${data.name}` in data.errors ? (
