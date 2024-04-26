@@ -172,6 +172,7 @@
         "currency": "Moneda para la factura",
         "currencyPlaceholder": "Solo para la representacion en la factura",
         "changeLanguage": "Para visualizar el cambio debe reiniciar el App",
-        "changeCompany": "Se ha cambiado la empresa correctamente"
+        "changeCompany": "Se ha cambiado la empresa correctamente",
+        "correlatives": "Correlativos automáticos"
     }
 }

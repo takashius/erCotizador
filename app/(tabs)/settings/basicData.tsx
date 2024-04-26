@@ -1,28 +1,30 @@
 import { Stack, router, useNavigation } from "expo-router"
-import { VStack, Box, useToast } from "native-base"
-import { InputForm, Spinner, onError, useOptions, write } from "../../../components"
+import { VStack, Box, useToast, HStack, Text, Switch } from "native-base"
+import { InputForm, Spinner, onError, useOptions } from "../../../components"
 import { t } from "i18next"
 import { useEffect, useState } from "react"
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native"
+import { KeyboardAvoidingView, ScrollView } from "react-native"
 import { useGetCompany, useSetConfig, useUploadImage } from "../../../api/company"
-import { Company, Image } from "../../../types/company"
-import { SelectDropdownForm, SelectForm, SelectImage } from "../../../components/Form"
+import { Company } from "../../../types/company"
+import { SelectForm, SelectImage } from "../../../components/Form"
 
 export default () => {
   const navigation = useNavigation();
   const [errors, setErrors] = useState({});
-  const responseQuery = useGetCompany();
+  const responseQuery = useGetCompany(true);
   const uploadMutation = useUploadImage();
   const configMutation = useSetConfig();
   const toast = useToast();
 
   const [formData, setData] = useState<Company>();
   const [image, setImage] = useState<any>();
+  const [itemSwitch, setItemSwitch] = useState(true);
 
   useEffect(() => {
     if (responseQuery.isSuccess) {
       setData(responseQuery.data)
       setData({ ...responseQuery.data, id: responseQuery.data._id })
+      setItemSwitch(responseQuery.data?.correlatives?.manageInvoiceCorrelative!)
     }
   }, [responseQuery.isSuccess])
 
@@ -123,6 +125,29 @@ export default () => {
           formData,
           setData
         }} />
+
+      <HStack alignItems="center" space={4}>
+        <Text>{t("settings.correlatives")}</Text>
+        {formData?.correlatives?.manageInvoiceCorrelative !== undefined &&
+          <Switch
+            size="sm"
+            offTrackColor="blue.100"
+            onTrackColor="blue.200"
+            onThumbColor="blue.500"
+            offThumbColor="blue.50"
+            defaultIsChecked={formData?.correlatives?.manageInvoiceCorrelative}
+            onValueChange={() => {
+              if (formData)
+                setData({
+                  ...formData, correlatives: {
+                    ...formData.correlatives!,
+                    manageInvoiceCorrelative: !formData?.correlatives?.manageInvoiceCorrelative
+                  }
+                });
+            }}
+          />
+        }
+      </HStack>
       <SelectImage
         data={{
           name: "logo",

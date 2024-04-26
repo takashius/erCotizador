@@ -4,10 +4,10 @@ import { Colors, Company, ConfigPDF, Image } from "../types/company";
 import { parseImage } from "../components/helpers/ParseImage";
 import { write, remove } from "../components";
 
-export const useGetCompany = () => {
+export const useGetCompany = (retry: boolean) => {
   const query = useQuery<Company>({
     queryKey: ["myCompany"],
-    retry: false,
+    retry,
     queryFn: () => {
       return ERDEAxios.get("/company/myCompany");
     },

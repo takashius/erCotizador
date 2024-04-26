@@ -166,6 +166,7 @@
         "currency": "Currency for the invoice",
         "currencyPlaceholder": "Only for representation on the invoice",
         "changeLanguage": "To view the change you must restart the App",
-        "changeCompany": "The company has been changed successfully"
+        "changeCompany": "The company has been changed successfully",
+        "correlatives": "Automatic correlatives"
     }
 }

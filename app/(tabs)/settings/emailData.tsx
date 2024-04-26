@@ -11,7 +11,7 @@ import { SelectImage } from "../../../components/Form";
 export default () => {
   const navigation = useNavigation();
   const configMutation = useSetConfigEmail();
-  const responseQuery = useGetCompany();
+  const responseQuery = useGetCompany(false);
   const [errors, setErrors] = useState({});
   const [formData, setData] = useState<Colors>();
   const [image, setImage] = useState<any>();
