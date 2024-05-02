@@ -25,7 +25,7 @@ const getEnvVars = (env = Constants.expoConfig) => {
   // } else {
   //   return ENV.staging;
   // }
-  return ENV.prod;
+  return ENV.dev;
 };
 
 export default getEnvVars;

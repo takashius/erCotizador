@@ -54,17 +54,20 @@ const ModalProducts = ({
   };
 
   useEffect(() => {
-    if (createMutation.isSuccess || updateMutation.isSuccess) {
+    if (updateMutation.isSuccess) {
       setSubmit(true);
       setOpen(false);
     }
-  }, [createMutation.isSuccess, updateMutation.isSuccess]);
+  }, [updateMutation.isSuccess]);
 
   useEffect(() => {
     if (params && post === "edit") {
       setData(transformData(params!));
     } else {
       setData(defaultData);
+    }
+    if (open === false) {
+      setSubmit(true);
     }
   }, [params, open]);
 
