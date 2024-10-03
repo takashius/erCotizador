@@ -81,7 +81,7 @@ export default () => {
       <Stack.Screen options={useOptions({ title: t("modules.cotiza"), navigation })} />
 
       <SearchBar filterData={filterData} />
-      {responseQuery.isLoading ? (
+      {responseQuery.isFetching ? (
         <Spinner />
       ) : (
         <SwipeListView

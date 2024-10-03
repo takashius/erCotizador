@@ -60,7 +60,7 @@ const CardCotizaItem = ({ item }: { item: Cotiza }) => {
               py="1.5"
             >
               <Icon as={<FontAwesome name="dollar" />} size={4} color={"white"} />
-              {item.amount}
+              {item.amount.toLocaleString("es-VE")}
             </Center>
             <Center
               _text={{

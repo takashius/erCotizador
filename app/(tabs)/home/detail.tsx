@@ -40,14 +40,13 @@ export default () => {
 
   const { id } = params;
   const navigation = useNavigation();
-  const responseQuery = useGetCotiza(id);
+  const responseQuery = useGetCotiza(id!);
   const deleteProductMutation = useDeleteProduct();
   const getPdf = useGetPdf();
   const sendCotiza = useSendCotiza();
 
   const saveReportFile = async (pdfData: any) => {
     try {
-      console.log(JSON.stringify(responseQuery.data, null, 2))
       const buff = Buffer.from(pdfData, 'base64');
       const pdf = buff.toString('base64');
       const fileUri = FileSystem.documentDirectory + `${encodeURI('invoice_' + responseQuery.data?.sequence)}.pdf`;
@@ -220,7 +219,7 @@ export default () => {
                 size={4}
                 color={"blue.500"}
               />
-              <Text>{total?.toString()}</Text>
+              <Text>{total?.toLocaleString("es-VE")}</Text>
             </HStack>
           </HStack>
 

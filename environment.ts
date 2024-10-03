@@ -5,12 +5,8 @@ const ENV = {
     apiUrl: "http://192.168.123.34:8080",
     type: "dev",
   },
-  staging: {
-    apiUrl: "https://cotizador-dev-tdrr.4.us-1.fl0.io",
-    type: "staging",
-  },
   prod: {
-    apiUrl: "https://cotizador-eyee.onrender.com",
+    apiUrl: "https://orca-app-ts78d.ondigitalocean.app",
     type: "production",
   },
 };
