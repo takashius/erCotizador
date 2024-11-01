@@ -2,11 +2,11 @@ import Constants from "expo-constants";
 
 const ENV = {
   dev: {
-    apiUrl: "http://192.168.123.34:8080",
+    apiUrl: "http://192.168.30.135:8080",
     type: "dev",
   },
   prod: {
-    apiUrl: "https://orca-app-ts78d.ondigitalocean.app",
+    apiUrl: "https://17k7htqzc1.execute-api.us-east-2.amazonaws.com/v1",
     type: "production",
   },
 };
@@ -21,7 +21,7 @@ const getEnvVars = (env = Constants.expoConfig) => {
   // } else {
   //   return ENV.staging;
   // }
-  return ENV.prod;
+  return ENV.dev;
 };
 
 export default getEnvVars;

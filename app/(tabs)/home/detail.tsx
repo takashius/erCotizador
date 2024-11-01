@@ -3,7 +3,7 @@ import { Stack, router, useLocalSearchParams, useNavigation } from "expo-router"
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { SwipeListView } from "react-native-swipe-list-view";
 import * as FileSystem from 'expo-file-system';
-import { Alert, Animated, View } from "react-native";
+import { Alert, Animated, ScrollView, View } from "react-native";
 import * as Sharing from "expo-sharing";
 import { Buffer } from "buffer";
 import {
@@ -15,6 +15,7 @@ import {
   Icon,
   Fab,
   VStack,
+  SimpleGrid,
 } from "native-base";
 import {
   useOptions,
@@ -178,139 +179,193 @@ export default () => {
           navigation,
           back: true,
           dropdown: true,
-          menuItems: menuItems
+          menuItems: menuItems,
         })}
       />
       {responseQuery.isFetching || getPdf.isPending || sendCotiza.isPending ? (
         <Spinner />
       ) : (
-        <_Stack p="4" pt="0" space={0}>
-          <_Stack space={2} pb="2">
-            <Heading size="md" color={"blue.500"}>
-              {responseQuery.data?.title}
-            </Heading>
-          </_Stack>
-          <HStack>
-            <HStack mr="4">
-              <Icon
-                marginTop={1}
-                marginRight={2}
-                as={<MaterialIcons name="receipt" />}
-                size={4}
-                color={"blue.500"}
-              />
-              <Text>{responseQuery.data?.number}</Text>
-            </HStack>
-            <HStack mr="4">
-              <Icon
-                marginTop={1}
-                marginRight={2}
-                as={<MaterialIcons name="calendar-today" />}
-                size={4}
-                color={"blue.500"}
-              />
-              <Text>{responseQuery.data?.date}</Text>
-            </HStack>
-            <HStack mr="4">
-              <Icon
-                marginTop={1}
-                marginRight={2}
-                as={<MaterialIcons name="attach-money" />}
-                size={4}
-                color={"blue.500"}
-              />
-              <Text>{total?.toLocaleString("es-VE")}</Text>
-            </HStack>
-          </HStack>
+        <>
+          <_Stack p="4" pt="0" space={0}>
+            <_Stack space={2} pb="2">
+              <Heading size="md" color={"blue.500"}>
+                {responseQuery.data?.title}
+              </Heading>
+            </_Stack>
 
-          <_Stack space={2} pb="2">
-            <Heading size="md" mt="5" color={"blue.500"}>
-              {t("customer.detail")}
-            </Heading>
+            <HStack justifyContent="space-between">
+              <HStack>
+                <Icon
+                  marginTop={1}
+                  marginRight={2}
+                  as={<MaterialIcons name="receipt" />}
+                  size={4}
+                  color="blue.500"
+                />
+                <Text color="blue.500">Factura: </Text>
+                <Text>{responseQuery.data?.number}</Text>
+              </HStack>
+              <HStack>
+                <Text mr={1}>{responseQuery.data?.date}</Text>
+                <Icon
+                  marginTop={1}
+                  marginRight={2}
+                  as={<MaterialIcons name="calendar-today" />}
+                  size={4}
+                  color="blue.500"
+                />
+              </HStack>
+            </HStack>
+            <HStack justifyContent="space-between">
+              <HStack>
+                <Icon
+                  marginTop={1}
+                  marginRight={2}
+                  as={<MaterialIcons name="attach-money" />}
+                  size={4}
+                  color={"blue.500"}
+                />
+                <Text color="blue.500" mr={2}>
+                  Subtotal:
+                </Text>
+                <Text>{responseQuery.data?.amount.toLocaleString("es-VE")}</Text>
+              </HStack>
+              <HStack>
+                <Text color="blue.500" mr={2}>
+                  IVA:
+                </Text>
+                <Text>{responseQuery.data?.totalIva}</Text>
+                <Icon
+                  marginTop={1}
+                  marginRight={2}
+                  as={<MaterialIcons name="attach-money" />}
+                  size={4}
+                  color={"blue.500"}
+                />
+              </HStack>
+            </HStack>
+            <HStack justifyContent="space-between">
+              <HStack>
+                <Icon
+                  marginTop={1}
+                  marginRight={2}
+                  as={<MaterialIcons name="attach-money" />}
+                  size={4}
+                  color={"blue.500"}
+                />
+                <Text fontWeight="semibold" color="blue.500" mr={2}>
+                  Total:
+                </Text>
+                <Text>{responseQuery.data?.total?.toLocaleString("es-VE")}</Text>
+              </HStack>
+              <HStack>
+                <Text color="blue.500" mr={2}>
+                  Tasa de Cambio:
+                </Text>
+                <Text>{responseQuery.data?.rate.toLocaleString("es-VE")}</Text>
+                <Icon
+                  marginTop={1}
+                  marginRight={2}
+                  as={<MaterialIcons name="attach-money" />}
+                  size={4}
+                  color={"blue.500"}
+                />
+              </HStack>
+            </HStack>
           </_Stack>
-          <HStack justifyContent="center">
-            <Card>
-              <_Stack p="4" space={0}>
-                <_Stack space={2} pb="2">
-                  <Heading size="md" ml="-1" color={"blue.500"}>
-                    {responseQuery.data?.customer?.title}
-                  </Heading>
-                  <Text fontSize="lg" fontWeight="500">
-                    {responseQuery.data?.customer?.name} {responseQuery.data?.customer?.lastname}
-                  </Text>
-                </_Stack>
-                <VStack>
-                  <HStack>
-                    <Icon
-                      marginTop={1}
-                      marginRight={2}
-                      as={<MaterialIcons name="mail" />}
-                      size={4}
-                      color={"blue.500"}
-                    />
-                    <Text>{responseQuery.data?.customer?.email}</Text>
-                  </HStack>
-                  {responseQuery.data?.customer?.phone && (
-                    <HStack>
-                      <Icon
-                        marginTop={1}
-                        as={<MaterialIcons name="phone" />}
-                        size={4}
-                        color={"blue.500"}
-                      />
-                      <Text> {responseQuery.data?.customer?.phone}</Text>
-                    </HStack>
-                  )}
-                  <Text>Rif: {responseQuery.data?.customer?.rif}</Text>
-                </VStack>
+
+          <ScrollView>
+            <VStack space={4} p="4" pt="0">
+              <_Stack space={2} pb="2">
+                <Heading size="md" mt="5" color={"blue.500"}>
+                  {t("customer.detail")}
+                </Heading>
               </_Stack>
-            </Card>
-          </HStack>
+              <HStack justifyContent="center">
+                <Card>
+                  <_Stack p="4" space={0}>
+                    <_Stack space={2} pb="2">
+                      <Heading size="md" ml="-1" color={"blue.500"}>
+                        {responseQuery.data?.customer?.title}
+                      </Heading>
+                      <Text fontSize="lg" fontWeight="500">
+                        {responseQuery.data?.customer?.name}{" "}
+                        {responseQuery.data?.customer?.lastname}
+                      </Text>
+                    </_Stack>
+                    <VStack>
+                      <HStack>
+                        <Icon
+                          marginTop={1}
+                          marginRight={2}
+                          as={<MaterialIcons name="mail" />}
+                          size={4}
+                          color={"blue.500"}
+                        />
+                        <Text>{responseQuery.data?.customer?.email}</Text>
+                      </HStack>
+                      {responseQuery.data?.customer?.phone && (
+                        <HStack>
+                          <Icon
+                            marginTop={1}
+                            as={<MaterialIcons name="phone" />}
+                            size={4}
+                            color={"blue.500"}
+                          />
+                          <Text> {responseQuery.data?.customer?.phone}</Text>
+                        </HStack>
+                      )}
+                      <Text>Rif: {responseQuery.data?.customer?.rif}</Text>
+                    </VStack>
+                  </_Stack>
+                </Card>
+              </HStack>
 
-          <_Stack space={2} pt="5" pb="3">
-            <Heading size="md" ml="-1" color={"blue.500"}>
-              {t("products.title")}
-            </Heading>
-          </_Stack>
+              <_Stack space={2} pt="5" pb="3">
+                <Heading size="md" ml="-1" color={"blue.500"}>
+                  {t("products.title")}
+                </Heading>
+              </_Stack>
 
-          {responseQuery.isLoading || deleteProductMutation.isPending ? (
-            <Spinner />
-          ) : (
-            <SwipeListView
-              data={dataList}
-              useFlatList={true}
-              disableRightSwipe={true}
-              closeOnRowBeginSwipe={true}
-              renderItem={({ item }) => (
-                <CardProductItem openLink={false} item={item} onClick={onEditClick} />
+              {responseQuery.isLoading || deleteProductMutation.isPending ? (
+                <Spinner />
+              ) : (
+                <SwipeListView
+                  data={dataList}
+                  useFlatList={true}
+                  disableRightSwipe={true}
+                  closeOnRowBeginSwipe={true}
+                  renderItem={({ item }) => (
+                    <CardProductItem openLink={false} item={item} onClick={onEditClick} />
+                  )}
+                  keyExtractor={(item: any) => item._id}
+                  contentContainerStyle={{ paddingBottom: 300 }}
+                  renderHiddenItem={(data, rowMap) => (
+                    <View
+                      style={{
+                        marginLeft: 270,
+                        height: "90%",
+                        width: 60,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <DeleteButton
+                        data={data}
+                        rowMap={rowMap}
+                        deleteMutation={deleteProductMutation}
+                        idParent={responseQuery.data!._id}
+                        deleteRow={deleteRow}
+                      />
+                    </View>
+                  )}
+                  rightOpenValue={-75}
+                />
               )}
-              keyExtractor={(item: any) => item._id}
-              contentContainerStyle={{ paddingBottom: 300 }}
-              renderHiddenItem={(data, rowMap) => (
-                <View
-                  style={{
-                    marginLeft: 270,
-                    height: "90%",
-                    width: 60,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <DeleteButton
-                    data={data}
-                    rowMap={rowMap}
-                    deleteMutation={deleteProductMutation}
-                    idParent={responseQuery.data!._id}
-                    deleteRow={deleteRow}
-                  />
-                </View>
-              )}
-              rightOpenValue={-75}
-            />
-          )}
-
-        </_Stack>
+            </VStack>
+          </ScrollView>
+        </>
       )}
       <ModalProducts
         idCotiza={responseQuery.data?._id!}
@@ -332,5 +387,6 @@ export default () => {
         icon={<Icon color="white" as={AntDesign} name="plus" size="sm" />}
       />
     </Box>
+
   )
 }

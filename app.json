@@ -2,7 +2,7 @@
   "expo": {
     "name": "erCotizador",
     "slug": "erCotizador",
-    "version": "1.0.12",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "ercotizador",
@@ -12,9 +12,7 @@
       "resizeMode": "cover",
       "backgroundColor": "#1d68b5"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -24,7 +22,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.erdesarrollo.cotizador",
-      "versionCode": 12
+      "versionCode": 14
     },
     "web": {
       "bundler": "metro",
