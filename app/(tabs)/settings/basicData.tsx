@@ -58,6 +58,10 @@ export default () => {
     { id: "$", title: "$" },
     { id: "€", title: "€" }
   ];
+  const rates = [
+    { id: "$", title: "$" },
+    { id: "€", title: "€" }
+  ];
 
   const renderForm = () => (
     <VStack mx="3">
@@ -120,6 +124,18 @@ export default () => {
           errors,
           selectData: currencies,
           title: t("settings.currency"),
+          placeholder: t("settings.currencyPlaceholder"),
+          value: formData?.currencySymbol,
+          formData,
+          setData
+        }} />
+      <SelectForm
+        data={{
+          name: "currencyRate",
+          search: false,
+          errors,
+          selectData: rates,
+          title: t("settings.rates"),
           placeholder: t("settings.currencyPlaceholder"),
           value: formData?.currencySymbol,
           formData,

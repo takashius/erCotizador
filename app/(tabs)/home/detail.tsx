@@ -23,7 +23,7 @@ import {
   DeleteButton,
   read, remove, write, Card, CardProductItem, ModalProducts
 } from "../../../components";
-import { useGetCotiza, useDeleteProduct, useGetPdf, useSendCotiza } from "../../../api/cotiza";
+import { useGetCotiza, useDeleteProduct, useGetPdf, useSendCotiza, useUpdateCotizaRate } from "../../../api/cotiza";
 import { t } from "i18next";
 import { ProductForm } from "../../../types/products";
 import { MenuItem } from "../../../types/general";
@@ -45,6 +45,7 @@ export default () => {
   const deleteProductMutation = useDeleteProduct();
   const getPdf = useGetPdf();
   const sendCotiza = useSendCotiza();
+  const updateRate = useUpdateCotizaRate();
 
   const saveReportFile = async (pdfData: any) => {
     try {
@@ -106,6 +107,12 @@ export default () => {
     }
   }, [sendCotiza.isSuccess]);
 
+  useEffect(() => {
+    if (updateRate.isError) {
+      Alert.alert("Error", "Ha ocurrido un error actualizando la tasa, por favor intente nuevamente mas tarde");
+    }
+  }, [updateRate.isError]);
+
   const deleteRow = (rowMap: any, rowKey: any) => {
     if (dataList !== undefined) {
       rowMap[rowKey].closeRow();
@@ -154,6 +161,11 @@ export default () => {
     onPress: () => onEditCotiza(),
     isDisabled: false
   }, {
+    icon: 'autorenew',
+    title: t('updateRate'),
+    onPress: () => { updateRate.mutate({ id: responseQuery.data?._id! }) },
+    isDisabled: false
+  }, {
     icon: 'picture-as-pdf',
     title: t('pdf'),
     onPress: () => { getPdf.mutate({ id: responseQuery.data?._id!, libre: false }) },
@@ -182,7 +194,7 @@ export default () => {
           menuItems: menuItems,
         })}
       />
-      {responseQuery.isFetching || getPdf.isPending || sendCotiza.isPending ? (
+      {responseQuery.isFetching || getPdf.isPending || sendCotiza.isPending || updateRate.isPending ? (
         <Spinner />
       ) : (
         <>

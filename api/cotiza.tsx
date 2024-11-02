@@ -52,6 +52,19 @@ export const useUpdateCotiza = () => {
   return mutation;
 };
 
+export const useUpdateCotizaRate = () => {
+  const mutation = useMutation({
+    mutationFn: (data: PdfEndpoint) => {
+      return ERDEAxios.patch("/cotiza/updateRate", data);
+    },
+    onSuccess: () => {
+      write("mutateCotiza", 'true').then((res) => res);
+    },
+  });
+
+  return mutation;
+};
+
 export const useDeleteCotiza = () => {
   const mutation = useMutation({
     mutationFn: (id: string) => {

@@ -14,7 +14,7 @@ export interface CotizaForm {
 
 export interface PdfEndpoint {
   id: string;
-  libre: boolean;
+  libre?: boolean;
 }
 
 export interface CotizaBase {
