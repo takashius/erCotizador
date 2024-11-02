@@ -244,7 +244,7 @@ export default () => {
               </HStack>
               <HStack>
                 <Text color="blue.500" mr={2}>
-                  IVA:
+                  {t('tax')}:
                 </Text>
                 <Text>{responseQuery.data?.totalIva}</Text>
                 <Icon
