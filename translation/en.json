@@ -39,6 +39,12 @@
   "uploading": "Uploading ...",
   "registerSuccessToast": "Successful registration, check your email",
   "forgetPassword": "Forget Password?",
+  "sendCotizaSuccess": "The quote has been sent successfully",
+  "updateRateError": "An error occurred updating the rate, please try again later",
+  "invoice": "Invoice",
+  "subtotal": "Subtotal",
+  "total": "Total",
+  "exchangeRate": "Exchange Rate",
   "modules": {
     "cotiza": "Quotes",
     "customer": "Customers",

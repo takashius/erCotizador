@@ -39,6 +39,12 @@
   "uploading": "Subiendo ...",
   "registerSuccessToast": "Registro exitoso, revisa tu correo electrónico",
   "forgetPassword": "Recuperar contraseña",
+  "sendCotizaSuccess": "Se ha enviado la cotización correctamente",
+  "updateRateError": "Ha ocurrido un error actualizando la tasa, por favor intente nuevamente mas tarde",
+  "invoice": "Factura",
+  "subtotal": "Subtotal",
+  "total": "Total",
+  "exchangeRate": "Tasa de cambio",
   "modules": {
     "cotiza": "Cotizaciones",
     "customer": "Clientes",

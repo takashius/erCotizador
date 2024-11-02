@@ -103,13 +103,13 @@ export default () => {
 
   useEffect(() => {
     if (sendCotiza.isSuccess) {
-      Alert.alert("Exito", "Se ha enviado la cotización correctamente");
+      Alert.alert("Exito", t('sendCotizaSuccess'));
     }
   }, [sendCotiza.isSuccess]);
 
   useEffect(() => {
     if (updateRate.isError) {
-      Alert.alert("Error", "Ha ocurrido un error actualizando la tasa, por favor intente nuevamente mas tarde");
+      Alert.alert("Error", t('updateRateError'));
     }
   }, [updateRate.isError]);
 
@@ -214,7 +214,7 @@ export default () => {
                   size={4}
                   color="blue.500"
                 />
-                <Text color="blue.500">Factura: </Text>
+                <Text color="blue.500">{t('invoice')}: </Text>
                 <Text>{responseQuery.data?.number}</Text>
               </HStack>
               <HStack>
@@ -238,7 +238,7 @@ export default () => {
                   color={"blue.500"}
                 />
                 <Text color="blue.500" mr={2}>
-                  Subtotal:
+                  {t('subtotal')}:
                 </Text>
                 <Text>{responseQuery.data?.amount.toLocaleString("es-VE")}</Text>
               </HStack>
@@ -266,13 +266,13 @@ export default () => {
                   color={"blue.500"}
                 />
                 <Text fontWeight="semibold" color="blue.500" mr={2}>
-                  Total:
+                  {t('total')}:
                 </Text>
                 <Text>{responseQuery.data?.total?.toLocaleString("es-VE")}</Text>
               </HStack>
               <HStack>
                 <Text color="blue.500" mr={2}>
-                  Tasa de Cambio:
+                  {t('exchangeRate')}:
                 </Text>
                 <Text>{responseQuery.data?.rate.toLocaleString("es-VE")}</Text>
                 <Icon
